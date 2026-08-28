@@ -3,7 +3,7 @@
 **Fecha:** 28 de agosto de 2026
 **Pasada:** UI-0b del `Plan de Vestido Canónico v1.1`
 **Hogar definitivo:** `liviojanz/suynda-ui`, `docs/congelado-ui.md`
-**Estado:** **FIRMADO** por el fundador el 28-ago-2026, leyendo, con la enmienda de CRÍTICO (§B.1.1) aplicada.
+**Estado:** **FIRMADO** por el fundador el 28-ago-2026 —leyendo, y después **viendo** el mockup aprobado (shell · Inicio · Admitir · catálogo de piezas · CRÍTICO invertido · tubos literales)— con la enmienda de CRÍTICO (§B.1.1) aplicada.
 
 > **Este documento es la autoridad visual de Suynda (F1).** Después de firmarlo, los mockups de Visibilidad, el congelado del hub y los tokens de Foundation son **referencia histórica**: se cita este documento, no ellos. Ningún otro documento repite un valor que acá esté declarado.
 

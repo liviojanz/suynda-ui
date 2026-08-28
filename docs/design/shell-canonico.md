@@ -3,7 +3,7 @@
 **Fecha:** 28 de agosto de 2026
 **Pasada:** UI-0a del `Plan de Vestido Canónico v1.1`
 **Hogar definitivo:** `liviojanz/suynda-ui`, `docs/design/shell-canonico.md`
-**Estado:** ENTREGADO PARA FIRMA (leyendo). Nada de código.
+**Estado:** **FIRMADO** por el fundador el 28-ago-2026 —leyendo, y después **viendo** el mockup— con la enmienda de las dos píldoras de la franja (§1.1) aplicada. Nada de código.
 
 ---
 
@@ -34,6 +34,41 @@ Todo lo demás acá es cita, no propuesta.
 - El riel **no** lleva secciones del módulo — viven en el nivel 3.
 
 **Marcas de estado:** módulo activo en el riel = ícono amarillo + hilo amarillo. Tab activa en la sub-barra = subrayado amarillo.
+
+### 1.1 Las dos píldoras de la franja — *enmienda firmada, 28-ago*
+
+El nivel 1 lleva **dos selectores, no uno**, y el hub ya los tiene construidos y probados (`lib/doble-selector.ts`, `lib/doble-selector.test.ts`). Esto es promoción con citas.
+
+| | Píldora | Qué elige | Tono |
+|---|---|---|---|
+| **Izquierda** | **Organización** | desde cuál de tus organizaciones propias trabajás | tinta |
+| **Centro** | **Espacio de trabajo** | "Mi espacio", una hermana, o el cliente activo por Nexo | **tinta = propio · verde = prestado** |
+
+**El color no es decoración — es el mecanismo de seguridad.** El congelado §4 lo nombra: *"semántica de color = semántica de ubicación: tinta = lo mío, verde = operando para un cliente… la defensa visual contra cargar datos en el cliente equivocado"*. Con dos píldoras esa defensa está siempre a la vista, sin abrir nada.
+
+**Lo que el color NO dice, y por eso el banner sobrevive:** verde significa "no es tuyo", **no cuál relación**. Un nexo y una tutela se pintan igual.
+
+**El buscador.** Aparece a partir de **8 filas** (`shell.ts`: `caja.hidden = todos.length < 8`). El asesor con cientos de clientes tipea; *"un campo sobre tres filas es ruido en el espacio más caro de la pantalla"*.
+
+#### La regla de aparición — con una corrección al enunciado firmado
+
+El enunciado decía *"el selector de trabajo existe sólo si el usuario tiene al menos un Nexo como asesor"*. **Eso rompería algo:** la píldora del centro lista **también las organizaciones hermanas propias** (`espacio.clase === 'propio'` en `shell.ts`). Un titular con tres espacios propios y **cero** Nexos la necesita para moverse entre ellos.
+
+**La regla correcta ya existe en el hub, y es más general** — la izquierda se apaga con una sola organización, y su test lo dice con todas las letras: *"un menú de una opción es decoración"* (`doble-selector.test.ts:270`).
+
+> **Norma: un selector de la franja se muestra cuando tiene más de una opción; con una sola, se apaga.**
+
+Aplicada a las dos, da exactamente el resultado que la firma buscaba —**sin Nexos y con un solo espacio, la franja queda simple**— y además no rompe al titular con hermanas. **Es un cambio real, no una promoción:** hoy la píldora del centro **no puede ocultarse** — su tipo `derecha: { nombre, tono }` no tiene campo `visible` (`doble-selector.ts:229`). Se le agrega uno en UI-2V/UI-4-C.
+
+#### Los datos: la lista trabajable **no** está en `/v1/shell`
+
+Sale de un **tercer endpoint, `GET /v1/cartera`** (el hub la pide por `/api/cartera`; `scripts/shell.ts:186`). Foundation la resuelve **por USUARIO**, no por tenant — es la corrida CAR-1, y el comentario del hub lo dice: *"la cartera es del asesor"*, y **se sigue viendo estando conmutado**.
+
+**Y por eso no se pliega en `/v1/shell`.** `/v1/shell` es del **espacio activo**; la cartera es del **usuario** y sobrevive al cambio de espacio. Plegarla cambiaría su alcance y su caché: sería el error del §2.1 del plan cometido en la otra dirección — asumir que dos endpoints responden lo mismo sin verificar la pregunta. **UI-0a-bis no la toca**; su pliegue sigue siendo ícono, URL de módulo y URL del hub.
+
+**El riel, bajo sesión prestada,** muestra los módulos del espacio activo —propio o prestado— con las facultades delegadas. Eso ya lo resuelve `/v1/shell`: en sesión prestada, `entitled` no es "el espacio tiene el módulo" sino "el espacio lo tiene **y esta sesión lo opera**" (`shell-service.ts`), para que el riel no ofrezca puertas que dan 403.
+
+---
 
 **Dónde va el nombre del módulo:** como **título de pantalla, encima de la sub-barra** — no como marca en el riel. El wordmark del nivel 1 es de la plataforma (`suynda`), y es el único. Así lo muestra el mockup firmado de Visibilidad: "Visibilidad" es el título, y debajo van sus tabs.
 
@@ -141,6 +176,7 @@ Se nombran para que no se descubran después como huecos:
 **Firma:** del fundador, **leyendo**. Lo que se firma concretamente:
 
 - Los cuatro niveles como norma de plataforma, con sus tres exclusiones.
+- **Las dos píldoras de la franja** (§1.1), con la norma "un menú de una opción es decoración" y la cartera **fuera** del pliegue.
 - Que el shell lo renderiza cada módulo, contra `/v1/shell` y con el paquete.
 - El mapa de las 7 estaciones de Lab, **incluida la decisión D1** sobre las dos Configuración.
 
