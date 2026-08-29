@@ -209,21 +209,36 @@ Se congela **el comportamiento de los cuatro niveles**. El diseño de las pantal
 | Nivel | Qué se congela | Estado |
 |---|---|---|
 | **3 · Tabs** | horizontales con scroll | ✅ **PROMOCIÓN** — `SubBarra.astro:49` ya tiene `overflow-x: auto` |
-| **2 · Riel** | pasa a **barra inferior**, casita en primera posición | ⚠️ **CAMBIA lo construido — ver la discrepancia** |
+| **2 · Riel** | pasa a **barra inferior** con los módulos, casita del Hub en primera posición | ⚖️ **DECIDIDO — cambia lo construido, ver abajo** |
 | **1 · Franja** | se comprime a wordmark + píldora del centro; la de organización se pliega al menú del avatar | 🆕 **DISEÑO** — hoy no existe |
 | **4 · Barra de estado** | se pliega al menú del avatar | 🆕 **DISEÑO** — hoy queda visible, es una franja de 40 px en flujo normal (`BarraEstado.astro:105-114`) |
 
-> ### ⚠️ DISCREPANCIA — el riel en móvil contradice el congelado §2
->
-> **Lo que el hub hace y por qué:** en móvil el riel **sigue siendo vertical**, 60 px, sólo íconos. Su código lo justifica citando la norma vieja: *"En móvil (sin hover) nunca aparece [la etiqueta]: **íconos con tap, como fija el congelado §2**"* (`Riel.astro:76-79`).
->
-> **Pasarlo a barra inferior no es promoción: es derogar el §2 del congelado del hub.**
->
-> **A favor del cambio:** un riel vertical de 60 px se come el **17 % del ancho** de una pantalla de 360 px, de forma permanente y para una navegación que en móvil se usa poco; la barra inferior es la convención de alcance del pulgar. Y no choca con nada: la barra de estado **no** está fija abajo hoy, y en el modelo nuevo se pliega al avatar.
->
-> **A favor de dejarlo:** es lo construido, probado y desplegado, y el §2 lo eligió a propósito.
->
-> **Esto NO se escribe como norma hasta tu firma.** El canon congela lo correcto, no lo que está — pero tampoco deroga una decisión congelada sin que se vea que la está derogando.
+### El riel en móvil — DECIDIDO: barra inferior
+
+> **NORMA.** En pantalla angosta el riel **pasa a barra inferior**, con los módulos y **la casita del Hub en primera posición**. Objetivos táctiles **≥ 44 px**.
+
+**Se decide contra lo construido, y por eso queda documentado de los dos lados.**
+
+**Lo que el hub hace hoy:** el riel sigue vertical, 60 px, sólo íconos. Su código lo justifica citando la norma vieja: *"En móvil (sin hover) nunca aparece [la etiqueta]: **íconos con tap, como fija el congelado §2**"* (`Riel.astro:76-79`).
+
+**Por qué gana la barra inferior** *(motivo del fundador, 29-ago)*:
+
+- **La puerta de entrada de Suynda es el celular** — el alta es por WhatsApp. El móvil no es el caso degradado; es el primero.
+- **El riel vertical cobra ~17 % del ancho a 360 px**, de forma constante, **en todas las pantallas de todos los módulos**. La barra inferior **cobra alto, que es lo que sobra**.
+- Es **el patrón que el pulgar ya conoce**.
+- No choca con nada: la barra de estado **no** está fija abajo hoy, y en este modelo se pliega al menú del avatar.
+
+**Lo que se pierde:** era lo construido, probado y desplegado, y el §2 lo había elegido a propósito.
+
+> **Nota doctrinaria — esto no deroga el canon: lo escribe.** El código del hub justificaba el riel vertical citando el §2 del congelado del hub, que **es referencia histórica desde la firma de UI-0b**. La autoridad visual es el canon; el §2 dejó de decidir en el momento en que se firmó el documento que lo reemplaza.
+
+**Consecuencias, declaradas:**
+
+| Quién | Cuándo |
+|---|---|
+| **El hub** | **reconverge en UI-4** — su riel móvil se reconstruye ahí, **no ahora** |
+| **Los módulos nuevos** | **nacen cumpliendo** |
+| **Lab** | se lo lleva **UI-2V**, junto con el resto del shell corregido |
 
 ### Las dos reglas de compuerta que UI-1 hereda
 
@@ -253,6 +268,8 @@ Se nombran para que no se descubran después como huecos:
 
 - Los cuatro niveles como norma de plataforma, con sus tres exclusiones.
 - **Las dos píldoras de la franja** (§1.1), con la norma "un menú de una opción es decoración" y la cartera **fuera** del pliegue.
+- **El asiento fijo del Hub** (§1.2) y el nombre del módulo como H1 sobre las tabs.
+- **El comportamiento en pantalla angosta** (§3-bis), con el riel a **barra inferior** decidido contra lo construido, y las dos reglas de compuerta que UI-1 hereda.
 - Que el shell lo renderiza cada módulo, contra `/v1/shell` y con el paquete.
 - El mapa de las 7 estaciones de Lab, **incluida la decisión D1** sobre las dos Configuración.
 
