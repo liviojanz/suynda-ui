@@ -39,10 +39,23 @@ Todo lo demás acá es cita, no propuesta.
 
 El nivel 1 lleva **dos selectores, no uno**, y el hub ya los tiene construidos y probados (`lib/doble-selector.ts`, `lib/doble-selector.test.ts`). Esto es promoción con citas.
 
-| | Píldora | Qué elige | Tono |
-|---|---|---|---|
-| **Izquierda** | **Organización** | desde cuál de tus organizaciones propias trabajás | tinta |
-| **Centro** | **Espacio de trabajo** | "Mi espacio", una hermana, o el cliente activo por Nexo | **tinta = propio · verde = prestado** |
+| | Píldora | La pregunta | Qué lista | Tono |
+|---|---|---|---|---|
+| **Izquierda** | **Organización** | **¿desde dónde actúo?** | **todas** las organizaciones de las que el usuario forma parte — propias, hermanas, y donde sea socio o empleado | tinta |
+| **Centro** | **Espacio de trabajo** | **¿sobre quién actúo?** | "Mi espacio" **+ la cartera de Nexos de la organización elegida a la izquierda** | **tinta = propio · verde = prestado** |
+
+**Se elige el sombrero a la izquierda, la mesa al centro.**
+
+#### El centro DEPENDE de la izquierda
+
+**Fundamento doctrinario — Reafirmación 3: el Nexo se ata a una organización concreta, jamás al grupo.** Cada organización tiene su propia cartera. Por eso son dos selectores y no uno: **cambiar la izquierda recarga el centro.**
+
+> **El ejemplo de las hermanas.** "Livio Janz" y "Livio Janz finanzas" son dos organizaciones del mismo grupo, y van las dos a la píldora izquierda. Si el estudio contable atiende a Ferretería Río **por** "Livio Janz finanzas", ese cliente aparece en el centro **sólo cuando la izquierda dice "Livio Janz finanzas"**. Parado en "Livio Janz", el centro no lo ofrece — porque el Nexo no existe desde ahí. Un solo selector no podría expresar eso.
+
+**Verificado, el código ya reparte así:**
+
+- `organizacionesPropias(me.tenants, cartera)` (`lib/doble-selector.ts:100`) mapea **todos** los `tenants` de `/v1/me` —que son todas las membresías del usuario, sin filtrar por rol— y a cada una le cuenta lo suyo: `cuantosClientes: cartera.filter(f => f.viaTenantId === t.tenantId).length`.
+- `espaciosDe(organizacionTenantId, cartera)` (`:137`) devuelve `[propio, ...ajenos]`, donde `ajenos` **filtra por `viaTenantId === organizacionTenantId`** (`:151`). El centro es "Mi espacio" más los Nexos **de esa** organización, y nada más.
 
 **El color no es decoración — es el mecanismo de seguridad.** El congelado §4 lo nombra: *"semántica de color = semántica de ubicación: tinta = lo mío, verde = operando para un cliente… la defensa visual contra cargar datos en el cliente equivocado"*. Con dos píldoras esa defensa está siempre a la vista, sin abrir nada.
 
@@ -50,19 +63,25 @@ El nivel 1 lleva **dos selectores, no uno**, y el hub ya los tiene construidos y
 
 **El buscador.** Aparece a partir de **8 filas** (`shell.ts`: `caja.hidden = todos.length < 8`). El asesor con cientos de clientes tipea; *"un campo sobre tres filas es ruido en el espacio más caro de la pantalla"*.
 
-#### La regla de aparición — con una corrección al enunciado firmado
+#### La regla de aparición
 
-El enunciado decía *"el selector de trabajo existe sólo si el usuario tiene al menos un Nexo como asesor"*. **Eso rompería algo:** la píldora del centro lista **también las organizaciones hermanas propias** (`espacio.clase === 'propio'` en `shell.ts`). Un titular con tres espacios propios y **cero** Nexos la necesita para moverse entre ellos.
+> **Un menú de una opción es decoración.** Se aplica por píldora:
+> - **La izquierda se oculta** si el usuario participa de **una sola** organización.
+> - **El centro se oculta** si la organización activa **no tiene Nexos** — queda implícito "Mi espacio".
 
-**La regla correcta ya existe en el hub, y es más general** — la izquierda se apaga con una sola organización, y su test lo dice con todas las letras: *"un menú de una opción es decoración"* (`doble-selector.test.ts:270`).
+El enunciado es del hub, no inventado acá: su test lo dice con todas las letras — *"un menú de una opción es decoración"* (`doble-selector.test.ts:270`), sobre la izquierda.
 
-> **Norma: un selector de la franja se muestra cuando tiene más de una opción; con una sola, se apaga.**
+**Lo que falta construir:** hoy la píldora del centro **no puede ocultarse** — su tipo es `derecha: { nombre, tono }`, sin campo `visible` (`doble-selector.ts:229`). Se le agrega uno en UI-4-C.
 
-Aplicada a las dos, da exactamente el resultado que la firma buscaba —**sin Nexos y con un solo espacio, la franja queda simple**— y además no rompe al titular con hermanas. **Es un cambio real, no una promoción:** hoy la píldora del centro **no puede ocultarse** — su tipo `derecha: { nombre, tono }` no tiene campo `visible` (`doble-selector.ts:229`). Se le agrega uno en UI-2V/UI-4-C.
+> **Corrección registrada (28-ago).** Una versión anterior de esta sección afirmaba que el centro listaba también las organizaciones hermanas, y por eso objetaba la regla. **Era falso**, y la objeción caía con él: `espaciosDe` filtra por `viaTenantId` y las hermanas viven en la píldora izquierda. El error fue leer `clase === 'propio'` —que es **una** entrada, "Mi espacio"— como si fueran las hermanas. La regla del fundador era correcta desde el principio.
 
 #### Los datos: la lista trabajable **no** está en `/v1/shell`
 
 Sale de un **tercer endpoint, `GET /v1/cartera`** (el hub la pide por `/api/cartera`; `scripts/shell.ts:186`). Foundation la resuelve **por USUARIO**, no por tenant — es la corrida CAR-1, y el comentario del hub lo dice: *"la cartera es del asesor"*, y **se sigue viendo estando conmutado**.
+
+> **Precisión sobre el alcance, verificada.** El endpoint recibe **sólo `token.sub`** (`routes/session.ts:144` → `auth/session.ts:446`): devuelve la cartera del usuario **entera, de todas sus organizaciones a la vez**. Pero **no es indistinta**: cada fila trae **`viaTenantId`** (`session.ts:458`), que es exactamente "la organización por la que existe este Nexo". El reparto por organización es del cliente, y **la Reafirmación 3 está honrada en el dato**, que es donde importa. Una llamada, un reparto local, ningún round-trip por cambio de sombrero.
+>
+> **La consecuencia que sí hay que saber:** nada del lado del servidor acota la respuesta al espacio activo. Para el hub es correcto —es el mismo usuario—, pero **un módulo que algún día consuma la cartera recibiría clientes de organizaciones ajenas al espacio donde está parado**. Si eso llega a pasar, el acote se decide ahí, con su propio diseño. Hoy no hay tal consumidor.
 
 **Y por eso no se pliega en `/v1/shell`.** `/v1/shell` es del **espacio activo**; la cartera es del **usuario** y sobrevive al cambio de espacio. Plegarla cambiaría su alcance y su caché: sería el error del §2.1 del plan cometido en la otra dirección — asumir que dos endpoints responden lo mismo sin verificar la pregunta. **UI-0a-bis no la toca**; su pliegue sigue siendo ícono, URL de módulo y URL del hub.
 
@@ -70,7 +89,26 @@ Sale de un **tercer endpoint, `GET /v1/cartera`** (el hub la pide por `/api/cart
 
 ---
 
-**Dónde va el nombre del módulo:** como **título de pantalla, encima de la sub-barra** — no como marca en el riel. El wordmark del nivel 1 es de la plataforma (`suynda`), y es el único. Así lo muestra el mockup firmado de Visibilidad: "Visibilidad" es el título, y debajo van sus tabs.
+### 1.2 El Hub tiene asiento fijo
+
+**Primera posición del riel, incondicional.** El Hub **no es un módulo**: no depende de entitlements ni del espacio activo. Los módulos de abajo varían; **la casita jamás**.
+
+**Verificado — es promoción:**
+
+- **El hub** cablea la casita fuera del bloque dinámico: `<a class="riel__item" href="/panel">🏠 Inicio</a>` va **antes** del separador y de `<div id="shell-riel-modulos">`, que es lo único que el launcher puebla (`Riel.astro:17-24`).
+- **Visibilidad** hace lo mismo sin que nadie se lo pidiera: `rail-link` con `data-testid="hub-link"` es el primer hijo del `<nav aria-label="Módulos Suynda">` (`SuyndaShell.tsx:295`).
+
+**El wordmark también navega al Hub** — segunda puerta, convención universal. Ya es así: `<a class="franja__wordmark" href="/panel">suynda</a>` (`Franja.astro:11`).
+
+**Precisión de contexto:** la casita lleva al **hub del espacio activo**. No cambia de mesa; para cambiar de mesa está la píldora del centro. **Cada control hace un solo trabajo.**
+
+---
+
+**Dónde va el nombre del módulo:** como **título de pantalla, encima de la sub-barra** — no como marca en el riel. Sin ambigüedad:
+
+- **El wordmark dice `suynda`, siempre.** Jamás "Suynda Lab". El `.rail-brand` de Lab **muere en UI-2V**.
+- **El nombre del módulo es el H1 de la pantalla**, sobre las tabs. La casa arriba, la habitación en el contenido.
+- **La primera tab dice "Inicio"** — no repite el nombre del módulo. El wordmark del nivel 1 es de la plataforma (`suynda`), y es el único. Así lo muestra el mockup firmado de Visibilidad: "Visibilidad" es el título, y debajo van sus tabs.
 
 > **La regla que gobierna las dudas futuras** (§2.1-bis del plan):
 > **El paquete manda cómo se ve. Foundation manda qué se muestra.**
@@ -155,6 +193,44 @@ Las 7 caben: el mockup firmado de Visibilidad tiene 8 tabs.
 **Propuesta:** la de Lab es una **tab más** de la sub-barra —es una sección del módulo, como cualquier otra— y el pie del riel queda para la Configuración de plataforma. Se llaman igual y viven en niveles distintos, lo cual es correcto pero pide cuidado en el rótulo: la del módulo puede decir **"Catálogo"**, que es lo que realmente configura.
 
 > Alternativa descartada: que la `configuracion` de Lab vaya al pie del riel. Rompería el nivel 2, que es de plataforma, y pondría una pantalla del módulo en el lugar donde el usuario espera salir de él.
+
+---
+
+## 3-bis. El shell en pantalla angosta
+
+Se congela **el comportamiento de los cuatro niveles**. El diseño de las pantallas de cada módulo en móvil **no** entra: eso es post-piloto, con datos reales.
+
+### El punto de quiebre
+
+**860 px**, y no es elegido a dedo: es el que el riel del hub **ya usa** para dejar de ser un riel de escritorio — `@media (hover: hover) and (min-width: 861px)` gobierna tanto el ensanche por hover como la aparición de las etiquetas (`Riel.astro:56,84`). Por debajo de 861 el hub ya se considera angosto. El resto de los quiebres del repo (1100 y 700 en `global.css`, 560 en `Franja.astro`) son de contenido, no de marco.
+
+### Nivel por nivel — con qué es promoción y qué es cambio
+
+| Nivel | Qué se congela | Estado |
+|---|---|---|
+| **3 · Tabs** | horizontales con scroll | ✅ **PROMOCIÓN** — `SubBarra.astro:49` ya tiene `overflow-x: auto` |
+| **2 · Riel** | pasa a **barra inferior**, casita en primera posición | ⚠️ **CAMBIA lo construido — ver la discrepancia** |
+| **1 · Franja** | se comprime a wordmark + píldora del centro; la de organización se pliega al menú del avatar | 🆕 **DISEÑO** — hoy no existe |
+| **4 · Barra de estado** | se pliega al menú del avatar | 🆕 **DISEÑO** — hoy queda visible, es una franja de 40 px en flujo normal (`BarraEstado.astro:105-114`) |
+
+> ### ⚠️ DISCREPANCIA — el riel en móvil contradice el congelado §2
+>
+> **Lo que el hub hace y por qué:** en móvil el riel **sigue siendo vertical**, 60 px, sólo íconos. Su código lo justifica citando la norma vieja: *"En móvil (sin hover) nunca aparece [la etiqueta]: **íconos con tap, como fija el congelado §2**"* (`Riel.astro:76-79`).
+>
+> **Pasarlo a barra inferior no es promoción: es derogar el §2 del congelado del hub.**
+>
+> **A favor del cambio:** un riel vertical de 60 px se come el **17 % del ancho** de una pantalla de 360 px, de forma permanente y para una navegación que en móvil se usa poco; la barra inferior es la convención de alcance del pulgar. Y no choca con nada: la barra de estado **no** está fija abajo hoy, y en el modelo nuevo se pliega al avatar.
+>
+> **A favor de dejarlo:** es lo construido, probado y desplegado, y el §2 lo eligió a propósito.
+>
+> **Esto NO se escribe como norma hasta tu firma.** El canon congela lo correcto, no lo que está — pero tampoco deroga una decisión congelada sin que se vea que la está derogando.
+
+### Las dos reglas de compuerta que UI-1 hereda
+
+1. **Toda pieza del catálogo funciona a 360 px de ancho.**
+2. **Todo objetivo táctil mide ≥ 44 px.**
+
+**El catálogo navegable se revisa también en angosto**, y la firma viendo del fundador incluye esa vista.
 
 ---
 
