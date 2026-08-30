@@ -15,6 +15,11 @@
 
 **En castellano (F4).** No es una traducción: el hub ya los tenía así, Foundation también, y el mockup firmado de Visibilidad los declara igual. Acá se unifican y se les da una sola casa.
 
+> **F4, enmendada — regla con excepciones nombradas** *(reviewer, 30-ago).*
+> **Vocabulario en castellano. Tres préstamos heredados —`--muted`, `--card` y `--maxw`— se conservan por estar desplegados idénticos en las tres fuentes firmadas; ningún token nuevo entra en inglés.**
+>
+> Se enmienda porque el enunciado anterior no era literalmente cierto del set, y una regla que su propio ejemplo incumple no gobierna nada. Con la excepción declarada, la hoja de UI-1-B muestra **tres préstamos nombrados**, no una contradicción.
+
 | Token | Valor | Qué es | Regla de uso |
 |---|---|---|---|
 | `--amarillo` | `#ffc20e` | **LA identidad.** Puerta plena, franja, acentos | **Jamás color de texto. Jamás botón de acción sobre fondo claro** |

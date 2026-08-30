@@ -1,0 +1,47 @@
+/* ============================================================================
+ * Las caras de marca, auto-hospedadas. Nunca por CDN (canon §A.3).
+ *
+ * Cuatro pesos y nada más: Poppins 500/600 para títulos, Inter 400/500 para
+ * cuerpo. 63,7 KB en total. Subconjunto latino — los archivos vienen de
+ * @fontsource, y sus licencias SIL OFL 1.1 viajan al lado, en esta carpeta.
+ *
+ * `font-display: swap` a propósito: el texto se lee con `system-ui` mientras
+ * la cara baja. Es exactamente lo que Lab y Visibilidad hacen HOY sin
+ * quererlo —declaran Poppins y no la cargan—, con la diferencia de que acá la
+ * cara termina llegando.
+ *
+ * BAJO CSP (Foundation): `font-src 'self'` tiene que estar declarado y los
+ * .woff2 servidos desde el propio origen. Ver `docs/consumo.md`, forma 4.
+ * ==========================================================================*/
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./poppins-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./poppins-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./inter-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./inter-500.woff2") format("woff2");
+}

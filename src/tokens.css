@@ -1,0 +1,82 @@
+/* ============================================================================
+ * @suynda/ui — capa 0: los tokens.
+ *
+ * FUENTE DE VERDAD. `src/tokens.ts` se GENERA de este archivo
+ * (`scripts/generar-tokens-ts.mjs`) y un test prueba que son byte a byte lo
+ * mismo. Editar el .ts a mano rompe esa prueba, a propósito.
+ *
+ * Todo valor de acá está declarado en `docs/congelado-ui.md` §A. Ningún token
+ * existe sin estar en el canon, y el canon no repite valores que estén acá:
+ * el canon dice qué significan, este archivo dice cuánto valen.
+ * ==========================================================================*/
+
+:root {
+  /* ---- A.1 · Color ------------------------------------------------------ */
+
+  /* LA identidad. Puerta plena, franja, acentos.
+     JAMÁS color de texto. JAMÁS botón de acción sobre fondo claro. */
+  --amarillo: #ffc20e;
+
+  /* Texto, siluetas, estructura, acción primaria.
+     El botón primario es tinta con texto blanco. */
+  --tinta: #1f1d1a;
+  --tinta-suave: #3d4a45;
+
+  /* Texto terciario y metadatos. Nunca para dato que importa. */
+  --muted: #6b7772;
+
+  --papel: #f6f7f5;
+  --card: #ffffff;
+  --linea: #e3e7e2;
+
+  --riel: #1c2a25;
+  --riel-hover: #2a3b34;
+
+  /* Semánticos. El fondo suave lleva SU texto, no `--tinta`. */
+  --verde: #0e7a5f;
+  --verde-bg: #e7f3ef;
+  --rojo: #b0453a;
+  --rojo-bg: #f9ecea;
+  --ambar-bg: #fbf1dc;
+  --ambar-tx: #8a6410;
+
+  /* Los dos que sólo viven SOBRE el amarillo (§A.1, promovidos).
+     `--oro` es el único texto legítimo sobre el campo amarillo: su contraste
+     está verificado AA. `--ambar` es profundidad y hover, no texto. */
+  --oro: #7a5b00;
+  --ambar: #e0a200;
+
+  /* ---- A.2 · Escala, espaciado y forma ---------------------------------- */
+
+  --tx-xs: 14.5px;
+  --tx-chrome: 15.5px;
+  --tx-sm: 16px;
+  --tx-base: 17px;
+  --tx-lg: 19px;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  /* Los dos de abajo son de página de marketing.
+     El PRODUCTO vive entre --space-1 y --space-5. */
+  --space-6: clamp(4rem, 10vw, 8rem);
+  --space-7: clamp(6rem, 16vw, 12rem);
+
+  --maxw: 1120px;
+  --radio: 12px;
+
+  --sombra: 0 1px 3px rgba(20, 32, 28, 0.07), 0 4px 14px rgba(20, 32, 28, 0.05);
+  --sombra-panel: 0 8px 30px rgba(20, 32, 28, 0.18);
+
+  --foco: 3px solid var(--tinta);
+
+  /* ---- A.3 · Tipografía ------------------------------------------------- */
+
+  /* Las caras se auto-hospedan: ver `fuentes/fuentes.css`. `system-ui` queda
+     de respaldo real, no decorativo — una superficie que todavía no sirva los
+     .woff2 cae ahí y sigue siendo legible. */
+  --tipografia-titulo: Poppins, system-ui, sans-serif;
+  --tipografia-cuerpo: Inter, system-ui, sans-serif;
+}

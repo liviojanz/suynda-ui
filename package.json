@@ -1,0 +1,36 @@
+{
+  "name": "@suynda/ui",
+  "version": "0.1.0",
+  "description": "La capa visual de Suynda: tokens, primitivas y fuentes. Se consume por tag de git, igual que @suynda/contracts.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src/tokens.css",
+    "fuentes"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tokens.css": "./src/tokens.css",
+    "./fuentes/fuentes.css": "./fuentes/fuentes.css",
+    "./fuentes/*": "./fuentes/*"
+  },
+  "scripts": {
+    "generar:tokens": "node scripts/generar-tokens-ts.mjs",
+    "prebuild": "node scripts/generar-tokens-ts.mjs",
+    "build": "tsc -p tsconfig.json",
+    "test": "node --import tsx --test --test-concurrency=1 tests/*.test.ts",
+    "verify": "npm run build && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
