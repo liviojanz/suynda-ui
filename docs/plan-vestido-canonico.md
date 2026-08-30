@@ -146,8 +146,8 @@ Por F2 cada módulo renderiza el riel; cablear ícono y URL en cada repo es exac
 | Sub-corrida | Qué produce | Cierra cuando |
 |---|---|---|
 | **A · Capa 0 + entrega** | `tokens.css` y su gemelo exportado como **string TS**. Las fuentes auto-hospedadas como archivos del paquete, **con su licencia adentro**: Poppins e Inter son SIL OFL —que permite exactamente este uso— y el archivo de licencia viaja junto a los `.woff2` | Las cuatro formas de consumo funcionan: import de Astro, import de Next, string embebido, y ruta servida |
-| **B · Capa 1** | Primitivas CSS planas: `.pildora`, `.boton`, `.campo`, `.vacio`, `.tarjeta`, `.tabs`, `.metrica`, `.medidor`, `.chip-canal`, `.calendario-semana` | Cada pieza del congelado tiene su clase, y ninguna clase existe sin estar en el congelado |
-| **C · El catálogo navegable** | Una página que muestra **cada pieza en cada estado**, generada del mismo CSS que consumen los productos | Un desconocido entiende el sistema sin leer el congelado |
+| **B · Capa 1 + la hoja** | Primitivas CSS planas (`.pildora`, `.boton`, `.campo`, `.vacio`, `.tarjeta`, `.tabs`, `.metrica`, `.medidor`, `.chip-canal`, `.calendario-semana`) **y la HOJA DE ESPECIFICACIÓN** (§UI-1-hoja) | Cada pieza del congelado tiene su clase y su ficha; ninguna clase existe sin estar en el congelado |
+| **C · El catálogo navegable** | Una página que muestra **cada pieza en cada estado**, generada del mismo CSS que consumen los productos. **Complemento interactivo de la hoja** — hover, foco, angosto | Un desconocido entiende el sistema sin leer el congelado |
 | **D · La compuerta** | Test que rechaza hex crudos y clases de paleta por defecto, con lista de excepciones nombradas. CI real | **Se lo vio fallar**: un caso rojo a propósito antes de firmarlo (regla 12) |
 
 **Las piezas, de las dos listas (F6):**
@@ -158,8 +158,27 @@ Por F2 cada módulo renderiza el riel; cablear ícono y URL en cada repo es exac
 
 **Pieza con dueño explícito (observación del fundador, 28-ago): "qué ve un módulo sin entitlement".** Hoy cada módulo lo resuelve por su cuenta. **Es pieza del catálogo**, y entra a la sub-corrida B para que no reaparezca como hueco en UI-3.
 
-**Compuerta:** catálogo completo renderizando · CI verde · el gate visto fallar.
-**Firma:** del fundador, **VIENDO el catálogo**. El tag `v0.1.0` se corta después de la firma, no antes.
+#### UI-1-hoja — la hoja de especificación *(enmienda E10, 29-ago)*
+
+**El §B.2 del canon es un índice, no una especificación.** El aspecto de una pieza necesita **identificación y muestra visual**, no descripción larga. La sub-corrida B produce, además del catálogo, una **hoja de especificación en PDF + MD**.
+
+**Una ficha por pieza, formato fijo:**
+
+1. **Código + nombre** — `B.2-NN`, citable como se citan las disciplinas (`B.2-02`, `B.2-14`).
+2. **Muestra visual renderizada del CSS real del paquete**, en cada estado. **Jamás dibujada aparte:** si la hoja y el paquete pueden divergir, la hoja no sirve.
+3. **Receta telegráfica en tokens** — fondo · texto · radio · padding · tipografía.
+4. **La prohibición, en una línea.**
+
+**Sin prosa larga.** Incluye **vista angosta (360 px)** donde aplique y las reglas táctiles (**≥ 44 px**).
+
+**Dónde vive:** el MD en `suynda-ui/docs/`; **el PDF es el artefacto de firma y de archivo**.
+
+**Punto de partida del aspecto:** el **mockup HTML ya aprobado** por el fundador. UI-1 no arranca de cero — arranca de ahí para **forma**: anatomía, densidad, proporción. **Sobre el color manda A.1**, siempre (ver la nota de neutros en el registro E10).
+
+**Compuerta:** la hoja completa · catálogo renderizando · CI verde · el gate visto fallar · **toda pieza a 360 px y todo objetivo táctil ≥ 44 px**.
+**Firma:** del fundador, **VIENDO la hoja, pieza por pieza**. El catálogo navegable es complemento, no el objeto de firma.
+
+> **Lo que se firma ahí es el aspecto CONGELADO.** Cambiar un padding después es **enmienda con tag nuevo**, no improvisación. El tag `v0.1.0` se corta **después** de la firma de la hoja, no antes.
 
 ---
 
@@ -216,8 +235,8 @@ Por F2 cada módulo renderiza el riel; cablear ícono y URL en cada repo es exac
 |---|---|---|---|
 | `--yellow` | `#ffc010` | `#ffc20e` | ✗ **el amarillo de marca, errado por dos dígitos — invisible al ojo** |
 | `--ink` | `#14201c` | `#1f1d1a` | ✗ |
-| `--line` | `#e5e4e0` | `#e3e7e2` | ✗ |
-| `--muted` | `#6b756f` | `#6b7772` | ✗ |
+| `--line` | `#e5e4e0` | `#e3e7e2` | ⚠️ **NO es deriva** — es el valor del mockup firmado (ver E10-nota) |
+| `--muted` | `#6b756f` | `#6b7772` | ✗ un tercer valor, distinto del canon **y** del mockup |
 
 Los nombres están **en inglés** (`--yellow`, `--ink`, `--paper`, `--rail`), contra F4 y contra su propio mockup firmado, que los declara en castellano. Y declara `Poppins, Inter` **sin cargar ninguna**: ni `@font-face`, ni `link`, ni `fontsource`. **Es el bug exacto de Lab, reproducido en un repo que nunca tocó Lab** — porque no había de dónde heredar.
 
@@ -260,7 +279,7 @@ Los nombres están **en inglés** (`--yellow`, `--ink`, `--paper`, `--rail`), co
 |---|---|---|
 | UI-0a · UI-0b | leyendo | los documentos |
 | UI-0a-bis *(si se activa)* | leyendo | el diff, y el deployment después del push |
-| UI-1 | **viendo** | **el catálogo navegable** |
+| UI-1 | **viendo** | **la hoja de especificación**, pieza por pieza (el catálogo navegable es complemento) |
 | UI-2P | **viendo** | las pantallas, sub-corrida por sub-corrida |
 | UI-3 | **viendo** | las pantallas desplegadas |
 | UI-2V | **viendo** | **las maquetas**, y después el deployment |
@@ -331,6 +350,8 @@ Las firmas que siguen abiertas son las de cada pasada, en su momento y con su su
 | **E6** | **UI-0a-bis se redefine sobre el archivo correcto**: pliegue de **ícono y URL** en `/v1/shell` — el rótulo ya lo trae. Justificación medida: tres repos inventan íconos, y en el riel de Visibilidad Compra y Talento son cuadraditos idénticos | Recon, 28-ago |
 | **E7** | **La frontera entra como regla** (§2.1-bis): el paquete manda cómo se ve, Foundation manda qué se muestra | Fundador, 28-ago |
 | **E8** | **Nuevo orden**: UI-2 se parte en **UI-2P** (producto, no depende del paquete, es la urgencia) y **UI-2V** (vestido). UI-2P corre **en paralelo con UI-3**, y UI-2V va **después**, con el paquete ya curtido por un consumidor real | Fundador, 28-ago |
+| **E10** | **La compuerta de UI-1 cambia.** La sub-corrida B produce además una **hoja de especificación (PDF + MD)**: una ficha por pieza con código `B.2-NN`, muestra renderizada **del CSS real**, receta en tokens y la prohibición en una línea. **La firma viendo es sobre la hoja**; el catálogo pasa a complemento. El tag `v0.1.0` se corta después de esa firma, y cambiar un padding después es enmienda con tag nuevo. Punto de partida: el mockup HTML aprobado, para **forma**; sobre color manda A.1 | Fundador, 29-ago |
+| **E10-nota** | **Discrepancia registrada, sin resolver: la temperatura de los neutros.** El mockup firmado declara `--tinta-suave #4A4741`, `--muted #75726B` y `--linea #E5E4E0` —**cálidos**—; A.1 los declara `#3d4a45`, `#6b7772` y `#e3e7e2` —**verdosos**—, tomados del hub y de Foundation. **Los dos están firmados.** Por F1 gana el canon, pero es una decisión de aspecto que el fundador debe tomar mirando, no heredar por regla de precedencia. **Corolario:** el `--line #e5e4e0` de Visibilidad que E9 reportó como deriva **no lo es** — es fiel al mockup. La deriva real de Visibilidad son `--yellow #ffc010` y `--ink #14201c`; `--muted #6b756f` es un tercer valor propio | Recon, 30-ago |
 | **E9** | **Rama R confirmada**: Visibilidad está construido. Entran al plan sus cuatro tokens desviados, los nombres en inglés, el bug de Poppins reproducido, la quinta tecnología (React+Vite) declarada sin reabrir la premisa, y el rebind `v0.7.0`→`v0.8.1` en UI-3-A | Recon, 28-ago |
 
 > **Nota de método sobre la E5.** La v1.0 afirmaba que `/v1/shell` no existía. Existía desde el 24 de julio. El error no fue de criterio sino de verificación: se comprobó qué devuelve `/v1/me` y **nunca se buscó el nombre `/v1/shell`** — un hueco declarado sin ir a buscarlo. Queda escrito acá, y no borrado, porque el plan se enmienda con evidencia.
