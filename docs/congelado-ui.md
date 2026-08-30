@@ -42,7 +42,25 @@
 
 **Los alias en inglés se retiran.** `--ink` (68 usos), `--gold` (18), `--yellow` (13) y `--amber` (5) son la misma cosa dos veces. Se retiran en UI-4-C, cuando el hub converja; **el paquete nace sin ellos**.
 
-**El desvío que este canon corrige, medido:** Visibilidad declara `--yellow: #ffc010` — el amarillo de marca errado por dos dígitos, invisible al ojo. Más `--ink #14201c`, `--line #e5e4e0` y `--muted #6b756f`. Los cuatro mueren en UI-3-C.
+#### La temperatura de los neutros — decidida el 29-ago, mirando
+
+El mockup firmado de Visibilidad declara sus neutros **cálidos**; A.1 los declara **verdosos**, tomados del hub y de Foundation. **Los dos estaban firmados**, así que se resolvió mirando un comparador, no por regla de precedencia.
+
+| Token | Mockup (cálido) | **A.1 — GANA** |
+|---|---|---|
+| `--tinta-suave` | `#4A4741` | **`#3d4a45`** |
+| `--muted` | `#75726B` | **`#6b7772`** |
+| `--linea` | `#E5E4E0` | **`#e3e7e2`** |
+
+**Son tres, no cuatro:** `--papel` es `#f6f7f5` en los dos. Nunca difirió.
+
+**Criterio del fundador:** menor retrabajo —es lo que el hub y Foundation ya tienen **desplegado en producción**— y **la familia verdosa empareja con el riel (`--riel #1c2a25`) y con el verde de marca**.
+
+**A.1 queda como está. El mockup cede en esos tres**, y pasa a referencia histórica (F1).
+
+**El desvío que este canon corrige, medido:** Visibilidad declara `--yellow: #ffc010` — el amarillo de marca errado por dos dígitos, invisible al ojo — más `--ink #14201c` y un `--muted #6b756f` que no es ni el del canon ni el del mockup. **Los tres mueren en UI-3-C.**
+
+> **Lo que NO era desvío:** su `--line #e5e4e0` es **exactamente** el del mockup firmado. Visibilidad lo copió bien; el desacuerdo era entre el mockup y el hub, y lo resolvió la decisión de arriba. Un recon anterior lo había contado como deriva — queda corregido acá.
 
 ### A.2 Escala, espaciado y forma
 
