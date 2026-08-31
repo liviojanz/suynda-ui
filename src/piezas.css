@@ -392,11 +392,30 @@
 
 .riel {
   background: var(--riel);
-  width: 176px;
+  /* REPOSO = 60px, sólo íconos (shell canónico §1). `overflow: hidden` no es
+     opcional: sin él la etiqueta se derrama fuera del riel y se apoya sobre
+     el contenido — medido, 128px de contenido en una caja de 60. */
+  width: 60px;
+  overflow: hidden;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   padding: 10px 0;
+  transition: width 0.18s ease;
+}
+/* Recortar NO alcanza: el hub ya pasó por ahí y le quedaban etiquetas
+   cortadas ("Comp…"). Colapsado, la etiqueta se oculta DEL TODO. */
+.riel__nombre {
+  opacity: 0;
+  transition: opacity 0.12s ease 0.06s;
+}
+/* Expandido explícito — para la hoja, y para quien quiera el riel abierto. */
+.riel--expandido { width: 176px; }
+.riel--expandido .riel__nombre { opacity: 1; }
+/* Y por hover, sólo donde hay hover de verdad: en táctil nunca se expande. */
+@media (hover: hover) and (min-width: 861px) {
+  .riel:hover { width: 176px; }
+  .riel:hover .riel__nombre { opacity: 1; }
 }
 .riel__item {
   display: flex;
@@ -879,6 +898,9 @@
     min-height: 44px;
     justify-content: center;
   }
+  /* En la barra inferior la etiqueta SÍ se ve: el ancho ya no se cobra, y un
+     ícono solo, sin hover que lo explique, no dice a qué módulo lleva. */
+  .riel__nombre { opacity: 1; }
   /* El hilo amarillo del activo pasa de costado a arriba. */
   .riel__item--activo::before {
     left: 8px;

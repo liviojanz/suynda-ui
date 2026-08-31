@@ -298,22 +298,28 @@
 <!-- 14 -->
 <section class="ficha">
   <div class="ficha__cab"><span class="ficha__cod">B.2-14</span><span class="ficha__nom">Riel — nivel 2</span></div>
-  <div class="muestra muestra--oscura" style="padding:0;gap:0">
-    <div class="riel" style="width:60px">
-      <a class="riel__item riel__item--activo" href="#"><span class="riel__icono">🏠</span>Inicio</a>
-      <div class="riel__separador"></div>
-      <a class="riel__item" href="#"><span class="riel__icono">▣</span>Compra</a>
-      <a class="riel__item" href="#"><span class="riel__icono">◉</span>Visibilidad</a>
-      <a class="riel__item" href="#"><span class="riel__icono">＋</span>Activar</a>
+  <div class="muestra" style="align-items:flex-start;gap:28px">
+    <div>
+      <span class="estado-rot" style="margin:0 0 6px">Colapsado · 60 px · reposo</span>
+      <div class="riel">
+        <a class="riel__item riel__item--activo" href="#"><span class="riel__icono">🏠</span><span class="riel__nombre">Inicio</span></a>
+        <div class="riel__separador"></div>
+        <a class="riel__item" href="#"><span class="riel__icono">▣</span><span class="riel__nombre">Compra</span></a>
+        <a class="riel__item" href="#"><span class="riel__icono">◉</span><span class="riel__nombre">Visibilidad</span></a>
+        <a class="riel__item" href="#"><span class="riel__icono">＋</span><span class="riel__nombre">Activar módulo</span></a>
+      </div>
     </div>
-    <div class="riel" style="width:176px">
-      <a class="riel__item riel__item--activo" href="#"><span class="riel__icono">🏠</span>Inicio</a>
-      <div class="riel__separador"></div>
-      <a class="riel__item" href="#"><span class="riel__icono">▣</span>Compra</a>
-      <a class="riel__item" href="#"><span class="riel__icono">◉</span>Visibilidad</a>
-      <a class="riel__item" href="#"><span class="riel__icono">＋</span>Activar módulo</a>
+    <div>
+      <span class="estado-rot" style="margin:0 0 6px">Expandido · 176 px · al hover, sólo escritorio</span>
+      <div class="riel riel--expandido">
+        <a class="riel__item riel__item--activo" href="#"><span class="riel__icono">🏠</span><span class="riel__nombre">Inicio</span></a>
+        <div class="riel__separador"></div>
+        <a class="riel__item" href="#"><span class="riel__icono">▣</span><span class="riel__nombre">Compra</span></a>
+        <a class="riel__item" href="#"><span class="riel__icono">◉</span><span class="riel__nombre">Visibilidad</span></a>
+        <a class="riel__item" href="#"><span class="riel__icono">＋</span><span class="riel__nombre">Activar módulo</span></a>
+      </div>
     </div>
-    <span class="estado-rot" style="padding:8px 14px;color:#b8c4be">colapsado 60px (reposo) · expandido 176px (hover, sólo escritorio) · a ≤860px, barra inferior</span>
+    <span class="estado-rot">a ≤860 px los dos ceden a la barra inferior</span>
   </div>
   <div class="receta"><b>Receta:</b> fondo <code>--riel</code> · <b>reposo 60px, sólo íconos</b> · <b>hover 176px con etiquetas</b>, y sólo donde hay hover real — en táctil nunca se expande · ítem 13px/500 · activo con hilo <code>--amarillo</code> de 3.5px e ícono amarillo · <b>a ≤860px pasa a barra inferior</b></div>
   <div class="prohibicion"><b>La casita del Hub es la primera, siempre</b> — no depende de entitlements ni del espacio activo.</div>
