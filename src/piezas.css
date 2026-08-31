@@ -416,6 +416,9 @@
 @media (hover: hover) and (min-width: 861px) {
   .riel:hover { width: 176px; }
   .riel:hover .riel__nombre { opacity: 1; }
+  .riel:hover .riel__item {
+    padding-left: 14px;
+  }
 }
 .riel__item {
   display: flex;
@@ -423,12 +426,23 @@
   gap: 12px;
   color: #b8c4be;
   text-decoration: none;
-  padding: 10px 0 10px 14px;
+  /* COLAPSADO manda en el reposo. La sangría es 7px y no 14: con 14 el ícono
+     quedaba a 22 de un lado y 8 del otro, pegado al borde derecho.
+     Y NO se centra con `justify-content`: la etiqueta sigue ocupando su ancho
+     aunque esté en opacidad 0, así que centrar centraría ícono+etiqueta y
+     sacaría el ícono del riel por la izquierda. Con 8 de margen y 7 de
+     sangría, el ícono de 30 queda a 15 de cada lado en un riel de 60. */
+  padding: 10px 0 10px 7px;
   margin: 1px 8px;
   border-radius: 9px;
   font-size: 13px;
   font-weight: 500;
   position: relative;
+}
+/* Expandido: el ícono vuelve a la izquierda, con su sangría, para que la
+   etiqueta arranque en una columna pareja. */
+.riel--expandido .riel__item {
+  padding-left: 14px;
 }
 .riel__item:hover { background: var(--riel-hover); color: #fff; }
 .riel__item--activo {
