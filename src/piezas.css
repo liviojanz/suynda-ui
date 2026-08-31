@@ -91,7 +91,7 @@
   white-space: nowrap;
 }
 /* El amarillo JAMÁS es botón sobre fondo claro (§A.1): la acción es tinta. */
-.boton--primario { background: var(--tinta); color: #fff; }
+.boton--primario { background: var(--tinta); color: var(--sobre-tinta); }
 .boton--secundario {
   background: var(--card);
   color: var(--tinta);
@@ -250,8 +250,8 @@
   box-shadow: var(--sombra-panel);
 }
 .toast__marca { font-weight: 700; }
-.toast--exito .toast__marca { color: #7ddcb8; }
-.toast--error .toast__marca { color: #f0a79c; }
+.toast--exito .toast__marca { color: var(--verde-sobre-tinta); }
+.toast--error .toast__marca { color: var(--rojo-sobre-tinta); }
 .toast--en-curso .toast__marca { color: var(--amarillo); }
 
 /* ---- B.2-09 · Modal ------------------------------------------------------ */
@@ -274,7 +274,7 @@
 .modal__fondo {
   position: fixed;
   inset: 0;
-  background: rgba(31, 29, 26, 0.45);
+  background: var(--velo);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -424,7 +424,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #b8c4be;
+  color: var(--riel-tx);
   text-decoration: none;
   /* COLAPSADO manda en el reposo. La sangría es 7px y no 14: con 14 el ícono
      quedaba a 22 de un lado y 8 del otro, pegado al borde derecho.
@@ -444,10 +444,10 @@
 .riel--expandido .riel__item {
   padding-left: 14px;
 }
-.riel__item:hover { background: var(--riel-hover); color: #fff; }
+.riel__item:hover { background: var(--riel-hover); color: var(--sobre-tinta); }
 .riel__item--activo {
   background: var(--riel-hover);
-  color: #fff;
+  color: var(--sobre-tinta);
   font-weight: 600;
 }
 .riel__item--activo::before {
@@ -464,7 +464,7 @@
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--riel-icono-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -472,7 +472,7 @@
   flex-shrink: 0;
 }
 .riel__item--activo .riel__icono { background: var(--amarillo); color: var(--tinta); }
-.riel__separador { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 8px 16px; }
+.riel__separador { height: 1px; background: var(--riel-linea); margin: 8px 16px; }
 .riel__abajo { margin-top: auto; }
 
 /* ---- B.2-15 · Barra de tabs (nivel 3) ------------------------------------ */
@@ -861,7 +861,7 @@
   font-size: 15px;
 }
 .icono-modulo svg { width: 18px; height: 18px; }
-.icono-modulo--sobre-riel { background: rgba(255, 255, 255, .08); color: #fff; }
+.icono-modulo--sobre-riel { background: var(--riel-icono-bg); color: var(--sobre-tinta); }
 .icono-modulo--activo { background: var(--amarillo); color: var(--tinta); }
 
 /* ============================================================================
@@ -908,7 +908,7 @@
     flex-direction: row;
     justify-content: space-around;
     padding: 4px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--riel-linea);
   }
   .riel__item {
     flex-direction: column;

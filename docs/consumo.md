@@ -15,6 +15,7 @@ Cuatro formas, porque cinco superficies con cinco tecnologías no pueden compart
 ```css
 /* en tu hoja global */
 @import "@suynda/ui/tokens.css";
+@import "@suynda/ui/piezas.css";
 @import "@suynda/ui/fuentes/fuentes.css";
 ```
 
@@ -59,6 +60,31 @@ scope.get("/flow/assets/tokens.css", async (_req, reply) => {
 1. **`font-src 'self'` tiene que estar en la CSP** — es la enmienda declarada del canon §A.3. Sin eso `default-src 'none'` bloquea las caras aunque las sirva Foundation mismo.
 2. **Los `.woff2` se sirven desde el propio origen**, con su propia ruta, y `fuentes.css` se reescribe para apuntar ahí.
 3. **`img-src 'self'` bloquea `data:`** — cualquier ícono o favicon embebido va por ruta servida, no en data-URI.
+
+---
+
+## La compuerta anti-deriva — se adopta con el pin
+
+El paquete trae su propio verificador. **Cualquier repo que lo pinee lo corre sobre su propio código:**
+
+```bash
+node node_modules/@suynda/ui/scripts/compuerta.mjs src app components
+```
+
+Rechaza dos cosas y nombra archivo, línea y el texto ofensor:
+
+1. **Color crudo** —hex, `rgb()`, `hsl()`— fuera de `tokens.css`.
+2. **Clases de las paletas por defecto de Tailwind.** Es la forma exacta que tomó la deriva en `facturas-py`: **79 `border-slate-200` conviviendo con 52 `border-gray-300`**, y ni uno solo de la marca.
+
+**Los comentarios no cuentan** — un hex citado en una explicación no es deriva.
+
+**Las excepciones se nombran, nunca se infieren.** Están en `EXCEPCIONES`, dentro del propio script, y cada una **tiene que escribir por qué**; un test falla si alguna no lo hace. Hoy son las marcas de dominio que el canon §B.1.1 protege: el color real de la tapa de un tubo y el de la plataforma de un canal. **Una excepción anónima es una deriva con permiso.**
+
+Recomendado en el `package.json` del consumidor:
+
+```json
+"scripts": { "compuerta": "suynda-ui-compuerta src app components" }
+```
 
 ---
 

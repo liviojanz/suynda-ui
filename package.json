@@ -10,7 +10,9 @@
   "files": [
     "dist",
     "src/tokens.css",
-    "fuentes"
+    "src/piezas.css",
+    "fuentes",
+    "scripts"
   ],
   "exports": {
     ".": {
@@ -19,18 +21,23 @@
     },
     "./tokens.css": "./src/tokens.css",
     "./fuentes/fuentes.css": "./fuentes/fuentes.css",
-    "./fuentes/*": "./fuentes/*"
+    "./fuentes/*": "./fuentes/*",
+    "./piezas.css": "./src/piezas.css"
   },
   "scripts": {
     "generar:tokens": "node scripts/generar-tokens-ts.mjs",
     "prebuild": "node scripts/generar-tokens-ts.mjs",
     "build": "tsc -p tsconfig.json",
     "test": "node --import tsx --test --test-concurrency=1 tests/*.test.ts",
-    "verify": "npm run build && npm test"
+    "verify": "npm run build && npm test && npm run compuerta",
+    "compuerta": "node scripts/compuerta.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
+  },
+  "bin": {
+    "suynda-ui-compuerta": "./scripts/compuerta.mjs"
   }
 }

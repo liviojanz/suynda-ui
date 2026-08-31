@@ -78,7 +78,7 @@
      aspecto. `print-color-adjust: exact` lo pide explícitamente, en vez de
      depender de que quien imprime se acuerde de tildar "gráficos de fondo". */
   @media print {
-    body { background: #fff; }
+    body { background: var(--card); }
     .ficha { break-inside: avoid; }
     *, *::before, *::after {
       -webkit-print-color-adjust: exact;
@@ -232,7 +232,7 @@
     </div>
     <span class="estado-rot">confirmación destructiva — la acción peligrosa nunca es la primaria</span>
   </div>
-  <div class="receta"><b>Receta:</b> ancho <code>min(420px, 100%)</code> · radio <code>--radio</code> · <code>--sombra-panel</code> · fondo <code>rgba(31,29,26,.45)</code> · acciones a la derecha</div>
+  <div class="receta"><b>Receta:</b> ancho <code>min(420px, 100%)</code> · radio <code>--radio</code> · <code>--sombra-panel</code> · velo <code>--velo</code> · acciones a la derecha</div>
   <div class="prohibicion"><b>No</b> para navegar: si lo que sigue es otro lugar, es una pantalla.</div>
 </section>
 

@@ -51,6 +51,19 @@ export const TOKENS_CSS = `/* ==================================================
   --oro: #7a5b00;
   --ambar: #e0a200;
 
+  /* ---- A.1-bis · Superficie oscura -------------------------------------- */
+  /* Sobre tinta o sobre el riel, los tonos claros no sirven: \`--verde\` sobre
+     \`--tinta\` no llega al contraste. Estos siete existían inline dentro de
+     las piezas hasta que la compuerta anti-deriva los sacó a la luz. Mismos
+     valores exactos: el aspecto firmado no se movió. */
+  --sobre-tinta: #ffffff;        /* texto y siluetas sobre tinta */
+  --riel-tx: #b8c4be;            /* el ítem del riel en reposo */
+  --riel-icono-bg: rgba(255, 255, 255, 0.08);
+  --riel-linea: rgba(255, 255, 255, 0.1);
+  --verde-sobre-tinta: #7ddcb8;  /* la marca del toast de éxito */
+  --rojo-sobre-tinta: #f0a79c;   /* la marca del toast de error */
+  --velo: rgba(31, 29, 26, 0.45); /* el fondo detrás de un modal */
+
   /* ---- A.2 · Escala, espaciado y forma ---------------------------------- */
 
   --tx-xs: 14.5px;

@@ -1,0 +1,45 @@
+name: CI
+
+# El paquete se consume por TAG de git, no por registro: no hay `npm install`
+# que construya nada del otro lado. Por eso el CI corre las tres cosas que
+# tienen que estar bien en el arbol que se pinea — build, tests y compuerta —
+# y por eso `dist/` viaja commiteado.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Tests
+        run: npm test
+
+      - name: Compuerta anti-deriva
+        run: npm run compuerta
+
+      # `dist/` y `src/tokens.ts` se generan. Si el build produce algo distinto
+      # de lo commiteado, alguien edito el gemelo a mano o subio un dist viejo:
+      # el paquete se consume por tag, asi que lo commiteado ES lo que reciben
+      # los productos.
+      - name: El arbol generado coincide con el commiteado
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "El build dejo cambios sin commitear:"
+            git status --porcelain
+            git diff
+            exit 1
+          fi
