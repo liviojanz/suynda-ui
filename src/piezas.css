@@ -1,0 +1,897 @@
+/* ============================================================================
+ * @suynda/ui — capa 1: las piezas.
+ *
+ * Cada clase de acá tiene su ficha en `docs/hoja-de-especificacion.md`, y
+ * ninguna existe sin estar en `docs/congelado-ui.md` §B.2. El código de la
+ * ficha (B.2-NN) va en el comentario de cada bloque.
+ *
+ * PUNTO DE PARTIDA: el CSS del mockup aprobado por el fundador. Lo que cambió
+ * respecto de él, y por qué:
+ *   · los hex crudos (#EDEEEA, #EFF0ED, #B8C4BE) pasan a tokens del canon;
+ *   · los objetivos táctiles suben a 44px bajo puntero grueso — el mockup es
+ *     de densidad de escritorio y ahí no llegaba;
+ *   · las píldoras se reducen a los cuatro tonos del §B.1.
+ *
+ * NADA acá trae datos: el paquete manda cómo se ve, Foundation manda qué se
+ * muestra.
+ * ==========================================================================*/
+
+/* ---- Modelo de caja ------------------------------------------------------
+ * Las piezas miden por su borde exterior. NO se impone un reset global `*`:
+ * el paquete entra en repos ajenos y no le toca cambiarles el modelo de caja
+ * a su código. Se declara pieza por pieza, que es lo que el paquete sí posee.
+ *
+ * Encontrado midiendo: con las columnas de `.entrada__campos` en 300px, el
+ * campo daba 324 — los 22 de padding y los 3 de borde se sumaban por fuera y
+ * se salía de su columna.
+ * ------------------------------------------------------------------------*/
+.pildora, .boton, .campo, .campo__control, .vacio, .tarjeta, .lista,
+.lista__cabecera, .lista__fila, .aviso, .toast, .modal, .esqueleto,
+.buscador__resultados, .buscador__opcion, .buscador__elegido, .franja,
+.franja__pildora, .franja__avatar, .riel, .riel__item, .riel__icono, .tabs,
+.tab, .barra-estado, .metrica, .medidor__riel, .semana__dia, .semana__franja,
+.chip-canal, .sin-modulo, .panel-selector, .panel-selector__opcion,
+.modulo-chip, .permisos, .permisos__cab, .permisos__cuerpo, .perfil, .tilde,
+.entrada, .entrada__campos, .mas-info, .icono-modulo {
+  box-sizing: border-box;
+}
+
+/* ---- B.2-01 · Píldora de estado ----------------------------------------- */
+
+.pildora {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--tipografia-cuerpo);
+  white-space: nowrap;
+}
+.pildora--positivo { background: var(--verde-bg); color: var(--verde); }
+.pildora--pendiente { background: var(--ambar-bg); color: var(--ambar-tx); }
+.pildora--negativo { background: var(--rojo-bg); color: var(--rojo); }
+.pildora--neutro {
+  background: var(--papel);
+  color: var(--muted);
+  box-shadow: inset 0 0 0 1px var(--linea);
+}
+
+/* B.2-01c · CRÍTICO — la única excepción con grito propio (§B.1.1).
+   Inversión de tono: relleno sólido, texto papel. Es el estilo que el canon
+   descartó como norma general PORQUE grita; acá gritar es el punto.
+   El ícono va aparte del color: en escala de grises tiene que separarse igual.
+   EL SISTEMA GRITA UNA SOLA VEZ — este relleno no se usa para nada más. */
+.pildora--critico {
+  background: var(--rojo);
+  color: var(--papel);
+  font-weight: 700;
+}
+.pildora--critico::before {
+  content: "▲";
+  margin-right: 5px;
+  font-size: 9px;
+  vertical-align: 1px;
+}
+
+/* ---- B.2-02 · Botón ------------------------------------------------------ */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 9px 15px;
+  font-family: var(--tipografia-cuerpo);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.2;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+/* El amarillo JAMÁS es botón sobre fondo claro (§A.1): la acción es tinta. */
+.boton--primario { background: var(--tinta); color: #fff; }
+.boton--secundario {
+  background: var(--card);
+  color: var(--tinta);
+  border-color: var(--linea);
+}
+.boton--fantasma { background: transparent; color: var(--tinta); }
+.boton--destructivo {
+  background: var(--card);
+  color: var(--rojo);
+  border-color: var(--rojo);
+}
+.boton:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ---- B.2-03 · Campo de formulario ---------------------------------------- */
+
+.campo { display: block; margin-bottom: var(--space-2); }
+.campo__rotulo {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--tinta-suave);
+  margin-bottom: 4px;
+}
+.campo__control {
+  width: 100%;
+  background: var(--card);
+  border: 1.5px solid var(--linea);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-family: var(--tipografia-cuerpo);
+  font-size: 13px;
+  color: var(--tinta);
+}
+.campo__control::placeholder { color: var(--muted); }
+.campo__control:disabled { background: var(--papel); color: var(--muted); }
+.campo__control[readonly] { background: var(--papel); }
+.campo--error .campo__control { border-color: var(--rojo); }
+.campo__error {
+  display: block;
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: var(--rojo);
+}
+
+/* El foco es del canon y se ve SIEMPRE — nunca `outline: none`. */
+.boton:focus-visible,
+.campo__control:focus-visible,
+.tab:focus-visible,
+.riel__item:focus-visible {
+  outline: var(--foco);
+  outline-offset: 2px;
+}
+
+/* ---- B.2-04 · Estado vacío ----------------------------------------------- */
+
+.vacio {
+  text-align: center;
+  padding: var(--space-4) var(--space-2);
+  color: var(--muted);
+}
+.vacio__titulo {
+  font-family: var(--tipografia-titulo);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--tinta);
+  margin: 0 0 4px;
+}
+.vacio__cuerpo {
+  font-size: 13px;
+  margin: 0 auto var(--space-2);
+  max-width: 42ch;
+  line-height: 1.5;
+}
+
+/* ---- B.2-05 · Tarjeta ---------------------------------------------------- */
+
+.tarjeta {
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 14px 16px;
+}
+.tarjeta--elevada { box-shadow: var(--sombra); }
+.tarjeta--interactiva { cursor: pointer; }
+.tarjeta--interactiva:hover { border-color: var(--muted); }
+
+/* ---- B.2-06 · Tabla y lista de trabajo ----------------------------------- */
+
+.lista {
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+.lista__cabecera {
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  border-bottom: 1.5px solid var(--linea);
+  padding: 9px 16px;
+  font-family: var(--tipografia-titulo);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.lista__fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--linea);
+  font-size: 13px;
+}
+.lista__fila:last-child { border-bottom: none; }
+.lista__fila--seleccionada { background: var(--papel); }
+.lista__fila--en-accion { opacity: 0.55; }
+.lista__der { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.lista__meta { font-size: 11.5px; color: var(--muted); }
+
+/* ---- B.2-07 · Aviso ------------------------------------------------------ */
+
+.aviso {
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  border-left: 4px solid;
+}
+.aviso--informativo {
+  background: var(--papel);
+  border-left-color: var(--muted);
+  color: var(--tinta-suave);
+}
+.aviso--pendiente {
+  background: var(--ambar-bg);
+  border-left-color: var(--ambar-tx);
+  color: var(--ambar-tx);
+}
+.aviso--negativo {
+  background: var(--rojo-bg);
+  border-left-color: var(--rojo);
+  color: var(--rojo);
+}
+
+/* ---- B.2-08 · Toast ------------------------------------------------------ */
+
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--tinta);
+  color: var(--papel);
+  border-radius: 10px;
+  padding: 11px 15px;
+  font-size: 13px;
+  box-shadow: var(--sombra-panel);
+}
+.toast__marca { font-weight: 700; }
+.toast--exito .toast__marca { color: #7ddcb8; }
+.toast--error .toast__marca { color: #f0a79c; }
+.toast--en-curso .toast__marca { color: var(--amarillo); }
+
+/* ---- B.2-09 · Modal ------------------------------------------------------ */
+
+.modal {
+  background: var(--card);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-panel);
+  padding: var(--space-3);
+  width: min(420px, 100%);
+}
+.modal__titulo {
+  font-family: var(--tipografia-titulo);
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.modal__cuerpo { font-size: 13px; color: var(--tinta-suave); margin: 0 0 var(--space-3); }
+.modal__acciones { display: flex; gap: 8px; justify-content: flex-end; }
+.modal__fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 29, 26, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* ---- B.2-10 · Esqueleto de carga ----------------------------------------- */
+
+.esqueleto {
+  background: linear-gradient(90deg, var(--papel) 25%, var(--linea) 37%, var(--papel) 63%);
+  background-size: 400% 100%;
+  border-radius: 6px;
+  animation: esqueleto-onda 1.4s ease infinite;
+}
+.esqueleto--linea { height: 12px; margin-bottom: 8px; }
+.esqueleto--titulo { height: 18px; width: 45%; margin-bottom: 12px; }
+@keyframes esqueleto-onda {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .esqueleto { animation: none; background: var(--papel); }
+}
+
+/* ---- B.2-11 · Buscar y elegir -------------------------------------------- */
+
+.buscador { position: relative; }
+.buscador__resultados {
+  margin-top: 4px;
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  box-shadow: var(--sombra);
+  overflow: hidden;
+}
+.buscador__opcion { padding: 9px 12px; font-size: 13px; cursor: pointer; }
+.buscador__opcion:hover,
+.buscador__opcion--activa { background: var(--papel); }
+.buscador__elegido {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--verde-bg);
+  color: var(--verde);
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+/* ---- B.2-12 · Monto ------------------------------------------------------ */
+
+/* Un monto JAMÁS aparece sin su moneda, porque en el dato tampoco existe sin
+   ella. `₲` sin decimales; USD/BRL/ARS con dos. */
+.monto {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+.monto--fuerte { font-weight: 600; color: var(--tinta); }
+.monto--negativo { color: var(--rojo); }
+
+/* ---- B.2-13 · Franja (nivel 1) ------------------------------------------- */
+
+.franja {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 54px;
+  padding: 0 14px;
+  background: var(--amarillo);
+}
+.franja__wordmark {
+  font-family: var(--tipografia-titulo);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--tinta);
+  text-decoration: none;
+}
+.franja__pildora {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--tinta);
+  color: var(--papel);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-family: var(--tipografia-cuerpo);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+/* Verde = operando para un cliente. No es decoración: es la defensa visual
+   contra cargar datos en el espacio equivocado. */
+.franja__pildora--prestado { background: var(--verde); }
+.franja__espaciador { margin-left: auto; }
+.franja__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--tinta);
+  color: var(--amarillo);
+  font-family: var(--tipografia-titulo);
+  font-weight: 700;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+}
+
+/* ---- B.2-14 · Riel (nivel 2) --------------------------------------------- */
+
+.riel {
+  background: var(--riel);
+  width: 176px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+}
+.riel__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #b8c4be;
+  text-decoration: none;
+  padding: 10px 0 10px 14px;
+  margin: 1px 8px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  position: relative;
+}
+.riel__item:hover { background: var(--riel-hover); color: #fff; }
+.riel__item--activo {
+  background: var(--riel-hover);
+  color: #fff;
+  font-weight: 600;
+}
+.riel__item--activo::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 8px;
+  bottom: 8px;
+  width: 3.5px;
+  background: var(--amarillo);
+  border-radius: 0 3px 3px 0;
+}
+.riel__icono {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.riel__item--activo .riel__icono { background: var(--amarillo); color: var(--tinta); }
+.riel__separador { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 8px 16px; }
+.riel__abajo { margin-top: auto; }
+
+/* ---- B.2-15 · Barra de tabs (nivel 3) ------------------------------------ */
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--linea);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  position: relative;
+  padding: 10px 12px;
+  font-size: var(--tx-chrome);
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.tab--activa { color: var(--tinta); font-weight: 600; }
+.tab--activa::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 2px 2px 0 0;
+  background: var(--amarillo);
+}
+
+/* ---- B.2-16 · Barra de estado (nivel 4) ---------------------------------- */
+
+.barra-estado {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 40px;
+  padding: 0 18px;
+  background: var(--papel);
+  border-top: 1px solid var(--linea);
+  font-size: var(--tx-xs);
+  color: var(--muted);
+}
+.barra-estado b { color: var(--tinta); }
+.barra-estado--bajo b { color: var(--ambar-tx); }
+.barra-estado--sobregiro b { color: var(--rojo); }
+
+/* ---- B.2-17 · Tarjeta de métrica con delta ------------------------------- */
+
+.metrica {
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 14px 16px;
+  box-shadow: var(--sombra);
+}
+.metrica__rotulo { font-size: 11.5px; color: var(--muted); font-weight: 500; margin-bottom: 4px; }
+.metrica__valor { font-family: var(--tipografia-titulo); font-weight: 700; font-size: 22px; }
+.metrica__delta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.metrica__delta--sube { color: var(--verde); }
+.metrica__delta--baja { color: var(--rojo); }
+
+/* ---- B.2-18 · Medidor de progreso ---------------------------------------- */
+
+.medidor { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
+.medidor__riel {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--linea);
+  overflow: hidden;
+}
+.medidor__relleno { height: 100%; background: var(--verde); border-radius: 3px; }
+.medidor__valor { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ---- B.2-19 · Calendario semanal ----------------------------------------- */
+
+.semana { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.semana__dia { text-align: center; font-size: 11px; color: var(--muted); padding: 4px 0; }
+.semana__dia--hoy {
+  background: var(--amarillo);
+  color: var(--tinta);
+  border-radius: 50%;
+  font-weight: 700;
+}
+.semana__franja {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-top: 4px;
+  background: var(--papel);
+}
+.semana__hora { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ---- B.2-20 · Chip de canal ---------------------------------------------- */
+
+/* El color del canal es COLOR DEL MUNDO REAL, como la tapa de un tubo: el
+   azul de LinkedIn es el azul de LinkedIn. Va literal y se declara acá; no
+   se aplana a los tonos del sistema. */
+.chip-canal {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  background: var(--papel);
+  color: var(--tinta-suave);
+}
+.chip-canal__punto { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ---- B.2-21 · Módulo sin entitlement ------------------------------------- */
+
+.sin-modulo {
+  text-align: center;
+  max-width: 46ch;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-2);
+}
+.sin-modulo__titulo {
+  font-family: var(--tipografia-titulo);
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+.sin-modulo__cuerpo { font-size: 13.5px; color: var(--tinta-suave); line-height: 1.5; margin: 0 0 var(--space-3); }
+
+/* ============================================================================
+ * PIEZAS 22-27 — de la review por capturas del fundador (31-ago).
+ * Sólo aspecto: el backend viene después.
+ * ==========================================================================*/
+
+/* ---- B.2-22 - Panel de selector ----------------------------------------- */
+
+.panel-selector {
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-panel);
+  padding: 14px;
+  min-width: 260px;
+}
+.panel-selector__rotulo {
+  font-size: 10.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+.panel-selector__encabezado {
+  font-size: 12.5px;
+  color: var(--tinta-suave);
+  margin: 0 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--linea);
+}
+.panel-selector__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.panel-selector__opcion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 14px;
+  background: var(--card);
+  border: 1.5px solid var(--linea);
+  border-radius: 22px;
+  font-family: var(--tipografia-cuerpo);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+.panel-selector__opcion:hover { border-color: var(--muted); }
+.panel-selector__opcion--activa { border-color: var(--tinta); font-weight: 600; }
+.panel-selector__meta { margin-left: auto; font-size: 11.5px; color: var(--muted); }
+
+/* ---- B.2-23 - Selector de modulos ---------------------------------------- */
+
+.modulos { display: flex; flex-wrap: wrap; gap: 8px; }
+.modulo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 14px;
+  background: var(--card);
+  border: 1.5px solid var(--linea);
+  border-radius: 22px;
+  font-family: var(--tipografia-cuerpo);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.modulo-chip--elegido {
+  border-color: var(--tinta);
+  background: var(--tinta);
+  color: var(--card);
+  font-weight: 600;
+}
+.modulo-chip--elegido .icono-modulo { filter: invert(1); }
+
+/* ---- B.2-24 - Tarjeta de permisos de modulo ------------------------------ */
+
+.permisos {
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.permisos__cab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--linea);
+  background: var(--papel);
+}
+.permisos__nombre { font-family: var(--tipografia-titulo); font-weight: 600; font-size: 14px; }
+.permisos__cuerpo { padding: 14px 16px; }
+.permisos__perfiles { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.permisos__rotulo {
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+/* El perfil es PRESELECCIÓN, jamás autoridad: el rótulo se deriva por
+   igualdad de conjunto, y tildar de más lo vuelve "Personalizado". */
+.perfil {
+  min-height: 44px;
+  padding: 8px 15px;
+  border-radius: 22px;
+  border: 1.5px solid var(--linea);
+  background: var(--card);
+  font-family: var(--tipografia-cuerpo);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.perfil--activo { border-color: var(--tinta); background: var(--tinta); color: var(--card); }
+.perfil--personalizado { border-style: dashed; color: var(--muted); }
+.permisos__tildes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 2px 14px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--linea);
+}
+.tilde {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 36px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.tilde input { width: 17px; height: 17px; accent-color: var(--tinta); flex-shrink: 0; }
+.tilde--con-alcance { flex-wrap: wrap; }
+.tilde__alcance {
+  margin-left: 26px;
+  font-size: 11.5px;
+  color: var(--muted);
+  width: 100%;
+}
+
+/* ---- B.2-25 - Tarjeta de entrada de datos -------------------------------- */
+
+/* LA TARJETA ESTÁNDAR: toda entrada de datos del sistema usa ésta y no otra.
+   Título, nota opcional, grilla de campos, y sus acciones abajo. Es lo que
+   hoy no existe: en Lab, «Médico (Padrón)» y «Equipos» son dos formularios
+   distintos resolviendo el mismo problema. */
+.entrada {
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-left: 4px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  /* Un campo de texto de 1.400px de ancho no se lee mejor: se lee peor. En
+     Lab, «Identificador» ocupaba toda la pantalla para recibir ocho dígitos. */
+  max-width: 720px;
+}
+
+/* EL COLOR DICE DÓNDE VIVE EL DATO — no decora.
+   Verde: se registra en el padrón compartido de Suynda; lo ven los demás.
+   Amarillo: es de este módulo y de nadie más.
+   Es la misma distinción que las capturas de Lab repetían con texto en cada
+   título («(Padrón)») y en cada nota («no hay master local»). */
+.entrada--compartida { border-left-color: var(--verde); }
+.entrada--compartida .entrada__origen { background: var(--verde-bg); color: var(--verde); }
+.entrada--propia { border-left-color: var(--amarillo); }
+.entrada--propia .entrada__origen { background: var(--ambar-bg); color: var(--ambar-tx); }
+
+.entrada__origen {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 2px 9px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+.entrada__titulo {
+  font-family: var(--tipografia-titulo);
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 3px;
+}
+.entrada__nota { font-size: 12px; color: var(--muted); margin: 0 0 12px; line-height: 1.45; }
+.entrada__campos {
+  display: grid;
+  /* Tope de 300px por campo: sin él, dos campos en una pantalla ancha se
+     estiran hasta ser ilegibles.
+     `justify-content: start` NO es adorno: sin él, `auto-fit` reparte el
+     sobrante entre las columnas que quedaron y se salta el máximo — medido,
+     daba 324px con un tope declarado de 300. */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+  justify-content: start;
+  gap: 0 14px;
+}
+.entrada__acciones {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+/* ---- B.2-26 - Agregar mas info ------------------------------------------- */
+
+.mas-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1.5px dashed var(--linea);
+  border-radius: 22px;
+  background: transparent;
+  color: var(--tinta-suave);
+  font-family: var(--tipografia-cuerpo);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mas-info:hover { border-color: var(--muted); color: var(--tinta); }
+.mas-info__signo { font-size: 15px; line-height: 1; }
+.mas-info-panel { margin-top: 10px; }
+
+/* ---- B.2-27 - Icono de modulo -------------------------------------------- */
+
+/* El dibujo lo da el paquete; CUÁL ícono lo dice Foundation. Ningún repo
+   cablea el suyo: hoy el hub los tiene en Riel.astro y Visibilidad en
+   launcherIcon(), y por eso en su riel Compra y Talento son cuadraditos
+   idénticos. EL MISMO JUEGO VISTE LA LANDING Y EL MARKETING — un ícono de
+   módulo es identidad de marca, no adorno de una pantalla. */
+.icono-modulo {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-size: 15px;
+}
+.icono-modulo svg { width: 18px; height: 18px; }
+.icono-modulo--sobre-riel { background: rgba(255, 255, 255, .08); color: #fff; }
+.icono-modulo--activo { background: var(--amarillo); color: var(--tinta); }
+
+/* ============================================================================
+ * Compuertas heredadas de UI-1: 360 px y 44 px.
+ *
+ * El punto de quiebre del marco es 860 px, el que el riel del hub ya usaba.
+ * ==========================================================================*/
+
+/* Todo objetivo táctil mide 44 px cuando el puntero es grueso. El mockup es de
+   densidad de escritorio y no llegaba: sus botones daban ~33 px de alto. */
+@media (pointer: coarse) {
+  .boton,
+  .campo__control,
+  .tab,
+  .riel__item,
+  .franja__pildora,
+  .franja__avatar,
+  .buscador__opcion,
+  /* `.tilde` es una fila con casilla, y una casilla es un objetivo táctil.
+     Se cayó del listado en el primer intento y la compuerta de 44px la
+     encontró a 36. */
+  .tilde,
+  .panel-selector__opcion,
+  .modulo-chip,
+  .perfil,
+  .mas-info {
+    min-height: 44px;
+  }
+  .franja__avatar { width: 44px; }
+}
+
+@media (max-width: 860px) {
+  /* El riel pasa a barra inferior (shell-canonico §3-bis). La casita del Hub
+     queda primera; el ancho ya no se cobra, se cobra alto — que sobra. */
+  .riel {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 4px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .riel__item {
+    flex-direction: column;
+    gap: 3px;
+    padding: 6px 4px;
+    margin: 0;
+    font-size: 10.5px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  /* El hilo amarillo del activo pasa de costado a arriba. */
+  .riel__item--activo::before {
+    left: 8px;
+    right: 8px;
+    top: -4px;
+    bottom: auto;
+    width: auto;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+  }
+  .riel__separador,
+  .riel__abajo { display: none; }
+
+  .franja { padding: 0 10px; gap: 8px; }
+  .modal { width: 100%; }
+}

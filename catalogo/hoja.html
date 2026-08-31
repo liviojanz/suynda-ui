@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoja de especificación — @suynda/ui v0.1.0</title>
+
+<!-- EL CSS REAL DEL PAQUETE. La muestra de cada ficha se renderiza de acá y
+     de ningún otro lado: si la hoja y el paquete pudieran divergir, la hoja
+     no serviría. Cambiar un token cambia esta hoja sin tocarla. -->
+<link rel="stylesheet" href="../fuentes/fuentes.css">
+<link rel="stylesheet" href="../src/tokens.css">
+<link rel="stylesheet" href="../src/piezas.css">
+
+<style>
+  /* Estilo DE LA HOJA, no de las piezas. Usa los mismos tokens. */
+  body {
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--tipografia-cuerpo);
+    font-size: 14px;
+  }
+  .hoja { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+  .portada { border-bottom: 3px solid var(--tinta); padding-bottom: 18px; margin-bottom: 22px; }
+  .portada h1 { font-family: var(--tipografia-titulo); font-size: 27px; margin: 0 0 6px; }
+  .portada p { margin: 0; color: var(--tinta-suave); max-width: 62ch; line-height: 1.5; }
+  .portada .sello { font-size: 11.5px; color: var(--muted); margin-top: 10px; }
+
+  .ficha {
+    background: var(--card);
+    border: 1px solid var(--linea);
+    border-radius: var(--radio);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    break-inside: avoid;
+  }
+  .ficha__cab { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+  .ficha__cod {
+    font-family: ui-monospace, monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--card);
+    background: var(--tinta);
+    border-radius: 5px;
+    padding: 2px 7px;
+  }
+  .ficha__nom { font-family: var(--tipografia-titulo); font-weight: 600; font-size: 16px; }
+  .muestra {
+    background: var(--papel);
+    border: 1px dashed var(--linea);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .muestra--bloque { display: block; }
+  .muestra--oscura { background: var(--riel); }
+  .estado-rot {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    width: 100%;
+    margin-top: 4px;
+  }
+  .receta, .prohibicion { font-size: 12px; line-height: 1.5; }
+  .receta { color: var(--tinta-suave); font-family: ui-monospace, monospace; }
+  .receta b, .prohibicion b { font-family: var(--tipografia-cuerpo); }
+  .prohibicion { color: var(--rojo); margin-top: 5px; }
+  .prohibicion b { color: var(--rojo); }
+  @media print { body { background: #fff; } .ficha { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="hoja">
+
+<header class="portada">
+  <h1>Hoja de especificación</h1>
+  <p>Las 21 piezas de <b>@suynda/ui</b>, una ficha cada una: código, muestra, receta en tokens y su prohibición. <b>Cada muestra se renderiza del CSS real del paquete</b> — esta hoja no puede mostrar algo distinto de lo que los productos reciben.</p>
+  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-21</p>
+</header>
+
+<!-- 01 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-01</span><span class="ficha__nom">Píldora de estado</span></div>
+  <div class="muestra">
+    <span class="pildora pildora--positivo">Aprobada</span>
+    <span class="pildora pildora--pendiente">Por aprobar</span>
+    <span class="pildora pildora--negativo">Rechazada</span>
+    <span class="pildora pildora--neutro">Sin asignar</span>
+    <span class="pildora pildora--critico">Crítico</span>
+    <span class="estado-rot">positivo · pendiente · negativo · neutro · crítico</span>
+  </div>
+  <div class="receta"><b>Receta:</b> fondo <code>--verde-bg</code>/<code>--ambar-bg</code>/<code>--rojo-bg</code>/<code>--papel</code> · texto del mismo tono · radio 20px · padding 3/10 · 11px/600</div>
+  <div class="prohibicion"><b>Jamás</b> para marcas de dominio (color real de un tubo o de un canal), ni un quinto tono.</div>
+</section>
+
+<!-- 01c -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-01c</span><span class="ficha__nom">CRÍTICO — el único grito</span></div>
+  <div class="muestra">
+    <span class="pildora pildora--critico">Crítico</span>
+    <span class="pildora pildora--negativo">Fuera de rango</span>
+    <span class="estado-rot">el crítico invertido, al lado del negativo normal</span>
+  </div>
+  <div class="receta"><b>Receta:</b> relleno sólido <code>--rojo</code> · texto <code>--papel</code> · peso 700 · ícono ▲ antes del texto · <b>y comportamiento:</b> nunca plegable, siempre primero, nunca truncado</div>
+  <div class="prohibicion"><b>El sistema grita una sola vez.</b> El relleno sólido no se usa para ninguna otra pieza.</div>
+</section>
+
+<!-- 02 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-02</span><span class="ficha__nom">Botón</span></div>
+  <div class="muestra">
+    <button class="boton boton--primario">Guardar</button>
+    <button class="boton boton--secundario">Cancelar</button>
+    <button class="boton boton--fantasma">Ver todas</button>
+    <button class="boton boton--destructivo">Eliminar</button>
+    <button class="boton boton--primario" disabled>Guardar</button>
+    <span class="estado-rot">primario · secundario · fantasma · destructivo · deshabilitado</span>
+  </div>
+  <div class="receta"><b>Receta:</b> primario <code>--tinta</code> sobre blanco · secundario borde <code>--linea</code> · radio 8px · padding 9/15 · 13px/600 · <b>44px de alto bajo puntero grueso</b></div>
+  <div class="prohibicion"><b>El amarillo jamás es botón</b> sobre fondo claro. La acción es tinta.</div>
+</section>
+
+<!-- 03 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-03</span><span class="ficha__nom">Campo de formulario</span></div>
+  <div class="muestra muestra--bloque">
+    <label class="campo"><span class="campo__rotulo">Razón social</span><input class="campo__control" value="Ferretería Río S.A."></label>
+    <label class="campo campo--error"><span class="campo__rotulo">RUC</span><input class="campo__control" value="8000123-"><span class="campo__error">Falta el dígito verificador.</span></label>
+    <label class="campo"><span class="campo__rotulo">Espacio</span><input class="campo__control" value="Livio Janz" disabled></label>
+    <span class="estado-rot">reposo · error · deshabilitado — el foco se ve siempre</span>
+  </div>
+  <div class="receta"><b>Receta:</b> borde 1.5px <code>--linea</code> · radio 8px · padding 9/11 · rótulo 11.5px/600 <code>--tinta-suave</code> · foco <code>--foco</code></div>
+  <div class="prohibicion"><b>Jamás</b> <code>outline: none</code>: quien navega con teclado pierde la pantalla.</div>
+</section>
+
+<!-- 04 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-04</span><span class="ficha__nom">Estado vacío</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="vacio">
+      <p class="vacio__titulo">Todavía no hay muestras</p>
+      <p class="vacio__cuerpo">Esta estación se llena cuando exista una toma. Admitir un paciente es el primer paso.</p>
+      <button class="boton boton--primario">Admitir paciente</button>
+    </div>
+  </div>
+  <div class="receta"><b>Receta:</b> centrado · título 15px/600 <code>--tipografia-titulo</code> · cuerpo 13px <code>--muted</code> a 42ch · una acción</div>
+  <div class="prohibicion"><b>No</b> para una lista filtrada a cero: eso es «sin resultados», otra pieza.</div>
+</section>
+
+<!-- 05 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-05</span><span class="ficha__nom">Tarjeta</span></div>
+  <div class="muestra">
+    <div class="tarjeta">Plana</div>
+    <div class="tarjeta tarjeta--elevada">Elevada</div>
+    <div class="tarjeta tarjeta--interactiva">Interactiva</div>
+    <span class="estado-rot">plana · elevada · interactiva</span>
+  </div>
+  <div class="receta"><b>Receta:</b> <code>--card</code> · borde <code>--linea</code> · radio <code>--radio</code> (12px) · padding 14/16 · elevada suma <code>--sombra</code></div>
+  <div class="prohibicion"><b>No anidar</b> tarjetas: dos bordes seguidos no crean jerarquía, crean ruido.</div>
+</section>
+
+<!-- 06 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-06</span><span class="ficha__nom">Tabla / lista de trabajo</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="lista">
+      <div class="lista__cabecera">Aprobaciones pendientes</div>
+      <div class="lista__fila"><b>Factura 001-002-0004512</b><span class="lista__meta">Ferretería Río</span><span class="lista__der"><span class="monto monto--fuerte">₲ 1.833.750</span><span class="pildora pildora--pendiente">Por aprobar</span></span></div>
+      <div class="lista__fila lista__fila--seleccionada"><b>Factura 001-002-0004513</b><span class="lista__meta">Ferretería Río</span><span class="lista__der"><span class="monto monto--fuerte">₲ 420.000</span><span class="pildora pildora--positivo">Aprobada</span></span></div>
+      <div class="lista__fila lista__fila--en-accion"><b>Factura 001-002-0004514</b><span class="lista__meta">guardando…</span><span class="lista__der"><span class="monto monto--fuerte">₲ 96.500</span></span></div>
+    </div>
+    <span class="estado-rot">cabecera pegajosa · fila seleccionada · fila en acción</span>
+  </div>
+  <div class="receta"><b>Receta:</b> filas 11/16 con separador <code>--linea</code> · última sin borde · seleccionada <code>--papel</code> · en acción a 55% de opacidad</div>
+  <div class="prohibicion"><b>Jamás</b> un monto sin su moneda, ni cifras sin <code>tabular-nums</code>.</div>
+</section>
+
+<!-- 07 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-07</span><span class="ficha__nom">Aviso</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="aviso aviso--informativo">Los resultados de este departamento los verifica otra persona.</div>
+    <div class="aviso aviso--pendiente" style="margin-top:8px">Padrón no respondió. Tu borrador quedó guardado.</div>
+    <div class="aviso aviso--negativo" style="margin-top:8px">No pudimos hablar con la plataforma. Intentá de nuevo.</div>
+    <span class="estado-rot">informativo · pendiente · negativo</span>
+  </div>
+  <div class="receta"><b>Receta:</b> radio 10px · padding 11/14 · barra izquierda de 4px del tono · fondo suave del tono</div>
+  <div class="prohibicion"><b>No</b> para algo transitorio: eso es un toast. El aviso se queda.</div>
+</section>
+
+<!-- 08 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-08</span><span class="ficha__nom">Toast</span></div>
+  <div class="muestra">
+    <div class="toast toast--exito"><span class="toast__marca">✓</span> Resultado verificado</div>
+    <div class="toast toast--error"><span class="toast__marca">✕</span> No se pudo guardar</div>
+    <div class="toast toast--en-curso"><span class="toast__marca">◴</span> Guardando…</div>
+    <span class="estado-rot">éxito · error · en curso</span>
+  </div>
+  <div class="receta"><b>Receta:</b> fondo <code>--tinta</code> · texto <code>--papel</code> · radio 10px · <code>--sombra-panel</code> · la marca lleva el color, no el fondo</div>
+  <div class="prohibicion"><b>No</b> para un error de un campo: ese error va en el campo, donde está el problema.</div>
+</section>
+
+<!-- 09 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-09</span><span class="ficha__nom">Modal</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="modal">
+      <p class="modal__titulo">¿Anular la admisión?</p>
+      <p class="modal__cuerpo">La orden ya tiene una muestra tomada. Anularla deja el hecho contable registrado.</p>
+      <div class="modal__acciones"><button class="boton boton--secundario">Volver</button><button class="boton boton--destructivo">Anular</button></div>
+    </div>
+    <span class="estado-rot">confirmación destructiva — la acción peligrosa nunca es la primaria</span>
+  </div>
+  <div class="receta"><b>Receta:</b> ancho <code>min(420px, 100%)</code> · radio <code>--radio</code> · <code>--sombra-panel</code> · fondo <code>rgba(31,29,26,.45)</code> · acciones a la derecha</div>
+  <div class="prohibicion"><b>No</b> para navegar: si lo que sigue es otro lugar, es una pantalla.</div>
+</section>
+
+<!-- 10 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-10</span><span class="ficha__nom">Esqueleto de carga</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="tarjeta"><div class="esqueleto esqueleto--titulo"></div><div class="esqueleto esqueleto--linea"></div><div class="esqueleto esqueleto--linea" style="width:70%"></div></div>
+    <span class="estado-rot">tarjeta — respeta <code>prefers-reduced-motion</code></span>
+  </div>
+  <div class="receta"><b>Receta:</b> gradiente <code>--papel</code>→<code>--linea</code>→<code>--papel</code> · onda de 1.4s · radio 6px · sin animación si el sistema la pide apagada</div>
+  <div class="prohibicion"><b>No</b> si la espera baja de ~300 ms: el parpadeo molesta más que la espera.</div>
+</section>
+
+<!-- 11 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-11</span><span class="ficha__nom">Buscar y elegir</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="buscador">
+      <input class="campo__control" placeholder="Buscar análisis…" value="hemog">
+      <div class="buscador__resultados">
+        <div class="buscador__opcion buscador__opcion--activa">Hemograma completo</div>
+        <div class="buscador__opcion">Hemoglobina glicosilada</div>
+      </div>
+    </div>
+    <div style="margin-top:10px"><span class="buscador__elegido">Hemograma completo ✕</span></div>
+    <span class="estado-rot">buscando · con resultados · elegido</span>
+  </div>
+  <div class="receta"><b>Receta:</b> resultados en <code>--card</code> con <code>--sombra</code> · opción activa sobre <code>--papel</code> · elegido en <code>--verde-bg</code>/<code>--verde</code></div>
+  <div class="prohibicion"><b>No</b> para listas cortas: con pocas opciones, un selector alcanza y evita tipear.</div>
+</section>
+
+<!-- 12 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-12</span><span class="ficha__nom">Monto</span></div>
+  <div class="muestra">
+    <span class="monto monto--fuerte">₲ 1.833.750</span>
+    <span class="monto">US$ 1.250,00</span>
+    <span class="monto monto--negativo">−₲ 96.500</span>
+    <span class="estado-rot">guaraní sin decimales · moneda extranjera con dos · negativo</span>
+  </div>
+  <div class="receta"><b>Receta:</b> símbolo + espacio + miles con punto · <code>tabular-nums</code> siempre · ₲ sin decimales, USD/BRL/ARS con dos</div>
+  <div class="prohibicion"><b>Jamás</b> un monto sin su moneda — en el dato tampoco existe sin ella.</div>
+</section>
+
+<!-- 13 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-13</span><span class="ficha__nom">Franja — nivel 1</span></div>
+  <div class="muestra muestra--bloque" style="padding:0">
+    <div class="franja">
+      <a class="franja__wordmark" href="#">suynda</a>
+      <button class="franja__pildora">Livio Janz finanzas ▾</button>
+      <button class="franja__pildora franja__pildora--prestado">Ferretería Río ▾</button>
+      <span class="franja__espaciador"></span>
+      <button class="franja__avatar">LJ</button>
+    </div>
+    <span class="estado-rot" style="padding:8px 14px">izquierda = desde dónde actúo · centro = sobre quién actúo (verde = prestado)</span>
+  </div>
+  <div class="receta"><b>Receta:</b> 54px de alto · fondo <code>--amarillo</code> · píldoras <code>--tinta</code>, la prestada <code>--verde</code> · avatar 32px (44 al tacto)</div>
+  <div class="prohibicion"><b>Jamás</b> créditos ni navegación de módulos acá: viven en los niveles 4 y 2.</div>
+</section>
+
+<!-- 14 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-14</span><span class="ficha__nom">Riel — nivel 2</span></div>
+  <div class="muestra muestra--oscura" style="padding:0">
+    <div class="riel" style="width:176px">
+      <a class="riel__item riel__item--activo" href="#"><span class="riel__icono">🏠</span>Inicio</a>
+      <div class="riel__separador"></div>
+      <a class="riel__item" href="#"><span class="riel__icono">▣</span>Compra</a>
+      <a class="riel__item" href="#"><span class="riel__icono">◉</span>Visibilidad</a>
+      <a class="riel__item" href="#"><span class="riel__icono">＋</span>Activar módulo</a>
+    </div>
+  </div>
+  <div class="receta"><b>Receta:</b> fondo <code>--riel</code> · 176px · ítem 13px/500 · activo con hilo <code>--amarillo</code> de 3.5px e ícono amarillo · <b>a ≤860px pasa a barra inferior</b></div>
+  <div class="prohibicion"><b>La casita del Hub es la primera, siempre</b> — no depende de entitlements ni del espacio activo.</div>
+</section>
+
+<!-- 15 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-15</span><span class="ficha__nom">Barra de tabs — nivel 3</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="tabs"><a class="tab tab--activa" href="#">Inicio</a><a class="tab" href="#">Admitir</a><a class="tab" href="#">Muestras</a><a class="tab" href="#">Cargar</a><a class="tab" href="#">Verificar</a><a class="tab" href="#">Entregar</a><a class="tab" href="#">Catálogo</a></div>
+    <span class="estado-rot">las 7 secciones de Lab · scroll horizontal cuando no entran</span>
+  </div>
+  <div class="receta"><b>Receta:</b> tab 10/12 · <code>--tx-chrome</code> · activa <code>--tinta</code>/600 con subrayado <code>--amarillo</code> de 3px · <code>overflow-x: auto</code></div>
+  <div class="prohibicion"><b>La primera tab dice «Inicio»</b>, no el nombre del módulo — ese es el título de la pantalla.</div>
+</section>
+
+<!-- 16 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-16</span><span class="ficha__nom">Barra de estado — nivel 4</span></div>
+  <div class="muestra muestra--bloque" style="padding:0">
+    <div class="barra-estado"><span>Créditos <b>5.000</b></span><span>·</span><a href="#" style="color:var(--verde);font-weight:600">Recargar</a></div>
+    <div class="barra-estado barra-estado--bajo"><span>Créditos <b>50</b> · saldo bajo</span></div>
+    <div class="barra-estado barra-estado--sobregiro"><span>Créditos <b>−120</b> · en sobregiro</span></div>
+    <span class="estado-rot" style="padding:6px 18px">normal · saldo bajo · sobregiro</span>
+  </div>
+  <div class="receta"><b>Receta:</b> 40px · fondo <code>--papel</code> · borde superior <code>--linea</code> · <code>--tx-xs</code> · el número toma el color del estado</div>
+  <div class="prohibicion"><b>Nunca grita.</b> Un saldo bajo informa; no bloquea ni interrumpe.</div>
+</section>
+
+<!-- 17 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-17</span><span class="ficha__nom">Tarjeta de métrica con delta</span></div>
+  <div class="muestra">
+    <div class="metrica" style="min-width:150px"><div class="metrica__rotulo">Campañas activas</div><div class="metrica__valor">3</div><div class="metrica__delta metrica__delta--sube">↑ 20% vs. semana pasada</div></div>
+    <div class="metrica" style="min-width:150px"><div class="metrica__rotulo">Aprobaciones pendientes</div><div class="metrica__valor">4</div><div class="metrica__delta metrica__delta--baja">↓ 1 vs. semana pasada</div></div>
+    <div class="metrica" style="min-width:150px"><div class="metrica__rotulo">Presencia online</div><div class="metrica__valor">—</div><div class="metrica__delta">sin datos todavía</div></div>
+    <span class="estado-rot">sube · baja · sin datos</span>
+  </div>
+  <div class="receta"><b>Receta:</b> tarjeta elevada · rótulo 11.5px <code>--muted</code> · valor 22px/700 <code>--tipografia-titulo</code> · delta 11px del tono</div>
+  <div class="prohibicion"><b>Jamás una métrica fabricada.</b> Sin dato, la tarjeta muestra su vacío — un número inventado enseña a desconfiar de la pantalla.</div>
+</section>
+
+<!-- 18 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-18</span><span class="ficha__nom">Medidor de progreso</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="medidor"><span style="width:110px">Sitio web</span><span class="medidor__riel"><span class="medidor__relleno" style="width:100%"></span></span><span class="medidor__valor">100%</span></div>
+    <div class="medidor" style="margin-top:8px"><span style="width:110px">Instagram</span><span class="medidor__riel"><span class="medidor__relleno" style="width:75%"></span></span><span class="medidor__valor">75%</span></div>
+  </div>
+  <div class="receta"><b>Receta:</b> riel 6px <code>--linea</code> · relleno <code>--verde</code> · radio 3px · valor con <code>tabular-nums</code> · rótulo a la izquierda</div>
+  <div class="prohibicion"><b>No</b> para indicar carga: eso es un esqueleto. Esto mide algo real.</div>
+</section>
+
+<!-- 19 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-19</span><span class="ficha__nom">Calendario semanal</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="semana"><div class="semana__dia">Lun<br>19</div><div class="semana__dia semana__dia--hoy">Mar<br>20</div><div class="semana__dia">Mié<br>21</div><div class="semana__dia">Jue<br>22</div><div class="semana__dia">Vie<br>23</div><div class="semana__dia">Sáb<br>24</div><div class="semana__dia">Dom<br>25</div></div>
+    <div class="semana__franja"><span class="semana__hora">09:00</span> Post: Beneficios de Axion</div>
+    <div class="semana__franja"><span class="semana__hora">15:00</span> Blog: Control de calidad</div>
+  </div>
+  <div class="receta"><b>Receta:</b> 7 columnas iguales · hoy en <code>--amarillo</code> circular · franja horaria sobre <code>--papel</code> · hora con <code>tabular-nums</code></div>
+  <div class="prohibicion"><b>No</b> inventar eventos para llenar la semana: una semana vacía es una semana vacía.</div>
+</section>
+
+<!-- 20 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-20</span><span class="ficha__nom">Chip de canal</span></div>
+  <div class="muestra">
+    <span class="chip-canal"><span class="chip-canal__punto" style="background:#0a66c2"></span>LinkedIn</span>
+    <span class="chip-canal"><span class="chip-canal__punto" style="background:#c13584"></span>Instagram</span>
+    <span class="chip-canal"><span class="chip-canal__punto" style="background:#25d366"></span>WhatsApp</span>
+    <span class="estado-rot">el color es del canal, no del sistema</span>
+  </div>
+  <div class="receta"><b>Receta:</b> fondo <code>--papel</code> · texto <code>--tinta-suave</code> · radio 20px · punto de 8px con <b>el color real del canal</b></div>
+  <div class="prohibicion"><b>No aplanar el color del canal</b> a los tonos del sistema: es color del mundo real, como la tapa de un tubo.</div>
+</section>
+
+<!-- 21 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-21</span><span class="ficha__nom">Módulo sin entitlement</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="sin-modulo">
+      <p class="sin-modulo__titulo">Lab no está activo en este espacio</p>
+      <p class="sin-modulo__cuerpo">Livio Janz finanzas todavía no tiene el módulo de laboratorio. Podés activarlo desde tu espacio, o volver al Hub.</p>
+      <button class="boton boton--primario">Activar Lab</button>
+      <button class="boton boton--secundario">Volver al Hub</button>
+    </div>
+  </div>
+  <div class="receta"><b>Receta:</b> centrado a 46ch · título 18px/600 · cuerpo 13.5px <code>--tinta-suave</code> · dos salidas: activar y volver</div>
+  <div class="prohibicion"><b>Jamás una pantalla en blanco ni un 403 crudo.</b> Quien llega acá se equivocó de espacio, no de producto.</div>
+</section>
+
+<!-- 22 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-22</span><span class="ficha__nom">Panel de selector</span></div>
+  <div class="muestra">
+    <div class="panel-selector">
+      <p class="panel-selector__rotulo">Desde qué organización trabajás</p>
+      <p class="panel-selector__encabezado">Livio Janz · RUC 1361710-9</p>
+      <div class="panel-selector__lista">
+        <button class="panel-selector__opcion panel-selector__opcion--activa">Livio Janz<span class="panel-selector__meta">2 titulares</span></button>
+        <button class="panel-selector__opcion">Livio Janz finanzas<span class="panel-selector__meta">2 titulares</span></button>
+      </div>
+    </div>
+    <span class="estado-rot">opciones separadas por 8px — pegadas se leen como una sola caja partida</span>
+  </div>
+  <div class="receta"><b>Receta:</b> panel <code>--card</code> con <code>--sombra-panel</code> · <b>gap 8px</b> entre opciones · opción de 44px con borde <code>--linea</code>, radio 22px · activa con borde <code>--tinta</code> · el meta a la derecha en <code>--muted</code></div>
+  <div class="prohibicion"><b>Se apaga con una sola opción</b> — un menú de una opción es decoración.</div>
+</section>
+
+<!-- 23 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-23</span><span class="ficha__nom">Selector de módulos</span></div>
+  <div class="muestra muestra--bloque">
+    <p class="permisos__rotulo">A qué módulos entra</p>
+    <div class="modulos">
+      <button class="modulo-chip modulo-chip--elegido"><span class="icono-modulo icono-modulo--activo">▣</span>Compra</button>
+      <button class="modulo-chip modulo-chip--elegido"><span class="icono-modulo">🧪</span>Lab</button>
+      <button class="modulo-chip"><span class="icono-modulo">◉</span>Visibilidad</button>
+      <button class="modulo-chip"><span class="icono-modulo">👥</span>Talento</button>
+    </div>
+    <span class="estado-rot">elegido · disponible — primero se eligen los módulos, después se abren sus permisos</span>
+  </div>
+  <div class="receta"><b>Receta:</b> chip de 44px con ícono de módulo · borde <code>--linea</code>, radio 22px · elegido en <code>--tinta</code> sobre blanco</div>
+  <div class="prohibicion"><b>No</b> mezclar la elección de módulo con sus permisos: son dos decisiones, y juntas producen la lista plana que esto viene a reemplazar.</div>
+</section>
+
+<!-- 24 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-24</span><span class="ficha__nom">Tarjeta de permisos de módulo</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="permisos">
+      <div class="permisos__cab"><span class="icono-modulo">🧪</span><span class="permisos__nombre">Lab</span><span class="pildora pildora--positivo" style="margin-left:auto">Carga</span></div>
+      <div class="permisos__cuerpo">
+        <p class="permisos__rotulo">Perfil</p>
+        <div class="permisos__perfiles">
+          <button class="perfil">Admisión</button>
+          <button class="perfil perfil--activo">Carga</button>
+          <button class="perfil">Verificación</button>
+          <button class="perfil">Configuración</button>
+          <button class="perfil perfil--personalizado">Personalizado</button>
+        </div>
+        <div class="permisos__tildes">
+          <label class="tilde"><input type="checkbox" checked>Ver</label>
+          <label class="tilde"><input type="checkbox">Admitir</label>
+          <label class="tilde"><input type="checkbox">Muestras</label>
+          <label class="tilde tilde--con-alcance"><input type="checkbox" checked>Cargar resultados<span class="tilde__alcance">Alcance: Hematología, Microbiología</span></label>
+          <label class="tilde"><input type="checkbox">Verificar</label>
+          <label class="tilde"><input type="checkbox">Entregar</label>
+        </div>
+      </div>
+    </div>
+    <span class="estado-rot">una tarjeta por módulo · el perfil preselecciona · tildar de más lo vuelve Personalizado</span>
+  </div>
+  <div class="receta"><b>Receta:</b> cabecera sobre <code>--papel</code> con ícono y nombre · perfiles como chips de 44px · tildes en grilla de 210px mínimo · el alcance cuelga de su tilde, indentado 26px</div>
+  <div class="prohibicion"><b>El perfil es preselección, jamás autoridad.</b> El rótulo se deriva por igualdad de conjunto; no se guarda cuál se eligió.</div>
+</section>
+
+<!-- 25 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-25</span><span class="ficha__nom">Tarjeta de entrada de datos</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="entrada entrada--compartida">
+      <span class="entrada__origen">Padrón · compartido</span>
+      <p class="entrada__titulo">Médico</p>
+      <p class="entrada__nota">Se registra en el padrón compartido de Suynda. No hay master local.</p>
+      <div class="entrada__campos">
+        <label class="campo"><span class="campo__rotulo">Tipo</span><input class="campo__control" value="CI"></label>
+        <label class="campo"><span class="campo__rotulo">País</span><input class="campo__control" value="PY"></label>
+        <label class="campo"><span class="campo__rotulo">Identificador</span><input class="campo__control" placeholder="Sin puntos ni guiones"></label>
+      </div>
+      <div class="entrada__acciones">
+        <button class="boton boton--primario">Buscar</button>
+        <button class="mas-info"><span class="mas-info__signo">+</span> Agregar más info</button>
+      </div>
+    </div>
+    <div class="entrada entrada--propia">
+      <span class="entrada__origen">Sólo en Lab</span>
+      <p class="entrada__titulo">Equipo</p>
+      <p class="entrada__nota">Vive en este módulo. La calibración consume inventario con causa propia.</p>
+      <div class="entrada__campos">
+        <label class="campo"><span class="campo__rotulo">Código</span><input class="campo__control"></label>
+        <label class="campo"><span class="campo__rotulo">Marca</span><input class="campo__control"></label>
+      </div>
+      <div class="entrada__acciones"><button class="boton boton--primario">Registrar equipo</button></div>
+    </div>
+    <span class="estado-rot">compartida (verde) · propia del módulo (amarillo) — el color dice dónde vive el dato</span>
+  </div>
+  <div class="receta"><b>Receta:</b> <code>--card</code> · <b><code>max-width: 720px</code></b> · borde izquierdo de 4px: <code>--verde</code> si es del padrón, <code>--amarillo</code> si es del módulo · píldora de origen a juego · campos en grilla de <b>200–300px</b>, nunca estirados</div>
+  <div class="prohibicion"><b>Ningún formulario propio.</b> Hoy Lab tiene «Médico (Padrón)» y «Equipos» resolviendo lo mismo de dos maneras distintas: eso es lo que esta pieza termina.</div>
+</section>
+
+<!-- 26 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-26</span><span class="ficha__nom">Agregar más info</span></div>
+  <div class="muestra muestra--bloque">
+    <button class="mas-info"><span class="mas-info__signo">+</span> Agregar más info</button>
+    <div class="mas-info-panel">
+      <div class="entrada">
+        <p class="entrada__titulo">Información adicional</p>
+        <div class="entrada__campos">
+          <label class="campo"><span class="campo__rotulo">Matrícula</span><input class="campo__control"></label>
+          <label class="campo"><span class="campo__rotulo">Especialidad</span><input class="campo__control"></label>
+        </div>
+      </div>
+    </div>
+    <span class="estado-rot">cerrado (el botón) y abierto (la tarjeta que revela)</span>
+  </div>
+  <div class="receta"><b>Receta:</b> borde punteado <code>--linea</code>, radio 22px, 44px de alto · al abrirse revela una tarjeta de entrada, no campos sueltos</div>
+  <div class="prohibicion"><b>Jamás</b> esconder detrás de esto un campo obligatorio: lo que se oculta es opcional, por definición.</div>
+</section>
+
+<!-- 27 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-27</span><span class="ficha__nom">Ícono de módulo</span></div>
+  <div class="muestra">
+    <span class="icono-modulo">▣</span>
+    <span class="icono-modulo icono-modulo--activo">🧪</span>
+    <span class="icono-modulo icono-modulo--sobre-riel" style="background:var(--riel)">◉</span>
+    <span class="estado-rot">sobre claro · activo · sobre el riel</span>
+  </div>
+  <div class="receta"><b>Receta:</b> 30×30 · radio 8px · sobre claro <code>--papel</code>/<code>--tinta</code> · activo <code>--amarillo</code>/<code>--tinta</code> · sobre riel blanco al 8%</div>
+  <div class="prohibicion"><b>Jamás cableado en un repo.</b> El dibujo lo da el paquete, <b>cuál</b> ícono lo dice Foundation, y <b>el mismo juego viste la landing y el marketing</b>: un ícono de módulo es identidad de marca, no adorno de una pantalla.</div>
+</section>
+
+</div>
+</body>
+</html>

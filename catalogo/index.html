@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo — @suynda/ui v0.1.0</title>
+
+<!-- El mismo CSS que reciben los productos. El catálogo no tiene estilos de
+     pieza propios: si algo se ve acá, es porque el paquete lo hace. -->
+<link rel="stylesheet" href="../fuentes/fuentes.css">
+<link rel="stylesheet" href="../src/tokens.css">
+<link rel="stylesheet" href="../src/piezas.css">
+
+<style>
+  body { margin:0; background:var(--papel); color:var(--tinta); font-family:var(--tipografia-cuerpo); }
+  .barra { position:sticky; top:0; z-index:5; display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+           background:var(--card); border-bottom:1px solid var(--linea); padding:10px 16px; }
+  .barra h1 { font-family:var(--tipografia-titulo); font-size:15px; margin:0 12px 0 0; }
+  .barra .nota { font-size:11.5px; color:var(--muted); margin-left:auto; }
+  main { padding:18px 16px 60px; }
+  .marco { border:1px solid var(--linea); border-radius:var(--radio); background:var(--card);
+           margin:0 auto; transition:max-width .2s ease; overflow:hidden; }
+  .marco[data-ancho="360"] { max-width:360px; }
+  .marco[data-ancho="860"] { max-width:860px; }
+  .marco[data-ancho="full"] { max-width:none; }
+  .grupo { padding:16px 18px; border-bottom:1px solid var(--linea); }
+  .grupo:last-child { border-bottom:none; }
+  .grupo h2 { font-family:var(--tipografia-titulo); font-size:13px; margin:0 0 10px; }
+  .grupo h2 code { background:var(--tinta); color:var(--card); border-radius:5px; padding:1px 6px;
+                   font-size:10.5px; margin-right:7px; }
+  .fila-muestra { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+</style>
+</head>
+<body>
+
+<div class="barra">
+  <h1>Catálogo · @suynda/ui</h1>
+  <button class="boton boton--secundario" data-ancho="360">360 px</button>
+  <button class="boton boton--secundario" data-ancho="860">860 px</button>
+  <button class="boton boton--secundario" data-ancho="full">Completo</button>
+  <span class="nota">Complemento interactivo de la hoja: pasá el puntero, tabulá con el teclado, y probá los 360 px.</span>
+</div>
+
+<main>
+<div class="marco" id="marco" data-ancho="full">
+
+  <section class="grupo"><h2><code>B.2-01</code>Píldora de estado</h2><div class="fila-muestra">
+    <span class="pildora pildora--positivo">Aprobada</span>
+    <span class="pildora pildora--pendiente">Por aprobar</span>
+    <span class="pildora pildora--negativo">Rechazada</span>
+    <span class="pildora pildora--neutro">Sin asignar</span>
+    <span class="pildora pildora--critico">Crítico</span>
+  </div></section>
+
+  <section class="grupo"><h2><code>B.2-02</code>Botón — tabulá para ver el foco</h2><div class="fila-muestra">
+    <button class="boton boton--primario">Guardar</button>
+    <button class="boton boton--secundario">Cancelar</button>
+    <button class="boton boton--fantasma">Ver todas</button>
+    <button class="boton boton--destructivo">Eliminar</button>
+    <button class="boton boton--primario" disabled>Deshabilitado</button>
+  </div></section>
+
+  <section class="grupo"><h2><code>B.2-03</code>Campo</h2>
+    <label class="campo"><span class="campo__rotulo">Razón social</span><input class="campo__control" value="Ferretería Río S.A."></label>
+    <label class="campo campo--error"><span class="campo__rotulo">RUC</span><input class="campo__control" value="8000123-"><span class="campo__error">Falta el dígito verificador.</span></label>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-04</code>Estado vacío</h2>
+    <div class="vacio"><p class="vacio__titulo">Todavía no hay muestras</p>
+    <p class="vacio__cuerpo">Esta estación se llena cuando exista una toma.</p>
+    <button class="boton boton--primario">Admitir paciente</button></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-05</code>Tarjeta — pasá el puntero por la interactiva</h2><div class="fila-muestra">
+    <div class="tarjeta">Plana</div><div class="tarjeta tarjeta--elevada">Elevada</div><div class="tarjeta tarjeta--interactiva">Interactiva</div>
+  </div></section>
+
+  <section class="grupo"><h2><code>B.2-06</code>Lista de trabajo</h2>
+    <div class="lista"><div class="lista__cabecera">Aprobaciones pendientes</div>
+      <div class="lista__fila"><b>001-002-0004512</b><span class="lista__meta">Ferretería Río</span><span class="lista__der"><span class="monto monto--fuerte">₲ 1.833.750</span><span class="pildora pildora--pendiente">Por aprobar</span></span></div>
+      <div class="lista__fila lista__fila--seleccionada"><b>001-002-0004513</b><span class="lista__meta">Ferretería Río</span><span class="lista__der"><span class="monto monto--fuerte">₲ 420.000</span><span class="pildora pildora--positivo">Aprobada</span></span></div>
+    </div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-07</code>Aviso</h2>
+    <div class="aviso aviso--informativo">Los resultados de este departamento los verifica otra persona.</div>
+    <div class="aviso aviso--pendiente" style="margin-top:8px">Padrón no respondió. Tu borrador quedó guardado.</div>
+    <div class="aviso aviso--negativo" style="margin-top:8px">No pudimos hablar con la plataforma.</div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-08</code>Toast</h2><div class="fila-muestra">
+    <div class="toast toast--exito"><span class="toast__marca">✓</span> Resultado verificado</div>
+    <div class="toast toast--error"><span class="toast__marca">✕</span> No se pudo guardar</div>
+    <div class="toast toast--en-curso"><span class="toast__marca">◴</span> Guardando…</div>
+  </div></section>
+
+  <section class="grupo"><h2><code>B.2-09</code>Modal</h2>
+    <div class="modal"><p class="modal__titulo">¿Anular la admisión?</p>
+      <p class="modal__cuerpo">La orden ya tiene una muestra tomada.</p>
+      <div class="modal__acciones"><button class="boton boton--secundario">Volver</button><button class="boton boton--destructivo">Anular</button></div></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-10</code>Esqueleto</h2>
+    <div class="tarjeta"><div class="esqueleto esqueleto--titulo"></div><div class="esqueleto esqueleto--linea"></div><div class="esqueleto esqueleto--linea" style="width:70%"></div></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-11</code>Buscar y elegir</h2>
+    <div class="buscador"><input class="campo__control" placeholder="Buscar análisis…" value="hemog">
+      <div class="buscador__resultados"><div class="buscador__opcion buscador__opcion--activa">Hemograma completo</div><div class="buscador__opcion">Hemoglobina glicosilada</div></div></div>
+    <div style="margin-top:10px"><span class="buscador__elegido">Hemograma completo ✕</span></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-12</code>Monto</h2><div class="fila-muestra">
+    <span class="monto monto--fuerte">₲ 1.833.750</span><span class="monto">US$ 1.250,00</span><span class="monto monto--negativo">−₲ 96.500</span>
+  </div></section>
+
+  <section class="grupo" style="padding:0"><h2 style="padding:16px 18px 8px"><code>B.2-13</code>Franja</h2>
+    <div class="franja"><a class="franja__wordmark" href="#">suynda</a>
+      <button class="franja__pildora">Livio Janz finanzas ▾</button>
+      <button class="franja__pildora franja__pildora--prestado">Ferretería Río ▾</button>
+      <span class="franja__espaciador"></span><button class="franja__avatar">LJ</button></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-14</code>Riel — a 360 px pasa a barra inferior</h2>
+    <div style="background:var(--riel);display:flex">
+      <div class="riel"><a class="riel__item riel__item--activo" href="#"><span class="riel__icono">🏠</span>Inicio</a>
+        <div class="riel__separador"></div>
+        <a class="riel__item" href="#"><span class="riel__icono">▣</span>Compra</a>
+        <a class="riel__item" href="#"><span class="riel__icono">◉</span>Visibilidad</a>
+        <a class="riel__item" href="#"><span class="riel__icono">＋</span>Activar</a></div>
+    </div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-15</code>Tabs — se desplazan cuando no entran</h2>
+    <div class="tabs"><a class="tab tab--activa" href="#">Inicio</a><a class="tab" href="#">Admitir</a><a class="tab" href="#">Muestras</a><a class="tab" href="#">Cargar</a><a class="tab" href="#">Verificar</a><a class="tab" href="#">Entregar</a><a class="tab" href="#">Catálogo</a></div>
+  </section>
+
+  <section class="grupo" style="padding:0"><h2 style="padding:16px 18px 8px"><code>B.2-16</code>Barra de estado</h2>
+    <div class="barra-estado"><span>Créditos <b>5.000</b></span><span>·</span><a href="#" style="color:var(--verde);font-weight:600">Recargar</a></div>
+    <div class="barra-estado barra-estado--bajo"><span>Créditos <b>50</b> · saldo bajo</span></div>
+    <div class="barra-estado barra-estado--sobregiro"><span>Créditos <b>−120</b> · en sobregiro</span></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-17</code>Métrica con delta</h2><div class="fila-muestra">
+    <div class="metrica" style="min-width:150px"><div class="metrica__rotulo">Campañas activas</div><div class="metrica__valor">3</div><div class="metrica__delta metrica__delta--sube">↑ 20% vs. semana pasada</div></div>
+    <div class="metrica" style="min-width:150px"><div class="metrica__rotulo">Aprobaciones</div><div class="metrica__valor">4</div><div class="metrica__delta metrica__delta--baja">↓ 1 vs. semana pasada</div></div>
+    <div class="metrica" style="min-width:150px"><div class="metrica__rotulo">Presencia</div><div class="metrica__valor">—</div><div class="metrica__delta">sin datos todavía</div></div>
+  </div></section>
+
+  <section class="grupo"><h2><code>B.2-18</code>Medidor</h2>
+    <div class="medidor"><span style="width:100px">Sitio web</span><span class="medidor__riel"><span class="medidor__relleno" style="width:100%"></span></span><span class="medidor__valor">100%</span></div>
+    <div class="medidor" style="margin-top:8px"><span style="width:100px">Instagram</span><span class="medidor__riel"><span class="medidor__relleno" style="width:75%"></span></span><span class="medidor__valor">75%</span></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-19</code>Calendario semanal</h2>
+    <div class="semana"><div class="semana__dia">Lun<br>19</div><div class="semana__dia semana__dia--hoy">Mar<br>20</div><div class="semana__dia">Mié<br>21</div><div class="semana__dia">Jue<br>22</div><div class="semana__dia">Vie<br>23</div><div class="semana__dia">Sáb<br>24</div><div class="semana__dia">Dom<br>25</div></div>
+    <div class="semana__franja"><span class="semana__hora">09:00</span> Post: Beneficios de Axion</div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-20</code>Chip de canal</h2><div class="fila-muestra">
+    <span class="chip-canal"><span class="chip-canal__punto" style="background:#0a66c2"></span>LinkedIn</span>
+    <span class="chip-canal"><span class="chip-canal__punto" style="background:#c13584"></span>Instagram</span>
+    <span class="chip-canal"><span class="chip-canal__punto" style="background:#25d366"></span>WhatsApp</span>
+  </div></section>
+
+  <section class="grupo"><h2><code>B.2-21</code>Módulo sin entitlement</h2>
+    <div class="sin-modulo"><p class="sin-modulo__titulo">Lab no está activo en este espacio</p>
+      <p class="sin-modulo__cuerpo">Livio Janz finanzas todavía no tiene el módulo de laboratorio.</p>
+      <button class="boton boton--primario">Activar Lab</button> <button class="boton boton--secundario">Volver al Hub</button></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-22</code>Panel de selector</h2>
+    <div class="panel-selector"><p class="panel-selector__rotulo">Desde qué organización trabajás</p>
+      <p class="panel-selector__encabezado">Livio Janz · RUC 1361710-9</p>
+      <div class="panel-selector__lista">
+        <button class="panel-selector__opcion panel-selector__opcion--activa">Livio Janz<span class="panel-selector__meta">2 titulares</span></button>
+        <button class="panel-selector__opcion">Livio Janz finanzas<span class="panel-selector__meta">2 titulares</span></button></div></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-23</code>Selector de módulos</h2>
+    <div class="modulos">
+      <button class="modulo-chip modulo-chip--elegido"><span class="icono-modulo icono-modulo--activo">▣</span>Compra</button>
+      <button class="modulo-chip modulo-chip--elegido"><span class="icono-modulo">🧪</span>Lab</button>
+      <button class="modulo-chip"><span class="icono-modulo">◉</span>Visibilidad</button>
+      <button class="modulo-chip"><span class="icono-modulo">👥</span>Talento</button></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-24</code>Permisos por módulo — una tarjeta cada uno</h2>
+    <div class="permisos"><div class="permisos__cab"><span class="icono-modulo">🧪</span><span class="permisos__nombre">Lab</span><span class="pildora pildora--positivo" style="margin-left:auto">Carga</span></div>
+      <div class="permisos__cuerpo"><p class="permisos__rotulo">Perfil</p>
+        <div class="permisos__perfiles"><button class="perfil">Admisión</button><button class="perfil perfil--activo">Carga</button><button class="perfil">Verificación</button><button class="perfil">Configuración</button><button class="perfil perfil--personalizado">Personalizado</button></div>
+        <div class="permisos__tildes">
+          <label class="tilde"><input type="checkbox" checked>Ver</label>
+          <label class="tilde"><input type="checkbox">Admitir</label>
+          <label class="tilde"><input type="checkbox">Muestras</label>
+          <label class="tilde tilde--con-alcance"><input type="checkbox" checked>Cargar resultados<span class="tilde__alcance">Alcance: Hematología, Microbiología</span></label>
+          <label class="tilde"><input type="checkbox">Verificar</label>
+          <label class="tilde"><input type="checkbox">Entregar</label></div></div></div>
+    <div class="permisos"><div class="permisos__cab"><span class="icono-modulo">▣</span><span class="permisos__nombre">Compra</span><span class="pildora pildora--neutro" style="margin-left:auto">Personalizado</span></div>
+      <div class="permisos__cuerpo"><p class="permisos__rotulo">Perfil</p>
+        <div class="permisos__perfiles"><button class="perfil">Sólo ver</button><button class="perfil">Cargar</button><button class="perfil">Aprobar</button><button class="perfil perfil--activo perfil--personalizado">Personalizado</button></div>
+        <div class="permisos__tildes">
+          <label class="tilde"><input type="checkbox" checked>Ver facturas</label>
+          <label class="tilde"><input type="checkbox" checked>Cargar facturas</label>
+          <label class="tilde"><input type="checkbox">Aprobar facturas</label>
+          <label class="tilde"><input type="checkbox">Conciliar con Marangatu</label></div></div></div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-25</code>Tarjeta de entrada de datos — la estándar</h2>
+    <div class="entrada entrada--compartida"><span class="entrada__origen">Padr&oacute;n &middot; compartido</span><p class="entrada__titulo">M&eacute;dico</p><p class="entrada__nota">Se registra en el padrón compartido de Suynda. No hay master local.</p>
+      <div class="entrada__campos">
+        <label class="campo"><span class="campo__rotulo">Tipo</span><input class="campo__control" value="CI"></label>
+        <label class="campo"><span class="campo__rotulo">País</span><input class="campo__control" value="PY"></label>
+        <label class="campo"><span class="campo__rotulo">Identificador</span><input class="campo__control" placeholder="Sin puntos ni guiones"></label></div>
+      <div class="entrada__acciones"><button class="boton boton--primario">Buscar</button>
+        <button class="mas-info" id="mas"><span class="mas-info__signo">+</span> Agregar más info</button></div>
+      <div class="mas-info-panel" id="masPanel" hidden>
+        <div class="entrada" style="margin:0"><p class="entrada__titulo">Información adicional</p>
+          <div class="entrada__campos"><label class="campo"><span class="campo__rotulo">Matrícula</span><input class="campo__control"></label>
+          <label class="campo"><span class="campo__rotulo">Especialidad</span><input class="campo__control"></label></div></div></div>
+    </div>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-26</code>Agregar más info — probalo arriba</h2>
+    <p style="font-size:12.5px;color:var(--muted);margin:0">El botón de la tarjeta anterior abre y cierra su panel. Lo que se esconde es opcional, por definición.</p>
+  </section>
+
+  <section class="grupo"><h2><code>B.2-27</code>Ícono de módulo</h2><div class="fila-muestra">
+    <span class="icono-modulo">▣</span><span class="icono-modulo icono-modulo--activo">🧪</span>
+    <span class="icono-modulo icono-modulo--sobre-riel" style="background:var(--riel)">◉</span>
+  </div></section>
+
+</div>
+</main>
+
+<script>
+  // Lo único que hace el catálogo: cambiar el ancho del marco. Las piezas
+  // reaccionan por sus propias reglas, no por nada de acá.
+  const marco = document.getElementById('marco');
+  for (const b of document.querySelectorAll('.barra [data-ancho]')) {
+    b.addEventListener('click', () => { marco.dataset.ancho = b.dataset.ancho; });
+  }
+  // B.2-26: el único otro comportamiento del catálogo — abrir y cerrar el
+  // panel de "Agregar más info", que es lo que la pieza hace.
+  const mas = document.getElementById('mas'), masPanel = document.getElementById('masPanel');
+  mas.addEventListener('click', () => { masPanel.hidden = !masPanel.hidden; });
+</script>
+</body>
+</html>
