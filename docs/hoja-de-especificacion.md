@@ -1,6 +1,8 @@
 # Hoja de especificación — `@suynda/ui` v0.1.0
 
-**Las 21 piezas, una ficha cada una.** Código, receta en tokens y la prohibición. Se citan por código como se citan las disciplinas: **B.2-02**, **B.2-14**.
+**Las 27 piezas, una ficha cada una.** Código, receta en tokens y la prohibición. Se citan por código como se citan las disciplinas: **B.2-02**, **B.2-14**.
+
+Son **21 del canon §B.2** más **6 descubiertas al construir** (B.2-22 … B.2-27), que la review por capturas del fundador encontró faltando y que el canon ya registra.
 
 > **La muestra visual vive en `catalogo/hoja.html`**, y se renderiza **del CSS real del paquete** — los mismos `tokens.css` y `piezas.css` que reciben los productos. Este MD es el texto; la hoja renderizada es la muestra. **Ninguna muestra se dibuja aparte:** si la hoja y el paquete pudieran divergir, la hoja no serviría.
 
@@ -91,8 +93,8 @@
 
 ## B.2-14 · Riel (nivel 2)
 
-**Estados:** módulo activo · disponible · «＋ Activar» · **barra inferior a ≤860px**
-**Receta:** fondo `--riel` · 176px · ítem 13px/500 · activo con hilo `--amarillo` de 3.5px e ícono amarillo · en angosto pasa a `row`, ítems en columna de 44px, el hilo pasa de costado a arriba
+**Estados:** **colapsado (60px, reposo)** · **expandido (176px, hover)** · módulo activo · disponible · «＋ Activar» · **barra inferior a ≤860px**
+**Receta:** fondo `--riel` · **60px en reposo, sólo íconos; 176px con etiquetas al hover, y sólo donde hay hover real** — en táctil nunca se expande, como fija el shell canónico · ítem 13px/500 · activo con hilo `--amarillo` de 3.5px e ícono amarillo · en angosto pasa a `row`, ítems en columna de 44px, el hilo pasa de costado a arriba
 **Prohibición:** **la casita del Hub es la primera, siempre** — no depende de entitlements ni del espacio activo.
 
 ## B.2-15 · Barra de tabs (nivel 3)
@@ -146,8 +148,9 @@ Seis piezas que la revisión visual del fundador encontró faltando. **Sólo asp
 
 ## B.2-23 · Selector de módulos
 
+**Uso:** el **primer paso del flujo de INVITAR** — a qué módulos entra la persona; después se abren sus permisos.
 **Receta:** chip de 44px con su ícono de módulo · borde `--linea`, radio 22px · elegido en `--tinta` sobre blanco
-**Prohibición:** no mezclar la elección del módulo con sus permisos. Son dos decisiones, y juntas producen la lista plana de 25 tildes que hoy tiene `/equipo`.
+**Prohibición:** **no aplica a `/equipo`.** Ahí los bloques apilados por módulo entitled quedan como están —diseño de la pasada 3, ya desplegado— y cada bloque se viste como B.2-24 en la convergencia del hub (UI-4-C). Esta pieza reemplaza al desplegable de rol pelado cuando el flujo de invitación se rediseñe.
 
 ## B.2-24 · Tarjeta de permisos de módulo
 
@@ -164,7 +167,9 @@ Seis piezas que la revisión visual del fundador encontró faltando. **Sólo asp
 
 > **Por qué el ancho tiene tope.** Un campo de texto de 1.400 px no se lee mejor: se lee peor. En Lab, «Identificador» ocupaba toda la pantalla para recibir ocho dígitos.
 >
-> **Por qué el color, y no más texto.** Las capturas de Lab repetían la misma distinción dos veces en cada tarjeta: en el título («Médico **(Padrón)**») y en la nota («no hay master local»). Es una propiedad del dato —compartido o propio— y el color la carga sin gastar una línea. **El texto sigue diciéndolo** en la píldora de origen; el color refuerza.
+> **Es norma del canon, no detalle de esta pieza.** Firmada el 31-ago y escrita en `congelado-ui.md` **§B.1.2**, hermana de «estado del sistema vs. color del mundo real». **Las tres cosas que el color dice en Suynda:** el estado, el color del mundo real, y dónde vive el dato. Ninguna más.
+>
+> **Por qué el color, y no más texto.** Las capturas de Lab repetían la misma distinción dos veces en cada tarjeta: en el título («Médico **(Padrón)**») y en la nota («no hay master local»). **El texto sigue diciéndolo** en la píldora de origen; el color refuerza.
 
 **Prohibición:** **ningún formulario propio.** Hoy Lab tiene «Médico (Padrón)» y «Equipos» resolviendo el mismo problema de dos maneras distintas: eso es lo que esta pieza termina.
 

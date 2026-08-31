@@ -72,7 +72,20 @@
   .receta b, .prohibicion b { font-family: var(--tipografia-cuerpo); }
   .prohibicion { color: var(--rojo); margin-top: 5px; }
   .prohibicion b { color: var(--rojo); }
-  @media print { body { background: #fff; } .ficha { break-inside: avoid; } }
+  /* La primera impresión salió SIN FONDOS: el crítico invertido, la franja
+     amarilla, el riel oscuro, los toasts y los botones primarios aparecieron
+     en blanco. Un aspecto que se firma en papel sin sus fondos no es el
+     aspecto. `print-color-adjust: exact` lo pide explícitamente, en vez de
+     depender de que quien imprime se acuerde de tildar "gráficos de fondo". */
+  @media print {
+    body { background: #fff; }
+    .ficha { break-inside: avoid; }
+    *, *::before, *::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    @page { margin: 12mm; }
+  }
 </style>
 </head>
 <body>
@@ -80,8 +93,8 @@
 
 <header class="portada">
   <h1>Hoja de especificación</h1>
-  <p>Las 21 piezas de <b>@suynda/ui</b>, una ficha cada una: código, muestra, receta en tokens y su prohibición. <b>Cada muestra se renderiza del CSS real del paquete</b> — esta hoja no puede mostrar algo distinto de lo que los productos reciben.</p>
-  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-21</p>
+  <p>Las <b>27 piezas</b> de <b>@suynda/ui</b>, una ficha cada una: código, muestra, receta en tokens y su prohibición. <b>Cada muestra se renderiza del CSS real del paquete</b> — esta hoja no puede mostrar algo distinto de lo que los productos reciben.</p>
+  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-27 · las 21 del canon más 6 descubiertas al construir</p>
 </header>
 
 <!-- 01 -->
@@ -285,7 +298,14 @@
 <!-- 14 -->
 <section class="ficha">
   <div class="ficha__cab"><span class="ficha__cod">B.2-14</span><span class="ficha__nom">Riel — nivel 2</span></div>
-  <div class="muestra muestra--oscura" style="padding:0">
+  <div class="muestra muestra--oscura" style="padding:0;gap:0">
+    <div class="riel" style="width:60px">
+      <a class="riel__item riel__item--activo" href="#"><span class="riel__icono">🏠</span>Inicio</a>
+      <div class="riel__separador"></div>
+      <a class="riel__item" href="#"><span class="riel__icono">▣</span>Compra</a>
+      <a class="riel__item" href="#"><span class="riel__icono">◉</span>Visibilidad</a>
+      <a class="riel__item" href="#"><span class="riel__icono">＋</span>Activar</a>
+    </div>
     <div class="riel" style="width:176px">
       <a class="riel__item riel__item--activo" href="#"><span class="riel__icono">🏠</span>Inicio</a>
       <div class="riel__separador"></div>
@@ -293,8 +313,9 @@
       <a class="riel__item" href="#"><span class="riel__icono">◉</span>Visibilidad</a>
       <a class="riel__item" href="#"><span class="riel__icono">＋</span>Activar módulo</a>
     </div>
+    <span class="estado-rot" style="padding:8px 14px;color:#b8c4be">colapsado 60px (reposo) · expandido 176px (hover, sólo escritorio) · a ≤860px, barra inferior</span>
   </div>
-  <div class="receta"><b>Receta:</b> fondo <code>--riel</code> · 176px · ítem 13px/500 · activo con hilo <code>--amarillo</code> de 3.5px e ícono amarillo · <b>a ≤860px pasa a barra inferior</b></div>
+  <div class="receta"><b>Receta:</b> fondo <code>--riel</code> · <b>reposo 60px, sólo íconos</b> · <b>hover 176px con etiquetas</b>, y sólo donde hay hover real — en táctil nunca se expande · ítem 13px/500 · activo con hilo <code>--amarillo</code> de 3.5px e ícono amarillo · <b>a ≤860px pasa a barra inferior</b></div>
   <div class="prohibicion"><b>La casita del Hub es la primera, siempre</b> — no depende de entitlements ni del espacio activo.</div>
 </section>
 
@@ -415,10 +436,10 @@
       <button class="modulo-chip"><span class="icono-modulo">◉</span>Visibilidad</button>
       <button class="modulo-chip"><span class="icono-modulo">👥</span>Talento</button>
     </div>
-    <span class="estado-rot">elegido · disponible — primero se eligen los módulos, después se abren sus permisos</span>
+    <span class="estado-rot">elegido · disponible — es el primer paso de INVITAR: a qué módulos entra la persona</span>
   </div>
   <div class="receta"><b>Receta:</b> chip de 44px con ícono de módulo · borde <code>--linea</code>, radio 22px · elegido en <code>--tinta</code> sobre blanco</div>
-  <div class="prohibicion"><b>No</b> mezclar la elección de módulo con sus permisos: son dos decisiones, y juntas producen la lista plana que esto viene a reemplazar.</div>
+  <div class="prohibicion"><b>Es del flujo de INVITAR, no de <code>/equipo</code>.</b> Reemplaza al desplegable de rol pelado cuando ese flujo se rediseñe: primero a qué módulos entra, después sus permisos. En <code>/equipo</code> los bloques apilados por módulo entitled quedan como están —diseño de la pasada 3, ya desplegado— y cada bloque se viste como B.2-24 en UI-4-C.</div>
 </section>
 
 <!-- 24 -->

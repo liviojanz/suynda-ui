@@ -163,6 +163,26 @@ Es la pieza con más deriva del sistema. Hoy existe **siete veces, en tres estil
 
 Esta distinción —**estado del sistema** contra **color del mundo real**— es norma general, no una excepción de Lab.
 
+#### B.1.2 La tercera cosa que el color puede decir: **dónde vive el dato**
+
+*(Norma nueva, firmada por el fundador el 31-ago-2026. Hermana de la anterior.)*
+
+> **El color del borde de una tarjeta de entrada dice dónde vive el dato.**
+> **`--verde`** = se registra en el **padrón compartido de Suynda**; lo ven los demás.
+> **`--amarillo`** = **vive sólo en este módulo** y en ningún otro lado.
+
+**De dónde salió:** las pantallas de Lab repetían esa distinción **dos veces en texto por tarjeta** — en el título («Médico **(Padrón)**») y en la nota («no hay master local»). Es una propiedad estable del dato, no del momento; el color la carga sin gastar dos líneas en cada formulario.
+
+**El texto sigue diciéndolo** en la píldora de origen: el color refuerza, nunca sustituye — la misma regla que gobierna la píldora de estado.
+
+**Las tres cosas que el color dice en Suynda, y no más:**
+
+| | Qué es | Ejemplo |
+|---|---|---|
+| **Estado del sistema** | los cuatro tonos de la píldora | aprobada, por aprobar |
+| **Color del mundo real** | va literal, no se aplana | la tapa de un tubo, el azul de LinkedIn |
+| **Dónde vive el dato** | verde compartido, amarillo propio | Padrón contra módulo |
+
 ### B.2 El catálogo de piezas
 
 Cada pieza se especifica con la misma anatomía: **qué es · sus estados · cuándo NO usarla**.
@@ -190,6 +210,21 @@ Cada pieza se especifica con la misma anatomía: **qué es · sus estados · cu�
 | 19 | **Calendario semanal** | con franjas horarias | — |
 | 20 | **Chip de canal** | con ícono de la plataforma | — |
 | 21 | **Módulo sin entitlement** | la pantalla que ve quien no lo contrató | *(dueño explícito, F-observación 28-ago: hoy cada módulo lo resuelve solo)* |
+
+### B.2-bis · Las seis piezas descubiertas al construir
+
+*(Enmienda del 31-ago-2026. Salieron de la review por capturas del fundador sobre la hoja de UI-1-B: no estaban en el inventario porque **no existen en ninguna superficie todavía** — el inventario sólo podía ver lo construido.)*
+
+| # | Pieza | Por qué faltaba |
+|---|---|---|
+| 22 | **Panel de selector** | existía en el hub sin espaciado entre opciones; se leía como una caja partida |
+| 23 | **Selector de módulos** | el flujo de invitar no lo tiene: hoy hay un desplegable de rol pelado. **Reservada para ese rediseño; NO aplica a `/equipo`** |
+| 24 | **Tarjeta de permisos por módulo** | `/equipo` mostraba una lista plana de todas las funciones de todos los módulos |
+| 25 | **Tarjeta de entrada de datos** | cada pantalla resolvía sus formularios a mano; ver **B.1.2** |
+| 26 | **Agregar más info** | lo opcional se mostraba siempre, o no se mostraba |
+| 27 | **Ícono de módulo** | tres repos cableaban el suyo; ver UI-0a-bis |
+
+**Consecuencia de frontera (24):** un módulo nuevo **manda su tarjeta** y el Hub la sabe pintar, sin aprender qué es «Verificar» ni qué es un Departamento.
 
 **Sobre el monto:** el guaraní se escribe **`₲ 1.833.750`** — símbolo, espacio, separador de miles con punto, sin decimales. El `G. 1.833.750` que usa `suynda-landing/src/lib/format.ts` **muere**; era la única superficie que lo escribía distinto. USD, BRL y ARS llevan dos decimales y su propio símbolo.
 
