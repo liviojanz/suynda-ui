@@ -78,6 +78,26 @@ test("el bloque de compuertas es lo último del CSS", () => {
   );
 });
 
+test("el punto de quiebre del marco está acotado a pantalla", () => {
+  // Sin `screen and`, el bloque de 860px también aplica al IMPRIMIR: la caja
+  // de página de una A4 mide ~779px CSS. El riel de cualquier producto salía
+  // impreso como barra inferior, con las etiquetas debajo de los íconos.
+  //
+  // Se encontró porque la hoja imprimió su propia muestra de "reposo, sólo
+  // íconos" mostrando exactamente lo contrario.
+  const css = leer("src", "piezas.css");
+  assert.match(
+    css,
+    /@media screen and \(max-width: 860px\)/,
+    "el bloque de 860px tiene que ser `screen and`: el papel no tiene pulgar",
+  );
+  assert.doesNotMatch(
+    css,
+    /@media \(max-width: 860px\)/,
+    "quedó un bloque de 860px sin acotar a pantalla",
+  );
+});
+
 test("la hoja y el catálogo enlazan el CSS REAL, no una copia", () => {
   // La regla que sostiene todo: si la hoja pudiera divergir del paquete, la
   // hoja no sirve. Se prueba mirando que enlacen los archivos del paquete y

@@ -893,7 +893,14 @@
   .franja__avatar { width: 44px; }
 }
 
-@media (max-width: 860px) {
+/* `screen and` NO es decorativo. Sin el tipo de medio, esto también aplica al
+   IMPRIMIR: la caja de página de una A4 mide ~779px CSS, cae bajo los 860 y
+   el riel de cualquier producto sale impreso como barra inferior, con las
+   etiquetas debajo de los íconos. Se encontró así — la hoja de especificación
+   imprimió su propia muestra de "reposo, sólo íconos" mostrando lo contrario.
+   La barra inferior es una respuesta al alcance del pulgar; el papel no tiene
+   pulgar. */
+@media screen and (max-width: 860px) {
   /* El riel pasa a barra inferior (shell-canonico §3-bis). La casita del Hub
      queda primera; el ancho ya no se cobra, se cobra alto — que sobra. */
   .riel {
