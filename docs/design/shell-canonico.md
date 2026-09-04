@@ -93,6 +93,37 @@ Sale de un **tercer endpoint, `GET /v1/cartera`** (el hub la pide por `/api/cart
 
 **Primera posición del riel, incondicional.** El Hub **no es un módulo**: no depende de entitlements ni del espacio activo. Los módulos de abajo varían; **la casita jamás**.
 
+### El orden del riel — enmienda del 2-sep-2026
+
+```
+casita  →  vertical(es) del espacio  →  horizontales
+```
+
+Los módulos son de dos clases, y la distinción es de negocio, no de
+infraestructura: **verticales** son gestión específica de un tipo de negocio
+—`lab`, `vet`, `taller`, `milk`, `farm`, `comercio`, los **arcos** de la franja
+de la landing— y una organización generalmente tiene **uno**. **Horizontales**
+son administración general —`compra`, `factura`, `nucleo`, `talento`,
+`visibilidad`, `conecta`, `deposito`, las **piezas de puzzle**— y una
+organización tiene **varias**.
+
+**El dato lo da la plataforma; el orden lo aplica quien pinta.** `/v1/shell`
+devuelve `kind` por ítem del launcher y **no** ordena por él: ordenar es
+decisión de presentación, y el mismo dato sirve a un riel vertical, a una barra
+inferior y a la landing sin que Foundation opine sobre ninguno.
+
+**Varios verticales se apilan por orden de activación.** Nada especial hasta
+que el caso exista — un espacio con dos verticales es hipotético hoy, y
+diseñarle un tratamiento propio sería resolver un problema que nadie tiene.
+
+**La misma jerarquía rige la barra inferior en móvil.** Es el mismo orden en
+otra orientación, no un segundo criterio.
+
+> **Lo que esta enmienda NO decide:** si la diferencia de aspecto que la
+> landing ya hace entre arcos y piezas de puzzle se traduce en algún matiz
+> visual del riel. Eso se decide **viendo** la hoja de firma de la corrida de
+> íconos, que agrupa los dibujos por clase. No se inventa antes.
+
 **Verificado — es promoción:**
 
 - **El hub** cablea la casita fuera del bloque dinámico: `<a class="riel__item" href="/panel">🏠 Inicio</a>` va **antes** del separador y de `<div id="shell-riel-modulos">`, que es lo único que el launcher puebla (`Riel.astro:17-24`).

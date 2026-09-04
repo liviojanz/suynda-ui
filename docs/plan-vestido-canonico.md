@@ -7,6 +7,9 @@
 
 **El orden:** UI-0a → UI-0a-bis → UI-0b → UI-1 → **UI-2P ∥ UI-3** → UI-2V → UI-4
 
+> **ENMENDADO (E12, 2-sep): UI-2V va ANTES que UI-3.** El orden vigente es
+> **UI-0a-bis → UI-2V → UI-3 → UI-4**. Ver el registro de enmiendas.
+
 ---
 
 ## 0. Qué es este plan, y qué no
@@ -201,9 +204,11 @@ Por F2 cada módulo renderiza el riel; cablear ícono y URL en cada repo es exac
 
 ---
 
-### UI-2V — Lab, vestido — *después de UI-3*
+### UI-2V — Lab, vestido — *ANTES que UI-3 desde E12*
 
-**Motivo del orden, escrito:** Lab está en producción con un piloto encima. **Descubrir un hueco del paquete a mitad de la reestructura de un módulo en uso es el peor lugar posible.** Cuando UI-2V arranca, el paquete ya viene curtido por un consumidor real.
+> **E12 (2-sep) invirtió esto.** Lo de abajo es el motivo del orden ANTERIOR y se conserva porque sigue siendo cierto — no se borra un argumento válido por haber perdido contra otro. Lo que ganó es la prioridad: **Lab tiene piloto real y Visibilidad no tiene usuarios.** El riesgo que este párrafo describe **se acepta**, con la mitigación de E12.
+
+**Motivo del orden ANTERIOR, escrito:** Lab está en producción con un piloto encima. **Descubrir un hueco del paquete a mitad de la reestructura de un módulo en uso es el peor lugar posible.** Cuando UI-2V arranca, el paquete ya viene curtido por un consumidor real.
 
 | Sub-corrida | Qué produce |
 |---|---|
@@ -307,7 +312,7 @@ Vale la disciplina completa del repo, y estas cinco con nombre propio en este pl
 |---|---|---|
 | R1 | La reestructura del shell de Lab toca una pantalla **desplegada y en uso** | El mapa se firma en UI-0a, antes de tocar código; sub-corrida propia y revertible |
 | R2 | El bump de contracts por el manifiesto de Visibilidad puede resucitar junctions | El gate permanente ya existe (`db/anti-resurreccion.pgtest.ts`); se corre de nuevo |
-| R3 | Un hueco del paquete se descubre a mitad de la reestructura de un módulo en producción | **Resuelto por el orden (E8):** UI-3 valida el paquete en una superficie fuera de producción; UI-2V lo recibe curtido. Y el producto de Lab (UI-2P) va aparte, así un revert del vestido no se lo lleva |
+| R3 | Un hueco del paquete se descubre a mitad de la reestructura de un módulo en producción | **REABIERTO por E12 (2-sep).** Ya no lo resuelve el orden: UI-2V se adelantó y el paquete **se estrena sobre producción**. Queda mitigado, no eliminado: el hueco se cierra en `suynda-ui` con firma y tag nuevo —jamás CSS inline en Lab—, la compuerta anti-deriva entra al CI de Lab en la primera sub-corrida, y el producto de Lab (UI-2P) ya está aparte, así que un revert del vestido no se lo lleva |
 | R4 | `font-src 'self'` enmienda una decisión de mesa | Se firma como desviación declarada (regla 8), no se cuela |
 | R5 | El catálogo envejece y vuelve la deriva | La compuerta de UI-1, adoptada por pin en cada repo |
 | R6 | Una base que conoció otra siembra rompe la de Visibilidad | Reset desde cero; la trampa ya está documentada |
@@ -354,6 +359,7 @@ Las firmas que siguen abiertas son las de cada pasada, en su momento y con su su
 | **E10** | **La compuerta de UI-1 cambia.** La sub-corrida B produce además una **hoja de especificación (PDF + MD)**: una ficha por pieza con código `B.2-NN`, muestra renderizada **del CSS real**, receta en tokens y la prohibición en una línea. **La firma viendo es sobre la hoja**; el catálogo pasa a complemento. El tag `v0.1.0` se corta después de esa firma, y cambiar un padding después es enmienda con tag nuevo. Punto de partida: el mockup HTML aprobado, para **forma**; sobre color manda A.1 | Fundador, 29-ago |
 | **E10-nota** | **RESUELTA el 29-ago, mirando un comparador: ganan los VERDOSOS.** A.1 queda como está y el mockup cede en `--tinta-suave`, `--muted` y `--linea` —**tres, no cuatro: `--papel` nunca difirió**—. Criterio: menor retrabajo (es lo desplegado en producción) y la familia verdosa empareja con el riel y el verde de marca. Detalle en el §A.1 del canon. *El registro original de la discrepancia:* | Fundador, 29-ago |
 | | **La temperatura de los neutros.** El mockup firmado declara `--tinta-suave #4A4741`, `--muted #75726B` y `--linea #E5E4E0` —**cálidos**—; A.1 los declara `#3d4a45`, `#6b7772` y `#e3e7e2` —**verdosos**—, tomados del hub y de Foundation. **Los dos están firmados.** Por F1 gana el canon, pero es una decisión de aspecto que el fundador debe tomar mirando, no heredar por regla de precedencia. **Corolario:** el `--line #e5e4e0` de Visibilidad que E9 reportó como deriva **no lo es** — es fiel al mockup. La deriva real de Visibilidad son `--yellow #ffc010` y `--ink #14201c`; `--muted #6b756f` es un tercer valor propio | Recon, 30-ago |
+| **E12** | **UI-2V se adelanta: va ANTES que UI-3.** La prioridad es Lab funcionando de punta a punta — es el módulo con **piloto real**; Visibilidad no tiene usuarios. **Se conserva el motivo del orden viejo, que sigue siendo cierto:** UI-3 iba primero para validar el paquete en la superficie más chica, más nueva y **fuera de producción**, de modo que Lab lo recibiera curtido. **Riesgo aceptado, con nombre:** el paquete se estrena sobre el módulo en producción, así que el R3 del §6 deja de estar resuelto por el orden. **Mitigación firmada:** todo hueco del paquete que aparezca en UI-2V se resuelve **en `suynda-ui` como pieza candidata, con firma del fundador y tag nuevo** — jamás CSS inline en Lab; y la **compuerta anti-deriva se adopta en el CI de Lab en la primera sub-corrida**, no al final | Fundador, 2-sep |
 | **E9** | **Rama R confirmada**: Visibilidad está construido. Entran al plan sus cuatro tokens desviados, los nombres en inglés, el bug de Poppins reproducido, la quinta tecnología (React+Vite) declarada sin reabrir la premisa, y el rebind `v0.7.0`→`v0.8.1` en UI-3-A | Recon, 28-ago |
 
 > **Nota de método sobre la E5.** La v1.0 afirmaba que `/v1/shell` no existía. Existía desde el 24 de julio. El error no fue de criterio sino de verificación: se comprobó qué devuelve `/v1/me` y **nunca se buscó el nombre `/v1/shell`** — un hueco declarado sin ir a buscarlo. Queda escrito acá, y no borrado, porque el plan se enmienda con evidencia.
