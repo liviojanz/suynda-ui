@@ -60,9 +60,27 @@ test("la hoja de firma pinta con el CSS del paquete, no con una copia", () => {
   assert.ok(firma.includes("icono-modulo"), "la hoja no usa la caja de B.2-27");
 });
 
+/**
+ * Assets del juego que NO son glifos de máscara. Cada uno con su razón: una
+ * excepción anónima es una deriva con permiso.
+ */
+const ASSETS_SIN_CLASE: ReadonlyArray<readonly [string, string]> = [
+  ["diana.svg", "el favicon de la plataforma: tiene colores propios, enmascararla la volvería una mancha"],
+];
+
 test("todo archivo de iconos/ está referenciado — nada huérfano", () => {
   const enDisco = readdirSync(join(raiz, "iconos"));
-  const huerfanos = enDisco.filter((f) => !css.includes(`iconos/${f}`));
+  const exceptuados = ASSETS_SIN_CLASE.map(([f]) => f);
+  for (const [archivo, razon] of ASSETS_SIN_CLASE) {
+    assert.ok(enDisco.includes(archivo), `${archivo} está exceptuado pero no existe`);
+    assert.ok(
+      css.includes(archivo) && css.includes(razon.slice(0, 20)),
+      `${archivo} está exceptuado sin su razón escrita en el CSS`,
+    );
+  }
+  const huerfanos = enDisco
+    .filter((f) => !exceptuados.includes(f))
+    .filter((f) => !css.includes(`iconos/${f}`));
   assert.deepEqual(
     huerfanos,
     [],

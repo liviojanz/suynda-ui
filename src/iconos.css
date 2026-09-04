@@ -56,6 +56,17 @@
 .glifo--conecta     { -webkit-mask-image: url("../iconos/conecta.svg");     mask-image: url("../iconos/conecta.svg"); }
 .glifo--deposito    { -webkit-mask-image: url("../iconos/deposito.svg");    mask-image: url("../iconos/deposito.svg"); }
 
+/* ── LA DIANA · el favicon de la plataforma ───────────────────────────────
+ * NO lleva clase `.glifo--`, y no es un olvido: los catorce dibujos son
+ * SILUETAS que se pintan por máscara sobre `currentColor`, y la diana tiene
+ * sus colores propios —campo amarillo, aro y punto de tinta—. Enmascararla
+ * la volvería una mancha.
+ *
+ * Se sirve tal cual, como asset: `/estaticos/iconos/diana.svg`.
+ * Promovida desde `lab/src/http/html.ts:56`, donde vivía como `data:` porque
+ * Lab no servía archivos. Es el mismo dibujo, no uno nuevo.
+ * ====================================================================== */
+
 /* ── El hub · primera posición del riel, incondicional ────────────────── */
 .glifo--hub { -webkit-mask-image: url("../iconos/hub.svg"); mask-image: url("../iconos/hub.svg"); }
 
