@@ -187,6 +187,80 @@ Seis piezas que la revisión visual del fundador encontró faltando. **Sólo asp
 
 ---
 
+# El juego de íconos — los catorce · v0.2.0
+
+**El nombre del ícono ES la `key` del módulo.** No hay un segundo campo que
+diga cuál: siempre valdría lo mismo. `/v1/shell` manda la `key`; el dibujo lo
+pone `src/iconos.css`.
+
+**Todos se pintan por máscara**, con `background: currentColor`. El mismo
+archivo sirve en los tres estados del riel sin una segunda copia.
+
+## Los seis verticales — arte aprobado, EXTRAÍDO
+
+`lab` · `vet` · `taller` · `milk` · `farm` · `comercio`
+
+**No están redibujados.** Son el arte de `4 Brand ID/`, con el motivo separado
+del arco por **componentes conectados**: el arco toca los bordes del lienzo, el
+motivo flota en el medio, se descarta el que toca el borde.
+
+> **`farm` necesitó un paso más, y queda escrito.** El tallo de la espiga se
+> apoya en la base del arco, así que motivo y arco eran una sola componente:
+> la primera corrida conservó 1.125 píxeles —las dos barbas sueltas— en vez de
+> 31.122. El extractor borra la línea de base antes de etiquetar. En los otros
+> cinco ese paso no cambia nada, y se verificó comparando los conteos.
+
+**Si el arte cambia, se vuelve a extraer.** No se retoca el PNG a mano — un
+retoque es un redibujo, y el redibujo es lo que esta corrida evitó.
+
+## Los siete horizontales y la casita — dibujados
+
+| `key` | Qué hace *(del manifiesto)* | El dibujo |
+|---|---|---|
+| `compra` | Compras y conciliación | etiqueta con ojal |
+| `factura` | Emisión y documentos fiscales | comprobante de borde dentado |
+| `nucleo` | Contabilidad y cierre | hexágono con rombo calado |
+| `talento` | Personas y nómina | una persona |
+| `visibilidad` | Enriquecimiento y presencia | cámara con el lente vacío |
+| `conecta` | Mensajería saliente | flechas de ida y vuelta |
+| `deposito` | Stock e inventario | pila de tres cajas |
+| `hub` | *no es un módulo* | casita maciza |
+
+**Elegidos por SILUETA, no por significado.** En una columna que se mira todos
+los días el ojo no lee: busca forma. Las ocho son distintas entre sí — rombo
+con punta, hoja con el borde roto, hexágono, cabeza sobre hombros, caja con
+visor, doble flecha, pila escalonada, casa.
+
+**Dos correcciones que costaron una vuelta cada una, y que conviene no repetir:**
+
+- **El nombre de un módulo no dice qué hace.** «Núcleo» sonaba a centro del
+  sistema; el manifiesto dice **contabilidad y cierre**. Tres dibujos —cruz,
+  plinto, cilindro— fallaron por diseñar el concepto equivocado, no por trazo.
+  **Antes de dibujar el ícono de algo, se lee qué es.**
+- **Un hueco tiene que ser un subpath del mismo `d`.** `fill-rule: evenodd`
+  cala dentro de un path, no entre paths hermanos: un hueco en un `<path>`
+  aparte se dibuja sólido encima y desaparece. Cuatro íconos se entregaron una
+  vez sin sus huecos por esto.
+
+> **Objeción planteada y resuelta:** el manifiesto dice que `conecta` es
+> *mensajería saliente*, y unas flechas de ida y vuelta dicen sincronización
+> bidireccional. Se planteó; el fundador decidió que las flechas se quedan.
+
+## El faltante se ve ROTO
+
+Una `key` sin dibujo muestra `.glifo--sin-dibujo`: caja punteada con `?`.
+**Jamás un genérico mudo** — el genérico mudo es el bug que este juego mata.
+Hoy el hub cablea `{ compra: '🧾', lab: '🧪' }` con `?? '▦'` y once módulos
+comparten el mismo cuadradito; Visibilidad hace lo mismo con `▣`. Un fallback
+silencioso es cómo eso sobrevivió meses sin que nadie lo reportara.
+
+**Lo hace cumplir `tests/iconos.test.ts`**, contra `@suynda/contracts` y no
+contra una lista escrita a mano: toda `key` comercial tiene clase, toda clase
+tiene archivo, ningún archivo queda huérfano, y **ningún vertical puede
+aparecer como SVG** — si aparece, alguien lo redibujó.
+
+---
+
 ## Las dos compuertas, verificadas
 
 | Compuerta | Cómo se verificó | Resultado |

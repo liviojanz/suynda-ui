@@ -1,0 +1,91 @@
+/* ============================================================================
+ * ICONOS DE MÓDULO — el juego de catorce.
+ *
+ * Trece módulos comerciales más la casita del hub. **El nombre del ícono ES la
+ * `key` del módulo**: no hay un segundo campo que diga cuál, porque siempre
+ * valdría lo mismo. `/v1/shell` manda la `key`; el dibujo lo pone este archivo.
+ *
+ * TODOS SE PINTAN POR MÁSCARA, no por `<img>`. El archivo es la silueta y el
+ * color lo pone `currentColor`, así que el mismo dibujo sirve en los tres
+ * estados del riel —tinta sobre claro, tinta sobre amarillo, blanco sobre el
+ * riel— sin una segunda copia.
+ *
+ * DOS ORÍGENES, y la diferencia importa:
+ *
+ *   · Los SEIS VERTICALES son PNG, y son el ARTE APROBADO — extraído de
+ *     `4 Brand ID/` separando el motivo del arco por componentes conectados.
+ *     No están redibujados. No se los toca a mano: si el arte cambia, se
+ *     vuelve a extraer.
+ *   · Los SIETE HORIZONTALES y la casita son SVG dibujados para el riel.
+ *
+ * POR QUÉ ARCHIVOS Y NO `data:` — el juego embebido pesa entre 25 y 46 KB, y
+ * Lab inyecta su CSS en CADA respuesta HTML. Como archivos se cachean una vez.
+ * El precio es que el consumidor tiene que servir `iconos/` como estático.
+ *
+ * B.2-27 pone la CAJA (30×30, radio 8, sus tres estados). Esto pone el DIBUJO.
+ * ========================================================================== */
+
+.glifo {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* ── Verticales · arte aprobado, extraído ─────────────────────────────── */
+.glifo--lab       { -webkit-mask-image: url("../iconos/lab.png");      mask-image: url("../iconos/lab.png"); }
+.glifo--vet       { -webkit-mask-image: url("../iconos/vet.png");      mask-image: url("../iconos/vet.png"); }
+.glifo--taller    { -webkit-mask-image: url("../iconos/taller.png");   mask-image: url("../iconos/taller.png"); }
+.glifo--milk      { -webkit-mask-image: url("../iconos/milk.png");     mask-image: url("../iconos/milk.png"); }
+.glifo--farm      { -webkit-mask-image: url("../iconos/farm.png");     mask-image: url("../iconos/farm.png"); }
+.glifo--comercio  { -webkit-mask-image: url("../iconos/comercio.png"); mask-image: url("../iconos/comercio.png"); }
+
+/* ── Horizontales · dibujados para el riel ────────────────────────────── */
+.glifo--compra      { -webkit-mask-image: url("../iconos/compra.svg");      mask-image: url("../iconos/compra.svg"); }
+.glifo--factura     { -webkit-mask-image: url("../iconos/factura.svg");     mask-image: url("../iconos/factura.svg"); }
+.glifo--nucleo      { -webkit-mask-image: url("../iconos/nucleo.svg");      mask-image: url("../iconos/nucleo.svg"); }
+.glifo--talento     { -webkit-mask-image: url("../iconos/talento.svg");     mask-image: url("../iconos/talento.svg"); }
+.glifo--visibilidad { -webkit-mask-image: url("../iconos/visibilidad.svg"); mask-image: url("../iconos/visibilidad.svg"); }
+.glifo--conecta     { -webkit-mask-image: url("../iconos/conecta.svg");     mask-image: url("../iconos/conecta.svg"); }
+.glifo--deposito    { -webkit-mask-image: url("../iconos/deposito.svg");    mask-image: url("../iconos/deposito.svg"); }
+
+/* ── El hub · primera posición del riel, incondicional ────────────────── */
+.glifo--hub { -webkit-mask-image: url("../iconos/hub.svg"); mask-image: url("../iconos/hub.svg"); }
+
+/* ── EL FALTANTE SE VE ROTO ───────────────────────────────────────────────
+ * Una `key` sin dibujo muestra una caja punteada con `?`. JAMÁS un genérico
+ * mudo: el genérico mudo es el bug que este juego vino a matar — hoy el hub
+ * cablea `{ compra: '🧾', lab: '🧪' }` con `?? '▦'`, y once módulos comparten
+ * el mismo cuadradito sin que nadie lo reporte.
+ *
+ * Se aplica en el elemento cuando ninguna clase `--<key>` coincidió. Un
+ * fallback silencioso es cómo un bug así sobrevive meses.
+ * ====================================================================== */
+.glifo--sin-dibujo {
+  background-color: transparent;
+  -webkit-mask-image: none;
+  mask-image: none;
+  border: 2px dashed currentColor;
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
+}
+.glifo--sin-dibujo::after {
+  content: "?";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
