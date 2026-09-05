@@ -176,7 +176,7 @@ balance   { saldo, en_sobregiro, bajo, gracia_restante } | null
 branding  { logo_url, color_primario, color_acento }
 ```
 
-`launcher[]` trae **también los módulos no contratados**, con `action: "expand"` — es el "＋ Activar módulo" del riel. Y excluye la clase `plataforma`: `foundation` y `padron` no son apps del launcher.
+`launcher[]` trae **también los módulos no contratados**, con `action: "expand"`. **El riel NO los lista** (B-fix, 5-sep): pintarlos daba once ítems muertos indistinguibles de los vivos. Lo no contratado se descubre en el hub, y al riel le basta la puerta "＋ Activar módulo" al final. Y excluye la clase `plataforma`: `foundation` y `padron` no son apps del launcher.
 
 ### 2.3 Lo que falta, y va a UI-0a-bis
 
@@ -192,7 +192,7 @@ Los tres son **qué se muestra**, no cómo se ve: por la regla del §1, van a Fo
 
 ## 3. El mapa de Lab
 
-**Lab contradice el nivel 2.** Su riel lleva sus propias estaciones (`.rail-link` en `html.ts`), no los módulos de la plataforma. No tiene franja, ni sub-barra, ni barra de estado: su `.rail-brand` dice "Suynda Lab" y hace de wordmark.
+**Lab contradecía el nivel 2** —su riel llevaba sus propias estaciones (`.rail-link` en `html.ts`) y su `.rail-brand` decía "Suynda Lab"—. **Corregido en UI-2V-B** (desplegado y verificado el 5-sep-2026): riel de plataforma contra `/v1/shell`, franja con wordmark `suynda`, sub-barra de tabs y barra de estado con el saldo servido.
 
 `LAB_STATIONS` (`src/lab/stations.ts`) tiene **7 estaciones** — 6 del grupo `daily` más `configuracion` al pie:
 
@@ -204,9 +204,9 @@ Los tres son **qué se muestra**, no cómo se ve: por la regla del §1, van a Fo
 | `cargar` | Cargar | daily | **Tab 4** |
 | `verificar` | Verificar | daily | **Tab 5** |
 | `entregar` | Entregar | daily | **Tab 6** |
-| `configuracion` | Configuración | config | **Tab 7** — ver la decisión D1 |
+| `configuracion` | Configuración | config | **Pie del riel** — ver la decisión D1 (enmienda del 5-sep) |
 
-Las 7 caben: el mockup firmado de Visibilidad tiene 8 tabs.
+Las tabs quedaron en **seis**: Configuración bajó al pie del riel (D1). Espacio de sobra — el mockup firmado de Visibilidad tiene 8 tabs.
 
 ### Los tres elementos que cambian de dueño
 
@@ -217,13 +217,25 @@ Las 7 caben: el mockup firmado de Visibilidad tiene 8 tabs.
 | El riel entero | **Nivel 2**, con los módulos del `launcher` de `/v1/shell` |
 | *(no existe)* | **Nivel 1** franja y **nivel 4** barra de estado: nuevos en Lab, del paquete |
 
-### D1 — la decisión que este documento pide firmar
+### D1 — RESUELTA AL REVÉS DE LA PROPUESTA (enmienda del fundador, 5-sep-2026)
 
 **Hay dos "Configuración" y no son la misma.** La del pie del riel (nivel 2) es de la **plataforma**: el espacio, el equipo, los datos de la organización. La `configuracion` de Lab es del **módulo**: el catálogo clínico, sus departamentos, sus determinaciones.
 
-**Propuesta:** la de Lab es una **tab más** de la sub-barra —es una sección del módulo, como cualquier otra— y el pie del riel queda para la Configuración de plataforma. Se llaman igual y viven en niveles distintos, lo cual es correcto pero pide cuidado en el rótulo: la del módulo puede decir **"Catálogo"**, que es lo que realmente configura.
+**La propuesta de este documento era:** la de Lab como **tab más** de la sub-barra, rotulada **"Catálogo"**, dejando el pie del riel a la Configuración de plataforma. Se implementó así en UI-2V-B.
 
-> Alternativa descartada: que la `configuracion` de Lab vaya al pie del riel. Rompería el nivel 2, que es de plataforma, y pondría una pantalla del módulo en el lugar donde el usuario espera salir de él.
+**Lo firmado es lo contrario.** El fundador enmendó B.2-15 el 5-sep-2026 mirando la primera pantalla real: **las tabs son las seis estaciones de trabajo** (Inicio · Admitir · Muestras · Cargar · Verificar · Entregar) y **Configuración vive al pie del riel**, como en el hub. Mismo `id`, misma ruta, mismo `requiredFunction` — sólo cambia de casa. Implementado en la mini-corrida B-fix (`lab/src/http/html.ts`, `marco-script.ts`).
+
+**Precedente que la sostiene:** el hub ya lo hace, y lo dice en su propio encabezado — «Inicio → módulos ACTIVOS del espacio → ＋ Activar módulo → Configuración abajo» (`suynda-landing/src/components/shell/Riel.astro:1-6`).
+
+**El rótulo se queda en "Configuración", no pasa a "Catálogo".** Lo que hay detrás es más que el catálogo clínico: inventario, equipos, calidad y datos. Rotularla por una de sus partes la haría más chica de lo que es.
+
+> **La razón de la alternativa descartada era ésta:** poner una pantalla del módulo en el pie del riel ocupa el lugar donde el usuario espera **salir** del módulo, y el día que exista una Configuración **de plataforma** dentro de un módulo serían dos engranajes peleando por un asiento — o peor, uno solo que dice "Configuración" y lleva al catálogo clínico cuando el usuario venía a tocar los datos de su empresa.
+>
+> **La colisión no va a ocurrir, y por eso la decisión no queda pendiente de reapertura:** la Configuración **de plataforma** pertenece al **nivel 1** —la franja, bajo el menú del avatar—, no al pie del riel. El día que exista, **sube; no pelea.** El pie del riel es del módulo que se está usando, y eso es consistente en los cuatro niveles: nivel 1 la plataforma y la identidad, nivel 2 moverse entre módulos, nivel 3 y 4 el módulo en curso.
+
+> **Consecuencia para el nivel 1, anotada acá porque nace de esta decisión:** cuando se construya el menú del avatar, la Configuración de plataforma va **ahí**, y ningún módulo debe volver a poner la suya en la franja.
+
+> **Agujero conocido, medido, con test que lo vigila:** `piezas.css:936` esconde `.riel__abajo` por debajo de 860 px. Como Configuración salió de las tabs, **en un teléfono no queda puerta para llegar** salvo tecleando la URL. El test `B-fix · agujero conocido` de `lab/tests/browser/marco.tc13.test.ts` lo afirma tal cual, y se pone rojo —a propósito— el día que el paquete lleve el pie a la barra inferior. Ahí se borra el test y se cierra el pendiente.
 
 ---
 

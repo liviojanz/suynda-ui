@@ -102,6 +102,7 @@ Son **21 del canon §B.2** más **6 descubiertas al construir** (B.2-22 … B.2-
 **Estados:** activa · inactiva · con scroll
 **Receta:** tab 10/12 · `--tx-chrome` · activa `--tinta`/600 con subrayado `--amarillo` de 3px · `overflow-x: auto` sin barra visible
 **Prohibición:** **la primera tab dice «Inicio»**, no el nombre del módulo — ese es el título de la pantalla.
+**Prohibición (enmienda del fundador, 5-sep-2026):** **las tabs son las estaciones de TRABAJO, no la configuración del módulo.** En Lab son seis —Inicio · Admitir · Muestras · Cargar · Verificar · Entregar— y Configuración vive **al pie del riel**, como en el hub. Ver D1 en `docs/design/shell-canonico.md`, que quedó resuelta al revés de su propia propuesta.
 
 ## B.2-16 · Barra de estado (nivel 4)
 
