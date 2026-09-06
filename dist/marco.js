@@ -310,6 +310,10 @@ function construirTabs(doc, tabs, rotuloDeTabs) {
  */
 export function montarMarco(opciones) {
     const doc = opciones.raiz.ownerDocument;
+    // La raiz la da el consumidor y suele ser un `<div>` sin alto. Se le pone la
+    // clase para que el `height: 100%` del shell tenga contra que resolver: si
+    // no, la columna crece con el contenido y el scroll se lo lleva la pagina.
+    opciones.raiz.classList.add("marco-raiz");
     const shell = el(doc, "div", "shell");
     const franja = el(doc, "header", "franja");
     franja.setAttribute("data-franja", "");

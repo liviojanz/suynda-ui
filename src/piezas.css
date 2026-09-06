@@ -398,10 +398,29 @@
  * pantalla decide vive ADENTRO, con clases propias. */
 .main {
   padding: 2rem 2.5rem;
+  /* `flex: 1` y NO `height: 100%`. Con el alto al 100% dentro de una columna
+     flexible, el slot pedia el alto ENTERO de su contenedor y las tabs
+     quedaban de mas: la columna crecia con el contenido en vez de contenerlo,
+     y el scroll se lo llevaba la pagina. Medido al montar el marco en un
+     modulo real: 2409px de columna en una ventana de 720. */
+  flex: 1;
   min-height: 0;
-  height: 100%;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+/* LA RAIZ DONDE SE MONTA, que el paquete tiene que poder gobernar.
+ *
+ * El montador recibe un elemento del consumidor y le cuelga el `.shell`. Ese
+ * elemento suele ser un `<div>` suelto, sin alto: el `height: 100%` del shell
+ * se resolvia contra `auto` y no acotaba nada. La clase se la pone el montador
+ * al elemento recibido, asi el consumidor no tiene que saber esto.
+ *
+ * Lo unico que sigue siendo suyo es que `html, body` tengan alto — sin eso no
+ * hay porcentaje que valga, y ningun paquete puede decidirlo por el. */
+.marco-raiz {
+  height: 100%;
+  min-height: 0;
 }
 
 /* ---- B.2-13 · Franja (nivel 1) ------------------------------------------- */
