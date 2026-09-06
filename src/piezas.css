@@ -453,7 +453,10 @@
 .franja__wordmark {
   font-family: var(--tipografia-titulo);
   font-weight: 600;
-  font-size: 17px;
+  /* v0.3.3 — 20px con su ajuste de tracking, medidos del hub. El paquete tenia
+     17: tres puntos menos en la pieza mas visible de la pantalla. */
+  font-size: 20px;
+  letter-spacing: -0.02em;
   color: var(--tinta);
   text-decoration: none;
 }
@@ -467,7 +470,9 @@
   border-radius: 20px;
   padding: 6px 12px;
   font-family: var(--tipografia-cuerpo);
-  font-size: 12.5px;
+  /* v0.3.3 — `--tx-chrome` (15.5) y no 12.5: la pildora es un CONTROL, no un
+     metadato, y a 12.5 se leia como una etiqueta al lado del wordmark. */
+  font-size: var(--tx-chrome);
   font-weight: 600;
   cursor: pointer;
 }
@@ -685,6 +690,9 @@
   height: 48px;
   padding: 0 22px;
   flex-shrink: 0;
+  /* v0.3.3 — la barra de tabs es BLANCA sobre el papel del contenido, como en
+     el hub. Sin fondo propio heredaba el gris y la separacion se perdia. */
+  background: var(--card);
   border-bottom: 1px solid var(--linea);
   overflow-x: auto;
   scrollbar-width: none;
@@ -697,7 +705,8 @@
   padding: 15px 11px 11px;
   font-size: var(--tx-chrome);
   font-weight: 500;
-  color: var(--muted);
+  /* v0.3.3 — `--tinta-suave` y no `--muted`: son NAVEGACION, no metadatos. */
+  color: var(--tinta-suave);
   text-decoration: none;
   white-space: nowrap;
 }

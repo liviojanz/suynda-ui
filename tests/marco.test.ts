@@ -376,22 +376,37 @@ test("v0.3.0: las medidas son las del hub, no las del paquete viejo", async () =
       return {
         franjaAlto: css(".franja", "height"),
         franjaPadding: css(".franja", "padding-left"),
+        wordmarkLetra: css(".franja__wordmark", "font-size"),
+        wordmarkTracking: css(".franja__wordmark", "letter-spacing"),
+        pildoraLetra: css("[data-selector-espacio]", "font-size"),
         rielExpandido: getComputedStyle(riel).width,
         itemLetra: css(".riel__item", "font-size"),
         iconoAncho: css(".riel__icono", "width"),
         tabsAlto: css(".tabs", "height"),
+        tabsFondo: css(".tabs", "background-color"),
+        tabLetra: css(".tab", "font-size"),
         tabPadding: css(".tab", "padding-top"),
         avatarPeso: css(".franja__avatar", "font-weight"),
+        barraLetra: css(".barra-estado", "font-size"),
       };
     });
+    // LA TABLA DEL RECON, EXIGIDA. Cada número es el del hub, que es la fuente
+    // visual aprobada. Que estén acá y no en un documento es la diferencia
+    // entre una medida acordada y una que hay que acordarse de respetar.
     assert.equal(medidas.franjaAlto, "54px");
     assert.equal(medidas.franjaPadding, "18px", "la franja quedó con el padding viejo de 14");
+    assert.equal(medidas.wordmarkLetra, "20px", "el wordmark quedó en los 17 viejos");
+    assert.notEqual(medidas.wordmarkTracking, "normal", "al wordmark le falta el tracking");
+    assert.equal(medidas.pildoraLetra, "15.5px", "la píldora quedó en los 12.5 viejos");
     assert.equal(medidas.rielExpandido, "208px", "el riel expandido quedó en los 176 viejos");
     assert.equal(medidas.itemLetra, "15.5px", "el ítem del riel quedó en los 13px viejos");
     assert.equal(medidas.iconoAncho, "32px", "el ícono del riel quedó en los 30 viejos");
     assert.equal(medidas.tabsAlto, "48px", "las tabs no declaran alto");
+    assert.equal(medidas.tabsFondo, "rgb(255, 255, 255)", "la barra de tabs no es blanca");
+    assert.equal(medidas.tabLetra, "15.5px");
     assert.equal(medidas.tabPadding, "15px");
     assert.equal(medidas.avatarPeso, "600");
+    assert.equal(medidas.barraLetra, "14.5px");
   });
 });
 
