@@ -370,6 +370,14 @@
  * ------------------------------------------------------------------------*/
 
 .shell {
+  /* LA BASE DEL PRODUCTO. El hub la fija en su armazon
+     (`AppShell.astro`: «todo lo que no fija tamano hereda»); el paquete no la
+     fijaba, asi que un modulo montado heredaba los 16px del navegador y TODO
+     lo que no declara su propio tamano salia un punto mas chico que en el hub.
+     Se ve poniendo las dos pantallas al lado: la misma letra, distinta. */
+  font-size: var(--tx-base);
+  line-height: 1.55;
+  color: var(--tinta);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -522,6 +530,12 @@
   text-decoration: none;
 }
 .menu-avatar a:hover { background: var(--papel); }
+/* La salida gana a `.menu-avatar a` A PROPOSITO: el hub la dibuja como
+   `<button>` y el montador como `<a>` —porque lleva a /salir del hub, que es
+   otro origen—, y con la misma especificidad que el enlace generico salia en
+   tinta, no en rojo. Un «Cerrar sesion» que se ve igual que «Mis datos» es
+   justo lo que el borde y el color estan para evitar. */
+.menu-avatar .menu-avatar__salir,
 .menu-avatar__salir {
   display: block;
   width: 100%;
@@ -537,6 +551,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+.menu-avatar .menu-avatar__salir:hover,
 .menu-avatar__salir:hover { background: var(--rojo-bg); }
 
 /* ---- B.2-14 · Riel (nivel 2) --------------------------------------------- */

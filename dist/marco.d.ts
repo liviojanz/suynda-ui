@@ -81,7 +81,16 @@ export interface OpcionesDelMarco {
     readonly contenido: Node;
     /** Rótulo de la barra de tabs, para lectores de pantalla. */
     readonly rotuloDeTabs?: string;
-    /** Adónde va «Recargar». Sin esto, el enlace no se dibuja. */
+    /**
+     * Adónde va «Recargar».
+     *
+     * **No hace falta pasarlo**: el paquete lo compone sobre el `hubUrl` servido
+     * —`{hub}#recargar`, que abre el cuadro de recarga del panel—. Recargar es
+     * un acto de la PLATAFORMA, igual que salir: ningún módulo cobra.
+     *
+     * Se acepta un valor sólo para poder apagarlo (`null` explícito) o
+     * redirigirlo, no porque cada consumidor deba saberlo.
+     */
     readonly urlDeRecarga?: string | null;
     /** Para los tests: reemplaza la espera de las hojas. */
     readonly alAplicarseLasHojas?: (seguir: () => void) => void;

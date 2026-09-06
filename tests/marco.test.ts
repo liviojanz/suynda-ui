@@ -273,12 +273,34 @@ test("v0.3.0: BARRA DE ESTADO — créditos, jamás guaraníes, con el color del
   });
 });
 
-test("v0.3.0: «Recargar» sólo existe si le dan destino", async () => {
+/**
+ * «Recargar» SALE DEL PAQUETE, compuesto sobre el hub servido.
+ *
+ * Antes había que pasarle el destino y por eso Lab salió a producción con la
+ * barra mostrando los créditos y ninguna forma de recargarlos. Recargar es un
+ * acto de la plataforma —ningún módulo cobra—, así que el destino lo sabe el
+ * marco: `{hub}#recargar`, que abre el cuadro del panel.
+ */
+test("v0.3.0: «Recargar» se compone del hub servido, sin que el módulo lo pase", async () => {
   await conPagina(async (page) => {
     await montar(page, SHELL);
-    assert.equal(await page.locator("[data-recargar]").count(), 0, "se dibujó un Recargar sin destino");
-    await montar(page, SHELL, { urlDeRecarga: `${HUB}#recargar` });
-    assert.equal(await page.locator("[data-recargar]").getAttribute("href"), `${HUB}#recargar`);
+    const recargar = page.locator("[data-recargar]");
+    assert.equal(await recargar.count(), 1, "no se dibujó Recargar");
+    assert.equal(await recargar.getAttribute("href"), `${HUB}#recargar`);
+    assert.equal(await recargar.textContent(), "Recargar");
+  });
+});
+
+test("v0.3.0: sin hub servido no hay Recargar, y con null explícito tampoco", async () => {
+  await conPagina(async (page) => {
+    // Sin hub no hay adónde ir: un «Recargar» que no recarga es peor que nada.
+    await montar(page, { ...SHELL, hubUrl: null });
+    assert.equal(await page.locator("[data-recargar]").count(), 0);
+    // Y el consumidor puede apagarlo a propósito.
+    await montar(page, SHELL, { urlDeRecarga: null });
+    assert.equal(await page.locator("[data-recargar]").count(), 0);
+    // Pero los créditos siguen estando: el dato no depende de la acción.
+    assert.match((await page.locator(".barra-estado").textContent()) ?? "", /créditos/);
   });
 });
 
@@ -370,6 +392,60 @@ test("v0.3.0: las medidas son las del hub, no las del paquete viejo", async () =
     assert.equal(medidas.tabsAlto, "48px", "las tabs no declaran alto");
     assert.equal(medidas.tabPadding, "15px");
     assert.equal(medidas.avatarPeso, "600");
+  });
+});
+
+/**
+ * LO QUE SE VE PONIENDO LAS DOS PANTALLAS AL LADO.
+ *
+ * El hub fija la base tipográfica en su armazón y el paquete no lo hacía, así
+ * que un módulo montado heredaba los 16px del navegador: la misma letra, un
+ * punto más chica que en el hub, en todo lo que no declara su tamaño.
+ */
+test("v0.3.0: el armazón fija la base del producto, como el hub", async () => {
+  await conPagina(async (page) => {
+    await montar(page, SHELL);
+    const base = await page.evaluate(() => {
+      const shell = document.querySelector(".shell") as HTMLElement;
+      const css = getComputedStyle(shell);
+      const parrafo = document.querySelector(".main p") as HTMLElement;
+      return {
+        shell: css.fontSize,
+        alto: css.lineHeight,
+        // Lo que NO declara tamaño propio tiene que heredarla.
+        heredado: parrafo ? getComputedStyle(parrafo).fontSize : "",
+      };
+    });
+    assert.equal(base.shell, "17px", "el armazón no fija --tx-base");
+    assert.equal(base.heredado, "17px", "el contenido no hereda la base del producto");
+    assert.notEqual(base.alto, "normal", "el armazón no fija el interlineado");
+  });
+});
+
+/**
+ * LA SALIDA VA EN ROJO, sea `<a>` o `<button>`.
+ *
+ * El hub la dibuja como botón y el montador como enlace —lleva a /salir del
+ * hub, que es otro origen—. Con la misma especificidad que `.menu-avatar a`,
+ * el enlace salía en tinta: «Cerrar sesión» indistinguible de «Mis datos», que
+ * es justo lo que el color y el borde existen para evitar.
+ */
+test("v0.3.0: «Cerrar sesión» se distingue de la navegación del menú", async () => {
+  await conPagina(async (page) => {
+    await montar(page, SHELL);
+    await page.locator("[data-avatar]").click();
+    const colores = await page.evaluate(() => {
+      const salir = document.querySelector("[data-salir]") as HTMLElement;
+      const navegar = document.querySelector(".menu-avatar a:not([data-salir])") as HTMLElement;
+      return {
+        salir: getComputedStyle(salir).color,
+        navegar: getComputedStyle(navegar).color,
+        borde: getComputedStyle(salir).borderTopWidth,
+      };
+    });
+    assert.notEqual(colores.salir, colores.navegar, "la salida se ve igual que un enlace más");
+    assert.match(colores.salir, /^rgb\(176, 69, 58\)$/, "la salida no está en --rojo");
+    assert.notEqual(colores.borde, "0px", "a la salida le falta el borde que la separa");
   });
 });
 

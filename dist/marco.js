@@ -29,6 +29,8 @@
 const CASITA = "Inicio";
 const ACTIVAR = "Activar módulo";
 const RECARGAR = "Recargar";
+/** El ancla que abre el cuadro de recarga del panel (hub, `shell.ts`). */
+const ANCLA_DE_RECARGA = "#recargar";
 /** Cuántos esqueletos se muestran mientras carga. */
 const ESQUELETOS = 3;
 function el(doc, etiqueta, clase) {
@@ -370,7 +372,15 @@ export function montarMarco(opciones) {
         esqueleto.remove();
         poblarFranja(doc, franja, datos, datos.hubUrl ?? null);
         if (datos.saldo && typeof datos.saldo.valor === "number") {
-            shell.appendChild(construirBarraDeEstado(doc, datos.saldo, opciones.urlDeRecarga ?? null));
+            // El destino de «Recargar» se COMPONE, no se cablea ni se pide: sale
+            // del mismo hub que sirvió el shell. Si el consumidor no quiere el
+            // enlace, pasa `null` explícito.
+            const recarga = opciones.urlDeRecarga === undefined
+                ? datos.hubUrl
+                    ? `${datos.hubUrl}${ANCLA_DE_RECARGA}`
+                    : null
+                : opciones.urlDeRecarga;
+            shell.appendChild(construirBarraDeEstado(doc, datos.saldo, recarga));
         }
         // EL DIBUJO FALTANTE SE VE ROTO — y se decide DESPUÉS de montar, mirando
         // si la hoja le dio una máscara. Así no hay que mantener en cada
