@@ -36,6 +36,24 @@
   box-sizing: border-box;
 }
 
+/* ---- LA GUARDA DE `hidden` ----------------------------------------------
+ *
+ * `[hidden] { display: none }` es una regla del NAVEGADOR, y cualquier regla
+ * de autor le gana. Como este paquete le da `display: flex` a `.riel`, a
+ * `.franja`, a `.barra-estado` y a media docena mas, un elemento marcado
+ * `hidden` SE SEGUIA VIENDO, vacio y ocupando su lugar.
+ *
+ * No es teorico: Lab nacio escondiendo el riel, la pildora del espacio y la
+ * barra de saldo con `hidden`, y los tres se veian. Se esquivo alla por
+ * estructura —construir en vez de esconder— pero el proximo consumidor
+ * tropezaba igual, porque la trampa estaba acá.
+ *
+ * El `!important` es deliberado: `hidden` es una afirmacion del autor del
+ * documento sobre si algo existe para el usuario, y ninguna pieza de este
+ * paquete tiene autoridad para contradecirla.
+ * ------------------------------------------------------------------------*/
+[hidden] { display: none !important; }
+
 /* ---- B.2-01 · Píldora de estado ----------------------------------------- */
 
 .pildora {
@@ -337,14 +355,72 @@
 .monto--fuerte { font-weight: 600; color: var(--tinta); }
 .monto--negativo { color: var(--rojo); }
 
+/* ---- B.2-28 · El armazon del marco -------------------------------------
+ *
+ * El paquete traia todas las PARTES del shell y no la CAJA que las ordena, asi
+ * que cada consumidor la escribia: Lab tenia `.shell`, `.shell__cuerpo`,
+ * `.marco-columna` y `.main` en su propio `<style>`, y el hub los suyos en
+ * `AppShell.astro`. Dos armazones para el mismo marco es como empiezan a
+ * separarse dos implementaciones.
+ *
+ * LA FORMA, medida del hub: la franja cruza ENTERA arriba y la barra de estado
+ * ENTERA abajo; el riel vive solo en la banda del medio. Cuando el riel era una
+ * columna de altura completa, cortaba el amarillo a los 60px y la pantalla se
+ * leia como dos aplicaciones pegadas.
+ * ------------------------------------------------------------------------*/
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+.shell__cuerpo {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.marco-columna {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+/* EL SLOT DEL CONTENIDO, y por que es del MARCO y no de la pantalla: lo que
+ * declara —la sangria del area, la contencion del scroll, el `min-height: 0`
+ * que evita que la caja se desborde— es lo que hace que el riel quede quieto
+ * mientras el contenido rueda. Eso es una garantia del marco. Lo que la
+ * pantalla decide vive ADENTRO, con clases propias. */
+.main {
+  padding: 2rem 2.5rem;
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 /* ---- B.2-13 · Franja (nivel 1) ------------------------------------------- */
 
 .franja {
+  /* `relative` y `z-index` NO son decorativos: el menu del avatar cuelga de
+     acá con `position: absolute`, y sin este ancla se posicionaria contra el
+     primer antepasado posicionado —que en un consumidor cualquiera puede ser
+     cualquier cosa—. El hub los tiene (`Franja.astro`); el paquete no, y la
+     pieza del menu no funcionaria hasta que alguien lo descubriera mirando. */
+  position: relative;
+  z-index: 30;
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* v0.3.0 — medidos del hub (`Franja.astro`), que es la fuente visual: el
+     paquete tenia 10 de gap y 14 de padding. */
+  gap: 12px;
   height: 54px;
-  padding: 0 14px;
+  padding: 0 18px;
   background: var(--amarillo);
 }
 .franja__wordmark {
@@ -379,14 +455,70 @@
   background: var(--tinta);
   color: var(--amarillo);
   font-family: var(--tipografia-titulo);
-  font-weight: 700;
+  /* v0.3.0 — 600 y no 700, y el borde transparente de 2px que el hub reserva
+     para el foco. Medidos de `Franja.astro`. */
+  font-weight: 600;
   font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 2px solid transparent;
   cursor: pointer;
 }
+
+/* ---- B.2-13c · Menu del avatar ------------------------------------------
+ *
+ * El desplegable de la identidad. Vivia SOLO en el `<style>` del hub, asi que
+ * cualquier modulo que quisiera ofrecer «Mis datos» o «Cerrar sesion» tenia
+ * que copiarlo — y el primero que lo intento (Lab) se freno justamente por eso.
+ *
+ * La salida va en rojo y con borde arriba: se separa de la navegacion porque
+ * NO es navegacion. Y `position: absolute` cuelga de la franja, que declara su
+ * `position: relative` mas abajo.
+ * ------------------------------------------------------------------------*/
+
+.menu-avatar {
+  position: absolute;
+  top: 50px;
+  right: 14px;
+  width: 230px;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-radius: 14px;
+  box-shadow: var(--sombra-panel);
+  z-index: 40;
+}
+.menu-avatar__quien {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--linea);
+  font-size: var(--tx-chrome);
+}
+.menu-avatar a {
+  display: block;
+  padding: 10px 16px;
+  color: var(--tinta);
+  font-size: var(--tx-chrome);
+  font-weight: 500;
+  text-decoration: none;
+}
+.menu-avatar a:hover { background: var(--papel); }
+.menu-avatar__salir {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-top: 1px solid var(--linea);
+  background: none;
+  color: var(--rojo);
+  font-family: var(--tipografia-cuerpo);
+  font-size: var(--tx-chrome);
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.menu-avatar__salir:hover { background: var(--rojo-bg); }
 
 /* ---- B.2-14 · Riel (nivel 2) --------------------------------------------- */
 
@@ -410,11 +542,12 @@
   transition: opacity 0.12s ease 0.06s;
 }
 /* Expandido explícito — para la hoja, y para quien quiera el riel abierto. */
-.riel--expandido { width: 176px; }
+/* v0.3.0 — 208 y no 176: es el ancho del hub (`Riel.astro:58`). */
+.riel--expandido { width: 208px; }
 .riel--expandido .riel__nombre { opacity: 1; }
 /* Y por hover, sólo donde hay hover de verdad: en táctil nunca se expande. */
 @media (hover: hover) and (min-width: 861px) {
-  .riel:hover { width: 176px; }
+  .riel:hover { width: 208px; }
   .riel:hover .riel__nombre { opacity: 1; }
   .riel:hover .riel__item {
     padding-left: 14px;
@@ -423,7 +556,8 @@
 .riel__item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  /* v0.3.0 — gap 14 (hub), no 12. */
+  gap: 14px;
   color: var(--riel-tx);
   text-decoration: none;
   /* COLAPSADO manda en el reposo. La sangría es 7px y no 14: con 14 el ícono
@@ -432,10 +566,12 @@
      aunque esté en opacidad 0, así que centrar centraría ícono+etiqueta y
      sacaría el ícono del riel por la izquierda. Con 8 de margen y 7 de
      sangría, el ícono de 30 queda a 15 de cada lado en un riel de 60. */
-  padding: 10px 0 10px 7px;
-  margin: 1px 8px;
+  /* v0.3.0 — los tres del hub (`Riel.astro:67-70`): el paquete tenia
+     `10px 0 10px 7px`, margen `1px 8px` y 13px de letra. */
+  padding: 9px 0 9px 8px;
+  margin: 1px 6px;
   border-radius: 9px;
-  font-size: 13px;
+  font-size: var(--tx-chrome);
   font-weight: 500;
   position: relative;
 }
@@ -461,25 +597,60 @@
   border-radius: 0 3px 3px 0;
 }
 .riel__icono {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
+  /* v0.3.0 — 32/9/16, medidos del hub (`Riel.astro:113-117`). */
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
   background: var(--riel-icono-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: 16px;
   flex-shrink: 0;
 }
-.riel__item--activo .riel__icono { background: var(--amarillo); color: var(--tinta); }
-.riel__separador { height: 1px; background: var(--riel-linea); margin: 8px 16px; }
+.riel__item--activo .riel__icono,
+.riel__item--activo .icono-modulo {
+  background: var(--amarillo);
+  color: var(--tinta);
+}
+/* UNA SOLA REGLA PARA LA MARCA ACTIVA, y la razon es un bug pagado.
+ *
+ * Antes habia dos caminos: esta, automatica, que cubria el icono de TEXTO
+ * (`.riel__icono`, el que usa el hub para la casita y el engranaje), y
+ * `.icono-modulo--activo`, que habia que aplicar A MANO al dibujo enmascarado
+ * de un modulo. Lab aplicaba el hilo amarillo y no el modificador, asi que el
+ * modulo activo salia con media marca: hilo si, icono gris. Lo vio el fundador
+ * en produccion.
+ *
+ * Ahora el estado se declara UNA vez, en el item, y las dos formas de icono lo
+ * heredan. El modificador sobrevive para quien pinte un icono suelto fuera del
+ * riel, pero ya no hace falta acordarse de el. */
+.riel__separador { height: 1px; background: var(--riel-linea); margin: 8px 14px; }
 .riel__abajo { margin-top: auto; }
+/* LA PUERTA «＋ Activar modulo»: su icono es un contorno punteado, no una caja
+ * llena — lo que no esta contratado todavia no ocupa lugar propio. */
+.riel__item--mas .riel__icono {
+  background: transparent;
+  border: 1.5px dashed var(--riel-linea);
+  font-size: 18px;
+}
+/* MODULO CON ENTITLEMENT PERO SIN URL: activo-pero-no-navegable. Se ve
+ * apagado y NO se enlaza — antes se veia identico a uno vivo y el clic no
+ * hacia nada, que es peor que un enlace roto porque no se nota. */
+.riel__item--sin-url { cursor: default; opacity: 0.75; }
 
 /* ---- B.2-15 · Barra de tabs (nivel 3) ------------------------------------ */
 
 .tabs {
   display: flex;
   gap: 4px;
+  /* v0.3.0 — el contenedor declara su alto y su sangria, que el paquete NO
+     declaraba: sin ellos cada consumidor inventaba los suyos. Medidos del hub
+     (`SubBarra.astro:44-46`). */
+  align-items: center;
+  height: 48px;
+  padding: 0 22px;
+  flex-shrink: 0;
   border-bottom: 1px solid var(--linea);
   overflow-x: auto;
   scrollbar-width: none;
@@ -487,7 +658,9 @@
 .tabs::-webkit-scrollbar { display: none; }
 .tab {
   position: relative;
-  padding: 10px 12px;
+  /* v0.3.0 — `15px 11px 11px` del hub: mas aire arriba que abajo, para que el
+     hilo de la activa no quede pegado al texto. */
+  padding: 15px 11px 11px;
   font-size: var(--tx-chrome);
   font-weight: 500;
   color: var(--muted);
@@ -520,6 +693,24 @@
   color: var(--muted);
 }
 .barra-estado b { color: var(--tinta); }
+/* EL DATO EMPUJADO A LA DERECHA. Las tres partes vivian en el `<style>` del
+ * hub y se copiaron a mano a Lab; ahora son del paquete. */
+.barra-estado__spacer { flex: 1; }
+.barra-estado__grupo { display: flex; align-items: center; gap: 14px; }
+.barra-estado__dato { font-weight: 600; color: var(--tinta-suave); }
+.barra-estado--bajo .barra-estado__dato { color: var(--ambar-tx); }
+.barra-estado--sobregiro .barra-estado__dato { color: var(--rojo); }
+.barra-estado__accion {
+  border: none;
+  background: none;
+  padding: 4px 0;
+  color: var(--verde);
+  font-family: var(--tipografia-cuerpo);
+  font-size: var(--tx-xs);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
 .barra-estado--bajo b { color: var(--ambar-tx); }
 .barra-estado--sobregiro b { color: var(--rojo); }
 
@@ -932,8 +1123,29 @@
     height: 3px;
     border-radius: 0 0 3px 3px;
   }
-  .riel__separador,
-  .riel__abajo { display: none; }
+  /* El riel baja a barra inferior: el cuerpo se apila y el riel va segundo. */
+  .shell__cuerpo { flex-direction: column; }
+  .shell__cuerpo > .riel { order: 2; }
+  .shell__cuerpo > .marco-columna { order: 1; }
+  .main { height: auto; }
+
+  .riel__separador { display: none; }
+  /* EL PIE NO DESAPARECE EN MOVIL — se suma a la fila.
+   *
+   * Hasta v0.2.1 esto decia `.riel__abajo { display: none }`, y era razonable
+   * mientras el pie llevara la Configuracion de la PLATAFORMA: en un telefono
+   * el hub la ofrece por otro lado. Dejo de serlo cuando la enmienda a B.2-15
+   * bajo al pie la Configuracion del MODULO: en un telefono quedaba sin
+   * ninguna puerta, porque tampoco esta en las tabs.
+   *
+   * `margin-top: auto` empuja hacia abajo en columna; en fila no hace nada, y
+   * habria dejado el pie pegado al ultimo modulo. `margin-left: auto` lo manda
+   * al extremo derecho, que es donde el pulgar lo encuentra. */
+  .riel__abajo {
+    display: flex;
+    margin-top: 0;
+    margin-left: auto;
+  }
 
   .franja { padding: 0 10px; gap: 8px; }
   .modal { width: 100%; }

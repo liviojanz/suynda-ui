@@ -23,8 +23,12 @@ const enHoja = codigos(leer("catalogo", "hoja.html")).sort();
 const enMd = codigos(leer("docs", "hoja-de-especificacion.md")).sort();
 const enCatalogo = codigos(leer("catalogo", "index.html")).sort();
 
-/** 21 del canon §B.2 + 6 de la review por capturas del 31-ago. */
-const PIEZAS = 27;
+/**
+ * 21 del canon §B.2 + 6 de la review por capturas del 31-ago + el ARMAZON
+ * (B.2-28), que entra en v0.3.0: el paquete traia todas las partes del shell
+ * y no la caja que las ordena, asi que cada consumidor escribia la suya.
+ */
+const PIEZAS = 28;
 
 test(`el CSS declara las ${PIEZAS} piezas`, () => {
   const numeradas = enCss.filter((c) => !c.endsWith("c"));

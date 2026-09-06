@@ -94,7 +94,7 @@
 <header class="portada">
   <h1>Hoja de especificación</h1>
   <p>Las <b>27 piezas</b> de <b>@suynda/ui</b>, una ficha cada una: código, muestra, receta en tokens y su prohibición. <b>Cada muestra se renderiza del CSS real del paquete</b> — esta hoja no puede mostrar algo distinto de lo que los productos reciben.</p>
-  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-27 · las 21 del canon más 6 descubiertas al construir</p>
+  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-28 · las 21 del canon, 6 descubiertas al construir y el armazón de v0.3.0</p>
 </header>
 
 <!-- 01 -->
@@ -276,6 +276,24 @@
   </div>
   <div class="receta"><b>Receta:</b> símbolo + espacio + miles con punto · <code>tabular-nums</code> siempre · ₲ sin decimales, USD/BRL/ARS con dos</div>
   <div class="prohibicion"><b>Jamás</b> un monto sin su moneda — en el dato tampoco existe sin ella.</div>
+</section>
+
+<!-- 13c -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-13c</span><span class="ficha__nom">Menú del avatar</span></div>
+  <div class="muestra">
+    <div style="position:relative;height:150px;width:260px">
+      <div class="menu-avatar" style="position:static;width:230px">
+        <div class="menu-avatar__quien"><b>Livio Janz</b></div>
+        <a href="#">Mis datos</a>
+        <a href="#">Mis espacios</a>
+        <button class="menu-avatar__salir" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+    <span class="estado-rot">quién · navegación · salida</span>
+  </div>
+  <div class="receta"><b>Receta:</b> 230px · fondo <code>--card</code> · borde <code>--linea</code> · radio 14 · sombra <code>--sombra-panel</code> · la salida en <code>--rojo</code> con borde superior</div>
+  <div class="prohibicion"><b>La salida se separa de la navegación</b> —borde arriba y color propio— porque no es navegación: es la única entrada del menú que termina la sesión. Y <b>la sesión es de la plataforma</b>: la salida lleva al hub, jamás borra la cookie desde un módulo.</div>
 </section>
 
 <!-- 13 -->
@@ -531,6 +549,27 @@
   </div>
   <div class="receta"><b>Receta:</b> borde punteado <code>--linea</code>, radio 22px, 44px de alto · al abrirse revela una tarjeta de entrada, no campos sueltos</div>
   <div class="prohibicion"><b>Jamás</b> esconder detrás de esto un campo obligatorio: lo que se oculta es opcional, por definición.</div>
+</section>
+
+<!-- 28 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-28</span><span class="ficha__nom">El armazón del marco</span></div>
+  <div class="muestra">
+    <div style="width:280px;height:150px;border:1px solid var(--linea);display:flex;flex-direction:column;overflow:hidden;border-radius:6px">
+      <div style="height:22px;background:var(--amarillo);flex-shrink:0"></div>
+      <div style="display:flex;flex:1;min-height:0">
+        <div style="width:26px;background:var(--riel);flex-shrink:0"></div>
+        <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+          <div style="height:18px;border-bottom:1px solid var(--linea);flex-shrink:0"></div>
+          <div style="flex:1;background:var(--papel)"></div>
+        </div>
+      </div>
+      <div style="height:16px;border-top:1px solid var(--linea);flex-shrink:0"></div>
+    </div>
+    <span class="estado-rot">franja entera · riel sólo en la banda del medio · barra de estado entera</span>
+  </div>
+  <div class="receta"><b>Receta:</b> columna <code>.shell</code> · banda <code>.shell__cuerpo</code> en fila · <code>.marco-columna</code> con las tabs y el slot · <code>.main</code> con el scroll contenido · a ≤860px el cuerpo se apila y el riel pasa a barra inferior</div>
+  <div class="prohibicion"><b>El riel jamás corta la franja.</b> Cuando el riel era una columna de altura completa, el amarillo arrancaba a los 60px y la pantalla se leía como dos aplicaciones pegadas. Y <b>el armazón es del paquete</b>: mientras no lo fue, cada consumidor escribió el suyo y los marcos se separaron.</div>
 </section>
 
 <!-- 27 -->

@@ -88,26 +88,36 @@ Son **21 del canon §B.2** más **6 descubiertas al construir** (B.2-22 … B.2-
 ## B.2-13 · Franja (nivel 1)
 
 **Estados:** con una píldora · con las dos · píldora prestada (verde)
-**Receta:** 54px de alto · fondo `--amarillo` · wordmark 17px/600 · píldoras `--tinta`, **la prestada `--verde`** · avatar 32px (44 al tacto)
+**Receta:** 54px de alto · **padding `0 18px`, gap 12px** · fondo `--amarillo` · wordmark 17px/600 · píldoras `--tinta`, **la prestada `--verde`** · avatar 32px **peso 600 con borde de 2px transparente** (44 al tacto)
+**Enmienda v0.3.0:** padding, gap y avatar corregidos a lo medido en el hub (`Franja.astro`), que es la fuente visual aprobada. El paquete traía `0 14px`, gap 10 y peso 700.
 **Prohibición:** jamás créditos ni navegación de módulos acá — viven en los niveles 4 y 2. El verde **no es decoración**: es la defensa contra cargar datos en el espacio equivocado.
+
+## B.2-13c · Menú del avatar
+
+**Estados:** cerrado · abierto
+**Receta:** 230px · fondo `--card` · borde `--linea` · radio 14 · sombra `--sombra-panel` · «Mis datos» y «Mis espacios» en `--tinta`; la salida en `--rojo`, con borde superior
+**Prohibición:** **la salida se separa de la navegación** —borde propio y color propio— porque no es navegación: es la única entrada que termina la sesión. Y **la sesión es de la plataforma**: la salida lleva al hub y **jamás** borra la cookie desde un módulo — errarle al `Domain` no da un error, da un borrado silencioso.
 
 ## B.2-14 · Riel (nivel 2)
 
-**Estados:** **colapsado (60px, reposo)** · **expandido (176px, hover)** · módulo activo · disponible · «＋ Activar» · **barra inferior a ≤860px**
-**Receta:** fondo `--riel` · **60px en reposo, sólo íconos; 176px con etiquetas al hover, y sólo donde hay hover real** — en táctil nunca se expande, como fija el shell canónico · ítem 13px/500 · activo con hilo `--amarillo` de 3.5px e ícono amarillo · en angosto pasa a `row`, ítems en columna de 44px, el hilo pasa de costado a arriba
+**Estados:** **colapsado (60px, reposo)** · **expandido (208px, hover)** · módulo activo · disponible · sin URL · «＋ Activar» · **barra inferior a ≤860px, con el pie adentro**
+**Receta:** fondo `--riel` · **60px en reposo, sólo íconos; 208px con etiquetas al hover, y sólo donde hay hover real** — en táctil nunca se expande, como fija el shell canónico · ítem `--tx-chrome`/500, padding `9px 0 9px 8px`, gap 14, margen `1px 6px` · ícono 32×32 radio 9 · activo con hilo `--amarillo` de 3.5px **e ícono amarillo, que se hereda del ítem: una sola regla** · en angosto pasa a `row`, ítems en columna de 44px, el hilo pasa de costado a arriba, **y el pie va al extremo derecho en vez de esconderse**
+**Enmienda v0.3.0:** expandido, tipografía del ítem y tamaño del ícono corregidos a lo medido en el hub (`Riel.astro:58,67,70,113-117`) — el paquete traía 176px, 13px y 30×30. **Lo que NO se enmienda:** «60px en reposo, sólo íconos». Los dos lados declaran `.riel__nombre { opacity: 0 }` colapsado; ninguno muestra etiquetas en reposo, y las capturas que las muestran están en hover.
 **Prohibición:** **la casita del Hub es la primera, siempre** — no depende de entitlements ni del espacio activo.
 
 ## B.2-15 · Barra de tabs (nivel 3)
 
 **Estados:** activa · inactiva · con scroll
-**Receta:** tab 10/12 · `--tx-chrome` · activa `--tinta`/600 con subrayado `--amarillo` de 3px · `overflow-x: auto` sin barra visible
+**Receta:** **contenedor de 48px de alto con padding `0 22px`** · tab `15px 11px 11px` · `--tx-chrome` · activa `--tinta`/600 con subrayado `--amarillo` de 3px · `overflow-x: auto` sin barra visible
+**Enmienda v0.3.0:** el contenedor **no declaraba alto ni sangría** y cada consumidor inventaba los suyos; ahora son los del hub (`SubBarra.astro:44-46`), y el padding del tab pasa de `10px 12px` a `15px 11px 11px`.
 **Prohibición:** **la primera tab dice «Inicio»**, no el nombre del módulo — ese es el título de la pantalla.
 **Prohibición (enmienda del fundador, 5-sep-2026):** **las tabs son las estaciones de TRABAJO, no la configuración del módulo.** En Lab son seis —Inicio · Admitir · Muestras · Cargar · Verificar · Entregar— y Configuración vive **al pie del riel**, como en el hub. Ver D1 en `docs/design/shell-canonico.md`, que quedó resuelta al revés de su propia propuesta.
 
 ## B.2-16 · Barra de estado (nivel 4)
 
 **Estados:** normal · saldo bajo · sobregiro · sin bolsillo
-**Receta:** 40px · fondo `--papel` · borde superior `--linea` · `--tx-xs` · el número toma el color del estado (`--ambar-tx`, `--rojo`)
+**Receta:** 40px · fondo `--papel` · borde superior `--linea` · `--tx-xs` · **el dato empujado a la derecha (`__spacer` + `__grupo`)**, en peso 600, y el número toma el color del estado (`--tinta-suave`, `--ambar-tx`, `--rojo`) · la acción «Recargar» en `--verde`
+**Prohibición añadida en v0.3.0:** **son CRÉDITOS, jamás dinero.** El dato sale del libro de créditos y se escribe «⬢ N créditos». Una versión de Lab lo pintó como «₲ 0» —una unidad inventada sobre un dato real—, que es la métrica fabricada que B.2-17 prohíbe.
 **Prohibición:** **nunca grita.** Un saldo bajo informa; no bloquea ni interrumpe.
 
 ## B.2-17 · Tarjeta de métrica con delta
@@ -270,3 +280,9 @@ aparecer como SVG** — si aparece, alguien lo redibujó.
 | **Todo objetivo táctil ≥ 44 px** | medidos los 7 selectores interactivos con `getBoundingClientRect` bajo `pointer: coarse` | **ninguno por debajo** |
 
 **Y una tercera, que es la que sostiene a la hoja entera:** los estilos computados se leyeron del documento servido, no del archivo. La primera vez se abrió por `file://`, el navegador lo inlineó como `data:` y los `<link>` no resolvieron: la hoja se veía en Times New Roman con los tokens vacíos. **Una captura de eso habría sido una hoja mintiendo sobre el paquete.**
+
+## B.2-28 · El armazón del marco
+
+**Estados:** ancho (riel al costado) · angosto ≤860px (riel como barra inferior) · impresión (siempre ancho)
+**Receta:** `.shell` en columna · `.shell__cuerpo` en fila con el riel y `.marco-columna` · `.marco-columna` con las tabs y el slot · `.main` con `overflow-y: auto` y `overscroll-behavior: contain` · **la franja y la barra de estado cruzan enteras**, por fuera de la banda del riel
+**Prohibición:** **el riel jamás corta la franja.** Cuando el riel era una columna de altura completa, el amarillo arrancaba a los 60px y la pantalla se leía como dos aplicaciones pegadas. Y el `@media` va con **`screen and`**: una A4 mide ~779px y sin eso el riel salía como barra inferior dentro del PDF impreso.
