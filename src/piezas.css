@@ -967,7 +967,16 @@
 .perfil--personalizado { border-style: dashed; color: var(--muted); }
 .permisos__tildes {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  /* `min(210px, 100%)` y NO `210px` a secas: la celda tiene que poder achicarse
+     cuando el contenedor es más angosto que ella. Con `minmax(210px, 1fr)` la
+     tarjeta empujaba a su contenedor y la PÁGINA ENTERA rodaba de costado a
+     360px — medido en el hub: con la tarjeta cerrada `scrollWidth` = 360, al
+     abrirla 377, y el único nodo que no se encogía era `LABEL.tilde`, clavado
+     en 210. Lo destapó el primer consumidor de la pieza (TP-2), no una
+     revisión: la ficha tiene compuerta de 360px desde UI-1, pero nadie había
+     montado B.2-24 todavía. La intención se conserva —210px mientras haya
+     lugar— y a un ancho chico queda UNA columna que cabe. */
+  grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr));
   gap: 2px 14px;
   margin-top: 12px;
   padding-top: 12px;

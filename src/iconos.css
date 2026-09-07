@@ -72,9 +72,22 @@
 
 /* ── EL FALTANTE SE VE ROTO ───────────────────────────────────────────────
  * Una `key` sin dibujo muestra una caja punteada con `?`. JAMÁS un genérico
- * mudo: el genérico mudo es el bug que este juego vino a matar — hoy el hub
- * cablea `{ compra: '🧾', lab: '🧪' }` con `?? '▦'`, y once módulos comparten
- * el mismo cuadradito sin que nadie lo reporte.
+ * mudo: el genérico mudo es el bug que este juego vino a matar.
+ *
+ * EL CASO QUE LO ORIGINÓ, Y DÓNDE ESTÁ HOY (al 7-sep-2026). El riel del hub
+ * cableaba `MODULE_ICONS = { compra: '🧾', lab: '🧪' }` con `?? '▦'`, así que
+ * once módulos compartían el mismo cuadradito sin que nadie lo reportara. **Eso
+ * MURIÓ**: el hub adoptó esta hoja y el riel pinta `.glifo--<key>`
+ * (`suynda-landing`, commit `f60e279`; verificado en el build emitido y en
+ * producción).
+ *
+ * **Pero el emoji cableado por módulo NO murió: se mudó**, y por eso este
+ * párrafo se corrige en vez de borrarse. Vive en
+ * `suynda-landing/src/i18n/textos.es.json:145+` (`catalogo[].emoji`), que
+ * `src/pages/panel.astro:106` renderiza en la grilla de «Descubrí módulos». Ahí
+ * el cableado es peor que un ícono feo: el catálogo ESTÁTICO decide qué módulos
+ * existen, así que uno que Foundation sirve y ese JSON no lista **no tiene
+ * tarjeta**. Dueño: UI-4.
  *
  * Se aplica en el elemento cuando ninguna clase `--<key>` coincidió. Un
  * fallback silencioso es cómo un bug así sobrevive meses.

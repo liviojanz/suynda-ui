@@ -261,9 +261,18 @@ visor, doble flecha, pila escalonada, casa.
 
 Una `key` sin dibujo muestra `.glifo--sin-dibujo`: caja punteada con `?`.
 **Jamás un genérico mudo** — el genérico mudo es el bug que este juego mata.
-Hoy el hub cablea `{ compra: '🧾', lab: '🧪' }` con `?? '▦'` y once módulos
-comparten el mismo cuadradito; Visibilidad hace lo mismo con `▣`. Un fallback
-silencioso es cómo eso sobrevivió meses sin que nadie lo reportara.
+
+El caso que lo originó: el hub cableaba `{ compra: '🧾', lab: '🧪' }` con
+`?? '▦'` y once módulos compartían el mismo cuadradito; Visibilidad hacía lo
+mismo con `▣`. Un fallback silencioso es cómo eso sobrevivió meses sin que nadie
+lo reportara.
+
+**Al 7-sep-2026 el del riel murió** —el hub adoptó esta hoja (`f60e279`)— **pero
+el emoji cableado por módulo sigue vivo en otro lado**:
+`suynda-landing/src/i18n/textos.es.json:145+`, renderizado por
+`panel.astro:106`. Y ahí arrastra algo peor que un dibujo feo: ese catálogo
+estático decide qué módulos se ven, así que un módulo que Foundation sirve y el
+JSON no lista queda sin tarjeta. Dueño: UI-4.
 
 **Lo hace cumplir `tests/iconos.test.ts`**, contra `@suynda/contracts` y no
 contra una lista escrita a mano: toda `key` comercial tiene clase, toda clase
