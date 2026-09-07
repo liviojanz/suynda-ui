@@ -149,7 +149,12 @@ test("v0.3.0: CARGA — lista sólo lo activo, agrupado por clase, con puerta y 
     assert.equal(await page.locator("[data-riel-modulos] .riel__separador").count(), 1);
 
     assert.equal(await page.locator("[data-riel-casita]").getAttribute("href"), HUB);
-    assert.equal(await page.locator("[data-riel-activar]").getAttribute("href"), `${HUB}#descubri`);
+    // ACT-1a-fix — la puerta lleva a la PANTALLA de activar, no a un ancla
+    // adentro del panel. Y se compone sobre el ORIGEN: `hubUrl` termina en
+    // `/panel`, así que concatenar daría `/panel/activar`, que no existe.
+    const puerta = await page.locator("[data-riel-activar]").getAttribute("href");
+    assert.equal(puerta, new URL("/activar", HUB).href);
+    assert.doesNotMatch(puerta ?? "", /\/panel\/activar/, "se concatenó en vez de componer sobre el origen");
     assert.equal(await page.locator(".riel__abajo [data-riel-pie]").count(), 1);
   });
 });

@@ -261,7 +261,15 @@ function construirRiel(
   if (datos.hubUrl) {
     const mas = el(doc, "a", "riel__item riel__item--mas");
     mas.setAttribute("data-riel-activar", "");
-    mas.setAttribute("href", `${datos.hubUrl}#descubri`);
+    // ACT-1a-fix ítem 1 — LA PUERTA APUNTA A UNA PANTALLA, NO A UN ANCLA.
+    // Apuntaba a `{hub}#descubri`, y ese ancla vive adentro de una sección que
+    // el hub des-oculta por JS: el navegador resuelve el fragmento AL CARGAR
+    // —y desde un módulo esto SIEMPRE es una carga completa—, cuando el nodo
+    // todavía no existe, y no reintenta. La puerta aterrizaba arriba del panel
+    // sin hacer nada.
+    // `new URL` sobre el ORIGEN, igual que «Cerrar sesión» (:338): `hubUrl` es
+    // `https://…/panel`, así que concatenar habría dado `/panel/activar`.
+    mas.setAttribute("href", new URL("/activar", datos.hubUrl).href);
     mas.appendChild(iconoDeTexto(doc, "＋"));
     mas.appendChild(rotulo(doc, ACTIVAR));
     riel.appendChild(mas);
