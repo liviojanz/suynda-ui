@@ -50,6 +50,20 @@ export const TOKENS_CSS = `/* ==================================================
   --oro: #7a5b00;
   --ambar: #e0a200;
 
+  /* ---- A.1-ter · Color del MUNDO REAL: la tapa del tubo ----------------- */
+  /* D2-5. El canon usa la tapa de un tubo como su EJEMPLO TEXTUAL de color del
+     mundo real (§B.1.1, y el comentario de B.2-20), y no tenía la pieza: el
+     ejemplo del canon vivía fuera del canon, en el \`<style>\` de Lab
+     (\`html.ts:285-287\`). Estos tres son los que están en producción, con sus
+     valores exactos.
+
+     NO SE APLANAN a los tonos del sistema: la tapa de un tubo de suero es
+     amarilla porque el tubo ES amarillo. \`scripts/compuerta.mjs\` ya exime el
+     patrón \`--tubo-\` por esa razón, escrita ahí desde antes que la pieza. */
+  --tubo-suero: #f5d76e;
+  --tubo-edta: #6b4c9a;
+  --tubo-sin-marca: #c5c8c4;
+
   /* ---- A.1-bis · Superficie oscura -------------------------------------- */
   /* Sobre tinta o sobre el riel, los tonos claros no sirven: \`--verde\` sobre
      \`--tinta\` no llega al contraste. Estos siete existían inline dentro de

@@ -94,7 +94,7 @@
 <header class="portada">
   <h1>Hoja de especificación</h1>
   <p>Las <b>27 piezas</b> de <b>@suynda/ui</b>, una ficha cada una: código, muestra, receta en tokens y su prohibición. <b>Cada muestra se renderiza del CSS real del paquete</b> — esta hoja no puede mostrar algo distinto de lo que los productos reciben.</p>
-  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-29 · las 21 del canon, 6 descubiertas al construir, el armazón de v0.3.0 y el tablero de D2</p>
+  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-29 · las 21 del canon, 6 descubiertas al construir, el armazón de v0.3.0 y el tablero de D2 · más los ocho arreglos de D2, que no llevan código propio</p>
 </header>
 
 <!-- 01 -->
@@ -549,6 +549,38 @@
   </div>
   <div class="receta"><b>Receta:</b> borde punteado <code>--linea</code>, radio 22px, 44px de alto · al abrirse revela una tarjeta de entrada, no campos sueltos</div>
   <div class="prohibicion"><b>Jamás</b> esconder detrás de esto un campo obligatorio: lo que se oculta es opcional, por definición.</div>
+</section>
+
+<!-- D2 - los ocho arreglos: lo que se VE -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">D2</span><span class="ficha__nom">Los ocho arreglos — huecos de piezas que ya existían</span></div>
+  <div class="muestra muestra--bloque">
+    <div class="tarjeta" style="margin-bottom:10px">
+      <p class="tarjeta__titulo">D2-9 · el título que B.2-05 no tenía</p>
+      <p class="sin-modulo__cuerpo" style="margin:0">Lab escribía ocho reglas <code>X h2</code> porque la tarjeta no traía título.</p>
+    </div>
+    <section class="tarjeta tarjeta--critico" style="margin-bottom:10px">
+      <p class="tarjeta__titulo">D2-7 · sección crítica</p>
+      <p class="sin-modulo__cuerpo" style="margin:0">La píldora grita en una etiqueta; esto grita en la sección entera.</p>
+    </section>
+    <div class="tarjeta tarjeta--punteada" style="margin-bottom:10px">
+      <p class="tarjeta__titulo">D2-8 · punteada</p>
+      <p class="sin-modulo__cuerpo" style="margin:0">Esto todavía no se guardó / esto es un checklist.</p>
+    </div>
+    <div class="chips" style="margin-bottom:10px">
+      <button class="chip chip--elegido">Hematología</button>
+      <button class="chip">Microbiología</button>
+      <button class="chip">Química clínica</button>
+    </div>
+    <p style="margin:0 0 10px">
+      <span class="tubo tubo--suero"></span> Suero
+      <span class="tubo tubo--edta" style="margin-left:12px"></span> EDTA
+      <span class="tubo tubo--sin-marca" style="margin-left:12px"></span> sin marca
+    </p>
+    <span class="estado-rot">D2-3 chip de filtro (= B.2-23 con el nombre de su rol) · D2-5 la tapa del tubo, color del mundo real</span>
+  </div>
+  <div class="receta"><b>Los que no se ven:</b> <code>D2-4</code> <code>.entrada__campos</code> con <code>min(200px,100%)</code> — la cura de v0.3.5 aplicada a la otra grilla · <code>D2-6</code> <code>.lista__fila--apilable</code> <b>y <code>display:block</code> en <code>.tarjeta</code></b>, sin el cual un <code>&lt;a class="tarjeta"&gt;</code> es <code>inline</code> y la compuerta táctil no lo mide · <code>D2-9</code> la envoltura de títulos, <code>anywhere</code> y no <code>break-word</code> porque <code>break-word</code> no achica <code>min-content</code> · <code>D2-10</code> <code>.envoltorio-scroll</code></div>
+  <div class="prohibicion"><b>El tubo jamás se aplana</b> a los tonos del sistema. <b>Jamás un título sin clase</b> esperando que el canon lo estilice: el canon vive en clases, y un <code>&lt;h2&gt;</code> pelado sale con el default del navegador — límite declarado, no descuido.</div>
 </section>
 
 <!-- 29 -->

@@ -187,14 +187,58 @@
 /* ---- B.2-05 · Tarjeta ---------------------------------------------------- */
 
 .tarjeta {
+  /* D2-6 / O-1 - `display: block` NO ES COSMETICO: es lo que devuelve la
+     tarjeta al alcance de la compuerta tactil.
+
+     `.tarjeta` no declaraba display, asi que un `<a class="tarjeta">` seguia
+     siendo `inline` — y la exencion de V-4 deja afuera a los `<a>` en linea,
+     con razon: un enlace en medio de una oracion no es un objetivo tactil.
+     El resultado era que los enlaces de fila de Inicio, que se tocan enteros,
+     no los medía NADIE. Medido: 47x212 e invisible; como bloque, 48x312 y
+     medido. La cura del canon —`.tarjeta--interactiva` para "una fila que se
+     toca entera"— era la que creaba el punto ciego. */
+  display: block;
   background: var(--card);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
   padding: 14px 16px;
 }
+/* D2-9 - EL TITULO QUE B.2-05 NO TENIA, y es la causa de que cada modulo
+   escriba el suyo. `.entrada` tiene `.entrada__titulo` (:1040) desde siempre;
+   `.tarjeta` no tenia ninguno, asi que Lab termino con OCHO reglas `X h2`
+   —`.card h2`, `.block h2`, `.board-col h2`, `.criticals-first h2`,
+   `.config-group h2`, `.recs h2`, `.analysis-selected-block h3`,
+   `.sin-acceso h1`— mas una global. Las ocho mueren con esta clase.
+
+   El tamano se alinea con `.vacio__titulo` (15px/600), que es su hermano mas
+   cercano en el paquete: los dos son el rotulo de un bloque de contenido. */
+.tarjeta__titulo {
+  font-family: var(--tipografia-titulo);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--tinta);
+  margin: 0 0 8px;
+}
 .tarjeta--elevada { box-shadow: var(--sombra); }
 .tarjeta--interactiva { cursor: pointer; }
 .tarjeta--interactiva:hover { border-color: var(--muted); }
+
+/* D2-7 - SECCION CRITICA. B.2-01c grita en una ETIQUETA; una seccion entera
+   que grita no tenia pieza, y Lab la escribio como `.criticals-first`
+   (`html.ts:387-388`): borde de 2px y su `h2` en rojo.
+
+   La pieza trae SOLO eso. Que vaya primera y que no colapse es conducta del
+   modulo, no de la pieza: son decisiones de que se muestra antes, no de como
+   se ve. Y no hay un segundo nivel de gravedad porque no existe uno. */
+.tarjeta--critico { border: 2px solid var(--rojo); }
+.tarjeta--critico .tarjeta__titulo { color: var(--rojo); }
+
+/* D2-8 - PUNTEADA. DOS consumidores, y eso la convierte de caso aislado en
+   patron: `.recs` en Inicio dice "esto es un checklist, no una cola de
+   atencion" (`html.ts:404`), y `.confirm` en el alta dice "esto todavia no se
+   guardo" (`html.ts:372`). El punteado es la misma idea las dos veces: esto
+   no es un registro firme. */
+.tarjeta--punteada { border-style: dashed; }
 
 /* ---- B.2-06 · Tabla y lista de trabajo ----------------------------------- */
 
@@ -227,6 +271,16 @@
 .lista__fila--seleccionada { background: var(--papel); }
 .lista__fila--en-accion { opacity: 0.55; }
 .lista__der { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+/* D2-6 - APILABLE. `.lista__fila` es flex SIN `flex-wrap`, y `.boton` es
+   `white-space: nowrap`: una fila con etiqueta larga y su boton no entra en
+   360 y hay que sacarla de la pieza. Lab tiene CUATRO grillas propias que
+   existen solo por esto — `.row`, `.admit`, `.cargar`, `.verificar`.
+
+   Es modificador y no conducta por defecto: una fila de tabla corta apilada
+   en movil se lee peor que en linea. Lo pide quien sabe que su fila es larga.
+   La regla angosta vive abajo, en el @media de 860. */
+.lista__fila--apilable { flex-wrap: wrap; }
 .lista__meta { font-size: 11.5px; color: var(--muted); }
 
 /* ---- B.2-07 · Aviso ------------------------------------------------------ */
@@ -899,8 +953,14 @@
 
 /* ---- B.2-23 - Selector de modulos ---------------------------------------- */
 
-.modulos { display: flex; flex-wrap: wrap; gap: 8px; }
-.modulo-chip {
+/* D2-3 - `.chips` / `.chip` son EL MISMO ROL, nombrado por lo que hace.
+   B.2-23 estaba nombrada por su primer uso —"selector de modulos"— y por eso
+   fue invisible para el siguiente consumidor: Lab necesitaba chips de filtro
+   por departamento y reescribio la mecanica entera (`html.ts:350-352`),
+   `flex-wrap` + `min-height: 44px` + radio de pildora + estado encendido.
+   No es CSS nuevo: es la misma receta con el nombre que se busca. */
+.modulos, .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.modulo-chip, .chip {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -914,7 +974,7 @@
   font-weight: 500;
   cursor: pointer;
 }
-.modulo-chip--elegido {
+.modulo-chip--elegido, .chip--elegido {
   border-color: var(--tinta);
   background: var(--tinta);
   color: var(--card);
@@ -1051,7 +1111,12 @@
      `justify-content: start` NO es adorno: sin él, `auto-fit` reparte el
      sobrante entre las columnas que quedaron y se salta el máximo — medido,
      daba 324px con un tope declarado de 300. */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+  /* D2-4 - `min(200px, 100%)` y no `200px` pelado. Es LA MISMA cura que
+     v0.3.5 le hizo a B.2-24, aplicada a la otra grilla que quedo con la forma
+     del defecto: un minimo duro no puede achicarse, asi que en un contenedor
+     mas angosto que el minimo la celda desborda por definicion. A 360 hoy
+     entra; esto cierra la familia antes de su tercer caso. */
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 300px));
   justify-content: start;
   gap: 0 14px;
 }
@@ -1107,6 +1172,74 @@
 .icono-modulo--sobre-riel { background: var(--riel-icono-bg); color: var(--sobre-tinta); }
 .icono-modulo--activo { background: var(--amarillo); color: var(--tinta); }
 
+/* ---- D2-5 - Tapa de tubo -------------------------------------------------- */
+
+/* La pieza que el canon usaba de EJEMPLO y no tenia. Ver la nota de los
+   tokens `--tubo-*` en tokens.css: el color va literal porque es del mundo
+   real, y la compuerta anti-deriva lo exime por nombre.
+
+   Lo que esta pieza NO decide: CUALES tipos de tubo existen. Estos tres son
+   los que Lab dibuja hoy; el juego real es del dominio, no del canon. */
+.tubo {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  border: 1px solid var(--tinta);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.tubo--suero { background: var(--tubo-suero); }
+.tubo--edta { background: var(--tubo-edta); }
+.tubo--sin-marca { background: var(--tubo-sin-marca); }
+
+/* ---- D2-10 - Envoltorio de scroll ---------------------------------------- */
+
+/* Una tabla ancha no se achica, y el canon no tenia donde ponerla: su unico
+   `overflow-x` esta adentro de `.tabs` (:697), para la barra de tabs. Lab
+   escribio `.scroll-x` y lo usa cuatro veces, siempre envolviendo un
+   `<table>`.
+
+   LO QUE SE DECIDE ACA NO ES LA REGLA CSS, ES QUIEN DECLARA LA EXENCION. V-3
+   obliga a declarar todo contenedor con scroll propio, porque cada exencion
+   es una zona donde la compuerta deja de mirar. Con la clase en el canon la
+   exencion se declara UNA vez y con este nombre, en vez de una por modulo con
+   el nombre que a cada uno se le ocurra.
+
+   NO trae estilos de tabla: el paquete no tiene `<table>` y esta corrida no
+   lo agrega — seria el candidato once, y la lista esta congelada. */
+.envoltorio-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* ---- D2-9 - Envoltura de titulos ----------------------------------------- */
+
+/* EL PAQUETE NO TENIA NI UNA REGLA DE ENVOLTURA, y ya costo una medicion: un
+   `<h1>` de UNA sola palabra —"Recomendaciones", 324px en un contenedor de
+   280— empujaba el slot a 364 contra 360.
+
+   VA `anywhere` Y NO `break-word`, y no es preferencia: medido en un item
+   flex y en una grilla de minimo automatico —que es la forma de
+   `.lista__fila`— `break-word` DESBORDA IGUAL (contenedor 162, scroll 176)
+   porque no toca el tamano `min-content`: el minimo del item sigue siendo la
+   palabra mas larga, 148px. `anywhere` si lo achica (scroll 160, entra).
+   En una caja de ancho fijo las dos se comportan igual, y por eso la
+   diferencia no se ve si se mide en el lugar comodo.
+
+   Se declara sobre las CLASES de titulo, no sobre `h1/h2/h3`. El canon vive en
+   clases. LIMITE CONOCIDO Y DECLARADO: un `<h2>` sin clase sigue saliendo con
+   el default del navegador — el paquete no estiliza elementos pelados. */
+.tarjeta__titulo,
+.entrada__titulo,
+.vacio__titulo,
+.modal__titulo,
+.sin-modulo__titulo,
+.permisos__nombre,
+.tablero__titulo {
+  overflow-wrap: anywhere;
+}
+
 /* ---- B.2-29 - Tablero de estados ----------------------------------------- */
 
 /* NACE DE UN DEFECTO MEDIDO, no de una pantalla que faltaba. Lab dibujaba su
@@ -1152,9 +1285,8 @@
   font-size: 11.5px;
   font-weight: 600;
   color: var(--muted);
-  /* B.2-29 se paga su propio ajuste de titulo: la hoja no tiene reglas de
-     h1/h2/h3 y el rotulo de una columna puede ser una palabra larga. */
-  overflow-wrap: anywhere;
+  /* La envoltura la da D2-9 para todos los titulos del canon; hasta entonces
+     esta pieza se la pagaba sola. */
 }
 .tablero__cuenta {
   flex-shrink: 0;
@@ -1184,6 +1316,7 @@
   .tilde,
   .panel-selector__opcion,
   .modulo-chip,
+  .chip,
   .perfil,
   .mas-info {
     min-height: 44px;
@@ -1235,6 +1368,16 @@
   .shell__cuerpo > .riel { order: 2; }
   .shell__cuerpo > .marco-columna { order: 1; }
   .main { height: auto; }
+
+  /* D2-6 - la fila apilable pasa a columna. `margin-left: auto` en
+     `.lista__der` empujaba a la derecha; en columna eso deja la meta colgada
+     lejos de su fila, asi que se suelta. */
+  .lista__fila--apilable {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .lista__fila--apilable .lista__der { margin-left: 0; }
 
   /* B.2-29 - EL TABLERO APILA. Jamas scroll horizontal: si no entra, apila
      (§2 del diseno firmado). El panorama del tablero vive en los CONTADORES,

@@ -310,3 +310,92 @@ aparecer como SVG** — si aparece, alguien lo redibujó.
 **El `minmax(0, 1fr)` no es estilo, es el arreglo.** `1fr` a secas es `minmax(auto, 1fr)`, y ese `auto` es `min-content`: la columna se niega a bajar del ancho de su tarjeta más ancha y empuja igual. Lab lo tenía como `repeat(4, minmax(12rem, 1fr))` — 804px de mínimo contra un slot de ~312 — y **no se veía porque `.shell__cuerpo` lo recortaba**.
 
 **Las tarjetas de adentro NO son de la pieza.** Cada módulo pone las suyas; el molde probado es `.tarjeta--interactiva`, que es bloque, envuelve el texto y hace que el objetivo táctil sea la tarjeta entera.
+
+---
+
+# D2 · Los ocho arreglos
+
+**No son piezas nuevas: son huecos de piezas que ya existían**, encontrados al
+vestir Lab. Ninguno lleva código `B.2-NN` propio — la lista del tag se congeló en
+diez y **un candidato once va al tag siguiente**. Se documentan acá para que la
+hoja no muestre menos de lo que el paquete entrega.
+
+## D2-3 · Chip de filtro — `.chips` / `.chip`
+
+**Es B.2-23 con el nombre de su rol**, no una pieza nueva. `.modulo-chip` estaba
+nombrada por su primer uso y por eso el siguiente consumidor no la encontró: Lab
+reescribió `flex-wrap` + 44 px + radio de píldora + estado encendido desde cero.
+Misma receta, dos nombres: `.modulo-chip` para el chip con ícono de módulo,
+`.chip` para el chip de filtro.
+
+## D2-4 · `.entrada__campos` sin mínimo duro
+
+`minmax(min(200px, 100%), 300px)`. **Es la misma cura que v0.3.5 le hizo a
+B.2-24:** un mínimo duro no puede achicarse, y en un contenedor más angosto que
+el mínimo la celda desborda por definición. El tope de 300 y el
+`justify-content: start` no se movieron.
+
+## D2-5 · Tapa de tubo — `.tubo`, `.tubo--suero`, `.tubo--edta`, `.tubo--sin-marca`
+
+**El ejemplo del canon que vivía fuera del canon.** §B.1.1 usa la tapa de un tubo
+como su ejemplo textual de color del mundo real y el paquete no tenía la pieza.
+Los colores van literales, desde los tokens `--tubo-*`, y `scripts/compuerta.mjs`
+ya eximía ese patrón por su razón escrita.
+**Prohibición:** jamás aplanarlos a los tonos del sistema. La tapa de un tubo de
+suero es amarilla porque el tubo **es** amarillo.
+**No decide** cuáles tipos de tubo existen: son tres porque hoy hay tres.
+
+## D2-6 · `.lista__fila--apilable`, y el `display` de `.tarjeta`
+
+**Dos partes, y la segunda es del aparato de medición.**
+
+`.lista__fila` es flex **sin** `flex-wrap` y `.boton` es `white-space: nowrap`:
+una fila con etiqueta larga y su botón no entra en 360. El modificador la pasa a
+columna bajo 860 y suelta el `margin-left: auto` de `.lista__der`. **Es
+modificador y no conducta por defecto:** una fila corta apilada se lee peor.
+
+Y **`.tarjeta` ahora declara `display: block`**. No es cosmético: sin él, un
+`<a class="tarjeta">` era `display: inline`, y la compuerta táctil de los módulos
+exime a los `<a>` en línea — con razón, un enlace de prosa no es un objetivo
+táctil. El resultado era que **las tarjetas que se tocan enteras no las medía
+nadie**: 47×212 e invisibles; como bloque, 48×312 y medidas.
+
+## D2-7 · `.tarjeta--critico`
+
+Borde de 2 px en `--rojo` y el `.tarjeta__titulo` en rojo. **B.2-01c grita en una
+etiqueta; esto es la sección entera.**
+**No trae** que vaya primera ni que no colapse: eso es qué se muestra antes, y lo
+decide el módulo. **No hay** un segundo nivel de gravedad porque no existe uno.
+
+## D2-8 · `.tarjeta--punteada`
+
+Borde punteado. **Dos consumidores la vuelven patrón:** «esto es un checklist, no
+una cola de atención» y «esto todavía no se guardó». Las dos veces dice lo mismo:
+esto no es un registro firme.
+
+## D2-9 · Títulos — `.tarjeta__titulo` y la envoltura
+
+**B.2-05 no tenía título**, mientras `.entrada` sí. Por eso cada módulo escribía
+el suyo: Lab llegó a **ocho reglas `X h2`** más una global. `.tarjeta__titulo`
+entra en la escala de `.vacio__titulo`, su hermano.
+
+Y la envoltura, en un solo lugar para todas las clases de título del canon.
+**Va `overflow-wrap: anywhere` y no `break-word`, y está medido:** en un ítem
+flex o una grilla de mínimo automático —que es la forma de `.lista__fila`—
+`break-word` **desborda igual**, porque no achica el tamaño `min-content`: el
+mínimo del ítem sigue siendo la palabra entera. En una caja de ancho fijo las dos
+se ven iguales, y por eso la diferencia no aparece si se mide en el lugar cómodo.
+
+**Límite declarado:** se declara sobre **clases**, no sobre `h1/h2/h3`. Un `<h2>`
+sin clase sigue saliendo con el default del navegador. El canon vive en clases.
+
+## D2-10 · `.envoltorio-scroll`
+
+`overflow-x: auto` y `max-width: 100%` para una tabla ancha. **Lo que se decide
+no es la regla CSS, es quién declara la exención:** la compuerta de 360 obliga a
+declarar todo contenedor con scroll propio, porque cada exención es una zona
+donde deja de mirar. Con la clase en el canon **la exención se declara una vez y
+con este nombre**, en vez de una por módulo con el nombre que a cada uno se le
+ocurra.
+**No trae estilos de tabla** — el paquete no tiene `<table>`, y agregarlos sería
+el candidato once.
