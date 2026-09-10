@@ -46,5 +46,13 @@ export {
   type PieDelRiel,
 } from "./marco.js";
 
+export {
+  copyDeDenegacion,
+  htmlDeDenegacion,
+  type CausaDeDenegacion,
+  type CopyDeDenegacion,
+  type OpcionesDeDenegacion,
+} from "./denegacion.js";
+
 /** La versión del canon contra la que se generó esta capa. */
 export const CANON = "docs/congelado-ui.md §A" as const;

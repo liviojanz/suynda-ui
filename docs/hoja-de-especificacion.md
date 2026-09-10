@@ -149,6 +149,8 @@ Son **21 del canon §B.2** más **6 descubiertas al construir** (B.2-22 … B.2-
 
 **Prohibición:** jamás una pantalla en blanco ni un 403 crudo — quien llega acá se equivocó de espacio, no de producto.
 
+> **Construida en D2 (10-sep-2026).** La pieza dejó de ser tres reglas de CSS: trae marcado, las dos causas, `.sin-modulo__salidas` —la fila centrada que envuelve, sin la cual las dos salidas no entran en 360— y el copy con `{modulo}` como parámetro, exportado como `copyDeDenegacion` y `htmlDeDenegacion`. **El copy no se redactó de nuevo:** es el que estaba en producción en `lab/src/http/denegacion.ts`. El título es un `<p class="sin-modulo__titulo">`, no un `<h1>`. Y **la ficha de la hoja decía «dos salidas» siempre hasta acá**, contradiciendo a esta misma sección: se corrigió, y su compuerta ahora exige que los dos documentos digan lo mismo.
+
 > **Enmienda del 9-sep-2026** (recon de extracción de `@suynda/modulo`, D2). La receta decía «dos salidas» siempre; la conducta firmada en ACT-1a-fix es una sola cuando activar no resuelve la denegación (`lab/src/http/denegacion.ts`). El canon se corrige a lo firmado. **Dueños:** la *decisión* —causa y salidas— es de `@suynda/modulo`; **la pieza completa —markup, las dos causas, las salidas y el copy con `{modulo}` como parámetro— es de este paquete**; el render es del starter. **Estado hoy:** la pieza tiene sólo CSS (`.sin-modulo`, `piezas.css:828-843`), y Lab la pintó con clases propias (`.sin-acceso`) reescribiendo el CSS en su `<style>` — deuda que se cierra cuando la pieza entre completa al paquete, con tag nuevo.
 
 ---

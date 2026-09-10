@@ -34,5 +34,6 @@
  */
 export { TOKENS_CSS } from "./tokens.js";
 export { montarMarco, iniciales, type OpcionesDelMarco, type MarcoMontado, type ShellServido, type ModuloServido, type SaldoServido, type TabDelModulo, type PieDelRiel, } from "./marco.js";
+export { copyDeDenegacion, htmlDeDenegacion, type CausaDeDenegacion, type CopyDeDenegacion, type OpcionesDeDenegacion, } from "./denegacion.js";
 /** La versión del canon contra la que se generó esta capa. */
 export declare const CANON: "docs/congelado-ui.md \u00A7A";

@@ -124,8 +124,21 @@ MD, en los mismos términos**:
 .sin-modulo__salidas   la fila de salidas, centrada y que envuelve   ← NUEVA
 ```
 
-**Una sola clase nueva.** Es la que Lab tuvo que inventar, y sin ella las dos
-salidas a 360 px se salen de la fila.
+**Una sola clase nueva.** Es la que Lab tuvo que inventar.
+
+> **CORRECCION AL CONSTRUIR.** Este documento decia que sin ella «las dos
+> salidas a 360 px se salen de la fila». **Medido, es falso**: a 312 px las
+> salidas de los seis modulos que existen entran en una linea (219–266 contra
+> una caja de 280), y solo envuelven con un nombre de dos palabras
+> («Laboratorio clinico», 308).
+>
+> **Lo que la clase sostiene siempre es el `gap`.** El marcado se emite por
+> concatenacion, sin espacio entre los dos `<a>`, asi que sin contenedor flex
+> los botones **se tocan**: 0 px de separacion sin la clase, 10 con ella. El
+> `flex-wrap` queda como seguro para el nombre largo, que es dato.
+>
+> La clase sigue haciendo falta; **la razon que le habia puesto no era la
+> verdadera**, y una razon falsa en un documento es peor que ninguna.
 
 **El marcado canónico**, que va a la hoja y al MD:
 

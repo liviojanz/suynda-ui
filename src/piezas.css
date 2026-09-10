@@ -895,6 +895,36 @@
 }
 .sin-modulo__cuerpo { font-size: 13.5px; color: var(--tinta-suave); line-height: 1.5; margin: 0 0 var(--space-3); }
 
+/* D2-2 - LA FILA DE SALIDAS, la clase que faltaba para que la pieza sea una
+   pantalla y no tres reglas.
+
+   ESCRIBI ACA QUE SIN `flex-wrap` LAS DOS SALIDAS NO ENTRAN EN 360, Y ERA
+   FALSO. Medido a 312 px con los seis modulos que existen: entran en una sola
+   linea, 219 a 266 px contra una caja de 280. Solo envuelven con un nombre de
+   dos palabras ("Laboratorio clinico", 308).
+
+   Lo que la clase sostiene de verdad es el `gap`, y eso si vale SIEMPRE: el
+   marcado se emite sin espacio entre los dos `<a>` —es concatenacion de
+   strings, no HTML escrito a mano— asi que sin contenedor flex los dos
+   botones SE TOCAN. Medido: 0 px de separacion sin la clase, 10 con ella.
+
+   `flex-wrap` queda como seguro para el nombre largo, que es dato y no
+   constante. `justify-content: center` es redundante con el `text-align`
+   heredado mientras los hijos sean de linea, y deja de serlo apenas envuelven.
+
+   CUANTAS salidas hay lo decide LA CAUSA, no esta clase:
+     · sin modulo   (ENTITLEMENT_MODULE_INACTIVE) -> activar + volver al Hub
+     · sin facultad (CAPABILITY_DENIED)           -> SOLO volver al Hub
+   Ofrecer "Activar" en el segundo caso seria mentir: activar el modulo no lo
+   dejaria entrar igual. Es la conducta firmada en ACT-1a-fix, y el fundador la
+   piso en produccion el 6-sep. */
+.sin-modulo__salidas {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /* ============================================================================
  * PIEZAS 22-27 — de la review por capturas del fundador (31-ago).
  * Sólo aspecto: el backend viene después.

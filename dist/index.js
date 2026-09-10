@@ -34,5 +34,6 @@
  */
 export { TOKENS_CSS } from "./tokens.js";
 export { montarMarco, iniciales, } from "./marco.js";
+export { copyDeDenegacion, htmlDeDenegacion, } from "./denegacion.js";
 /** La versión del canon contra la que se generó esta capa. */
 export const CANON = "docs/congelado-ui.md §A";

@@ -420,15 +420,25 @@
 <section class="ficha">
   <div class="ficha__cab"><span class="ficha__cod">B.2-21</span><span class="ficha__nom">Módulo sin entitlement</span></div>
   <div class="muestra muestra--bloque">
-    <div class="sin-modulo">
-      <p class="sin-modulo__titulo">Lab no está activo en este espacio</p>
-      <p class="sin-modulo__cuerpo">Livio Janz finanzas todavía no tiene el módulo de laboratorio. Podés activarlo desde tu espacio, o volver al Hub.</p>
-      <button class="boton boton--primario">Activar Lab</button>
-      <button class="boton boton--secundario">Volver al Hub</button>
+    <div class="sin-modulo" style="margin-bottom:18px">
+      <p class="sin-modulo__titulo">Este espacio no tiene Laboratorio activo</p>
+      <p class="sin-modulo__cuerpo">Te equivocaste de espacio, no de producto. Si este es el espacio donde querés trabajar, activá Laboratorio desde el Hub; si no, cambiá de espacio arriba y volvé a entrar.</p>
+      <div class="sin-modulo__salidas">
+        <a class="boton boton--primario">Activar Laboratorio</a>
+        <a class="boton boton--secundario">Volver al Hub</a>
+      </div>
     </div>
+    <div class="sin-modulo">
+      <p class="sin-modulo__titulo">Tu cuenta todavía no entra acá</p>
+      <p class="sin-modulo__cuerpo">Laboratorio está limitado mientras dura el piloto, o tu cuenta no tiene las facultades de esta área. Activarlo no cambiaría eso: quien administra el espacio te lo habilita desde Equipo, en el Hub.</p>
+      <div class="sin-modulo__salidas">
+        <a class="boton boton--secundario">Volver al Hub</a>
+      </div>
+    </div>
+    <span class="estado-rot">sin módulo: DOS salidas · sin facultad: UNA</span>
   </div>
-  <div class="receta"><b>Receta:</b> centrado a 46ch · título 18px/600 · cuerpo 13.5px <code>--tinta-suave</code> · dos salidas: activar y volver</div>
-  <div class="prohibicion"><b>Jamás una pantalla en blanco ni un 403 crudo.</b> Quien llega acá se equivocó de espacio, no de producto.</div>
+  <div class="receta"><b>Receta:</b> centrado a 46ch · título 18px/600 · cuerpo 13.5px <code>--tinta-suave</code> · salidas en fila centrada que <b>envuelve</b>, gap 10px · <b>las salidas dependen de la causa:</b> sin módulo → activar + volver; sin facultad → <b>sólo</b> volver</div>
+  <div class="prohibicion"><b>Jamás una pantalla en blanco ni un 403 crudo</b> — quien llega acá se equivocó de espacio, no de producto. Y <b>jamás ofrecer «Activar» cuando activar no cambiaría el desenlace</b>: quien fue negado por facultad activaría el módulo y seguiría afuera. <b>Esta ficha decía «dos salidas» siempre hasta D2</b>, y el MD ya decía lo contrario desde la enmienda de Fase 2: se firmaba un aspecto que la conducta había desmentido.</div>
 </section>
 
 <!-- 22 -->
