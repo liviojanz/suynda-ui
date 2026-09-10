@@ -27,8 +27,12 @@ const enCatalogo = codigos(leer("catalogo", "index.html")).sort();
  * 21 del canon §B.2 + 6 de la review por capturas del 31-ago + el ARMAZON
  * (B.2-28), que entra en v0.3.0: el paquete traia todas las partes del shell
  * y no la caja que las ordena, asi que cada consumidor escribia la suya.
+ *
+ * + el TABLERO (B.2-29), primero de la corrida D2. No salio de una revision:
+ * salio de que Lab dibujaba 804px de ancho minimo dentro de un slot de ~312 y
+ * `.shell__cuerpo` lo recortaba, asi que el defecto no se reportaba nunca.
  */
-const PIEZAS = 28;
+const PIEZAS = 29;
 
 test(`el CSS declara las ${PIEZAS} piezas`, () => {
   const numeradas = enCss.filter((c) => !c.endsWith("c"));

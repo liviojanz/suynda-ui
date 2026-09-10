@@ -94,7 +94,7 @@
 <header class="portada">
   <h1>Hoja de especificación</h1>
   <p>Las <b>27 piezas</b> de <b>@suynda/ui</b>, una ficha cada una: código, muestra, receta en tokens y su prohibición. <b>Cada muestra se renderiza del CSS real del paquete</b> — esta hoja no puede mostrar algo distinto de lo que los productos reciben.</p>
-  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-28 · las 21 del canon, 6 descubiertas al construir y el armazón de v0.3.0</p>
+  <p class="sello">v0.1.0 · UI-1-B · canon <code>docs/congelado-ui.md</code> · citable por código: B.2-01 … B.2-29 · las 21 del canon, 6 descubiertas al construir, el armazón de v0.3.0 y el tablero de D2</p>
 </header>
 
 <!-- 01 -->
@@ -549,6 +549,33 @@
   </div>
   <div class="receta"><b>Receta:</b> borde punteado <code>--linea</code>, radio 22px, 44px de alto · al abrirse revela una tarjeta de entrada, no campos sueltos</div>
   <div class="prohibicion"><b>Jamás</b> esconder detrás de esto un campo obligatorio: lo que se oculta es opcional, por definición.</div>
+</section>
+
+<!-- 29 -->
+<section class="ficha">
+  <div class="ficha__cab"><span class="ficha__cod">B.2-29</span><span class="ficha__nom">Tablero de estados</span></div>
+  <div class="muestra">
+    <div class="tablero" style="width:100%">
+      <section class="tablero__columna">
+        <h3 class="tablero__titulo">Pendiente de pago<span class="tablero__cuenta">3</span></h3>
+        <a class="tarjeta tarjeta--interactiva">Orden 1042</a>
+      </section>
+      <section class="tablero__columna">
+        <h3 class="tablero__titulo">En proceso<span class="tablero__cuenta">7</span></h3>
+        <a class="tarjeta tarjeta--interactiva">Orden 1038</a>
+      </section>
+      <section class="tablero__columna">
+        <h3 class="tablero__titulo">Listo para retiro<span class="tablero__cuenta">0</span></h3>
+      </section>
+      <section class="tablero__columna tablero__columna--inerte">
+        <h3 class="tablero__titulo">Entregado<span class="tablero__cuenta">—</span></h3>
+        <div class="vacio"><p class="vacio__cuerpo">No aplica: el cobro lo lleva el convenio.</p></div>
+      </section>
+    </div>
+    <span class="estado-rot">con ítems · vacía · inerte (no aplica) · a ≤860px apilan</span>
+  </div>
+  <div class="receta"><b>Receta:</b> <code>grid-auto-flow: column</code> con <code>grid-auto-columns: minmax(0, 1fr)</code> — cuántas columnas lo dice el módulo — · gap 12px · columna con <code>--linea</code>, <code>--radio</code>, <code>--card</code> y alto mínimo · título 11,5px/600 en <code>--muted</code> con el contador a la derecha · la inerte al 55% <b>y su texto dice por qué</b> · <b>a ≤860px apilan</b> y el alto mínimo se suelta</div>
+  <div class="prohibicion"><b>Jamás scroll horizontal:</b> si no entra, apila. Un contenedor que rueda de costado dentro de un slot que rueda hacia abajo exige una exención de la compuerta de 360, y cada exención es una zona donde deja de mirar. Y <b>jamás una columna sin su contador</b>: el número es el panorama, y sin él el tablero apilado es una lista larga. Las tarjetas de adentro <b>no son de la pieza</b> — el molde es <code>.tarjeta--interactiva</code>.</div>
 </section>
 
 <!-- 28 -->

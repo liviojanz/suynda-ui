@@ -165,3 +165,60 @@ decisión correcta de producto. Eso es la firma viendo.
 4. **Que la pieza no nace con modificador para volver a horizontal en móvil**
    (§2, «lo que la firma de A no decide»).
 5. **Los cinco puntos de su compuerta** (§6), en especial el 2 y el 4.
+
+---
+
+## 8. Enmienda al construir — **dos cosas que el diseño dijo mal**, con la evidencia
+
+Se agrega **después** de la firma y **no cambia ninguna decisión**: cambia dónde
+dije que estaban dos cosas. Se escribe acá para que nadie lea §5 y §6 y crea que
+siguen vigentes tal cual.
+
+### 8.1 · §6 punto 1 se equivocó de roja, y lo dijo R10
+
+§6 punto 1 dice: *«La roja se planta revirtiendo el `@media` de apilado»*.
+**No es cierto**, y se comprobó plantando la mutación en vez de escribirla a ojo.
+Al revertir el `@media`, la que cae es **G-2**, no G-1:
+
+```
+G-2 - le saca el apilado al @media de 860
+   ROJA   -> cae "G-2 a 360 px apila, y los cuatro contadores entran"
+G-1 - devuelve el minimo duro de Lab: 12rem por columna
+   ROJA   -> cae "G-1 ningun descendiente escapa al tablero"
+```
+
+**Las dos condiciones miden cosas distintas y no se cubren entre sí:**
+
+| | qué mide de verdad | su revert |
+|---|---|---|
+| **G-1** | el **mínimo duro** — `minmax(0, 1fr)` contra `minmax(12rem, 1fr)` | devolver el mínimo de 12rem |
+| **G-2** | el **apilado** — una pista de grilla a ≤860 | sacar la regla del `@media` |
+
+Sin el apilado, a 312 px las cuatro columnas de `minmax(0, 1fr)` **se encogen a
+~69 px cada una y no desbordan**: quedan ilegibles, no desbordadas. Por eso G-1
+sale verde con el apilado revertido, y por eso hacían falta las dos.
+
+**La lección, que ya es R10 y acá se cobra otra vez:** el diseño escribió a ojo
+de dónde venía una roja y se equivocó. La lista de qué mide cada condición **se
+valida plantando**, nunca redactando.
+
+### 8.2 · §5 dejaba «cómo se ve con las cuatro columnas vacías» **para la compuerta**, y ahí no va
+
+§5 lo listó entre lo no resuelto y lo mandó a la compuerta. **La compuerta no
+puede contestarlo**: la promesa —«jamás una columna sin su contador»— es una
+regla de **marcado**, y ninguna mutación del CSS la rompe. Un test así saldría
+verde contra cualquier cambio de la pieza, o sea que mediría su propio fixture.
+Es la trampa que R10 nombra, agarrada **antes** de escribir el test y no después.
+
+**Se contesta mirando, y está contestado:** con las cuatro vacías a 360 px el
+tablero son cuatro filas rotuladas con su cero, una debajo de otra, y **el
+panorama queda intacto** — que es exactamente lo que §2 prometió. La captura va
+con el STOP.
+
+### 8.3 · Y una trampa de medición, para el próximo
+
+La primera lectura de la captura decía que la columna inerte medía ~320 px y se
+comía la pantalla. **Medida en el navegador son 165 px.** La diferencia era
+`deviceScaleFactor: 2`: la imagen sale al doble. **No se miden píxeles de una
+captura** — la captura es para ver, el navegador es para medir.
+

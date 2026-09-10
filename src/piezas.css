@@ -1107,6 +1107,61 @@
 .icono-modulo--sobre-riel { background: var(--riel-icono-bg); color: var(--sobre-tinta); }
 .icono-modulo--activo { background: var(--amarillo); color: var(--tinta); }
 
+/* ---- B.2-29 - Tablero de estados ----------------------------------------- */
+
+/* NACE DE UN DEFECTO MEDIDO, no de una pantalla que faltaba. Lab dibujaba su
+   tablero con `repeat(4, minmax(12rem, 1fr))` (`html.ts:367`): 4x192 + 3x12 =
+   804 px de ancho MINIMO, contra un slot de ~312 px a 360. No se veia porque
+   `.shell__cuerpo` recorta, asi que el tablero estaba cortado y nadie lo
+   reportaba. Es la familia del defecto que v0.3.5 le curo a B.2-24, cuatro
+   veces mas grande.
+
+   POR ESO LA GRILLA NO TIENE MINIMO DURO. `grid-auto-columns: minmax(0, 1fr)`
+   y no `1fr` a secas: `1fr` es `minmax(auto, 1fr)`, y ese `auto` es min-content
+   — la columna se niega a bajar del ancho de su tarjeta mas ancha y vuelve a
+   empujar. El cero es el arreglo.
+
+   Y `grid-auto-flow: column` en vez de `repeat(N, ...)`: cuantas columnas hay
+   lo decide el modulo, no la pieza. */
+.tablero {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+.tablero__columna {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 12rem;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+/* La inerte NO es una columna vacia: es una que no aplica en este flujo. Se
+   distingue, y su texto dice por que — la opacidad sola seria un acertijo. */
+.tablero__columna--inerte { opacity: 0.55; }
+.tablero__titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-family: var(--tipografia-cuerpo);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--muted);
+  /* B.2-29 se paga su propio ajuste de titulo: la hoja no tiene reglas de
+     h1/h2/h3 y el rotulo de una columna puede ser una palabra larga. */
+  overflow-wrap: anywhere;
+}
+.tablero__cuenta {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--tinta);
+}
+
 /* ============================================================================
  * Compuertas heredadas de UI-1: 360 px y 44 px.
  *
@@ -1180,6 +1235,14 @@
   .shell__cuerpo > .riel { order: 2; }
   .shell__cuerpo > .marco-columna { order: 1; }
   .main { height: auto; }
+
+  /* B.2-29 - EL TABLERO APILA. Jamas scroll horizontal: si no entra, apila
+     (§2 del diseno firmado). El panorama del tablero vive en los CONTADORES,
+     y apilado los cuatro entran en el primer viewport; con scroll horizontal
+     hay que barrer para verlos. El alto minimo se suelta: apiladas, cuatro
+     columnas de 12rem son 768 px de pantalla en blanco. */
+  .tablero { grid-auto-flow: row; }
+  .tablero__columna { min-height: 0; }
 
   .riel__separador { display: none; }
   /* EL PIE NO DESAPARECE EN MOVIL — se suma a la fila.

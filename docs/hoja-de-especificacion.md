@@ -300,3 +300,13 @@ aparecer como SVG** — si aparece, alguien lo redibujó.
 **Estados:** ancho (riel al costado) · angosto ≤860px (riel como barra inferior) · impresión (siempre ancho)
 **Receta:** `.shell` en columna · `.shell__cuerpo` en fila con el riel y `.marco-columna` · `.marco-columna` con las tabs y el slot · `.main` con `overflow-y: auto` y `overscroll-behavior: contain` · **la franja y la barra de estado cruzan enteras**, por fuera de la banda del riel
 **Prohibición:** **el riel jamás corta la franja.** Cuando el riel era una columna de altura completa, el amarillo arrancaba a los 60px y la pantalla se leía como dos aplicaciones pegadas. Y el `@media` va con **`screen and`**: una A4 mide ~779px y sin eso el riel salía como barra inferior dentro del PDF impreso.
+
+## B.2-29 · Tablero de estados
+
+**Estados:** columna con ítems · columna vacía · **columna inerte** (no aplica en este flujo) · angosto ≤860px apilado
+**Receta:** `grid-auto-flow: column` con `grid-auto-columns: minmax(0, 1fr)` — **cuántas columnas lo decide el módulo, no la pieza** — y `gap` de 12px · cada columna con borde `--linea`, radio `--radio`, fondo `--card` y alto mínimo · título 11,5px/600 en `--muted` con el contador a la derecha · **la inerte al 55% de opacidad, y su texto dice por qué** · **bajo 860px las columnas apilan**, el contador se queda en el título y el alto mínimo se suelta
+**Prohibición:** **jamás scroll horizontal** — si no entra, apila. Y **jamás una columna sin su contador**: el número es el panorama, y sin él el tablero apilado es una lista larga.
+
+**El `minmax(0, 1fr)` no es estilo, es el arreglo.** `1fr` a secas es `minmax(auto, 1fr)`, y ese `auto` es `min-content`: la columna se niega a bajar del ancho de su tarjeta más ancha y empuja igual. Lab lo tenía como `repeat(4, minmax(12rem, 1fr))` — 804px de mínimo contra un slot de ~312 — y **no se veía porque `.shell__cuerpo` lo recortaba**.
+
+**Las tarjetas de adentro NO son de la pieza.** Cada módulo pone las suyas; el molde probado es `.tarjeta--interactiva`, que es bloque, envuelve el texto y hace que el objetivo táctil sea la tarjeta entera.
