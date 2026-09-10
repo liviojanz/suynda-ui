@@ -27,6 +27,8 @@ Son **21 del canon §B.2** más **6 descubiertas al construir** (B.2-22 … B.2-
 **Receta:** primario `--tinta` sobre blanco · secundario borde `--linea` sobre `--card` · destructivo texto y borde `--rojo` · radio 8px · padding 9/15 · 13px/600 · **44px de alto bajo puntero grueso**
 **Prohibición:** **el amarillo jamás es botón** sobre fondo claro. La acción es tinta.
 
+> **Enmienda de D2 (10-sep-2026).** `.boton` no declaraba `text-decoration`, así que `<button class="boton">` salía limpio y **`<a class="boton">` salía SUBRAYADO**: la misma clase con dos aspectos según la etiqueta. Se encontró al construir B.2-21, que es la primera pieza que **el paquete mismo** emite como enlace. Ahora `.boton` declara `text-decoration: none`, y su compuerta afirma la propiedad —que las dos etiquetas se vean igual— y **la dirección contraria**: un enlace de prosa conserva su subrayado.
+
 ## B.2-03 · Campo de formulario
 
 **Estados:** reposo · foco · error · deshabilitado · sólo lectura

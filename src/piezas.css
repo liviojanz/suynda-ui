@@ -104,6 +104,15 @@
   font-weight: 600;
   font-size: 13px;
   line-height: 1.2;
+  /* D2 - UN BOTON NO SE SUBRAYA, y hasta acá se subrayaba: `.boton` no
+     declaraba `text-decoration`, así que `<button class="boton">` salía limpio
+     y `<a class="boton">` salía SUBRAYADO. La misma clase, dos aspectos, según
+     la etiqueta — que es el mismo reparto que producía el agujero de V-4.
+
+     Seis clases del paquete ya lo declaraban (`.riel__item`, `.tab`, …); la
+     que más veces se dibuja como enlace, no. Quince `<a class="boton">` en Lab,
+     más los dos que `htmlDeDenegacion` emite desde este mismo paquete. */
+  text-decoration: none;
   border: 1.5px solid transparent;
   cursor: pointer;
   white-space: nowrap;

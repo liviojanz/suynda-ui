@@ -380,6 +380,46 @@ test("D2-10 · una tabla ancha rueda adentro del envoltorio y no empuja afuera",
   );
 });
 
+/* ══ `.boton` · UN BOTON NO SE SUBRAYA ═══════════════════════════════════
+ *
+ * Entró a este tag por decisión del fundador, fuera de los diez: no es un hueco
+ * que alguien pidió, es un defecto visible en lo que la corrida entrega. El
+ * paquete emite `<a class="boton">` desde `htmlDeDenegacion`, así que el
+ * subrayado dejó de ser sólo problema del consumidor.
+ *
+ * Se mide la PROPIEDAD que importa: la misma clase se ve igual con las dos
+ * etiquetas. Es la forma del mismo defecto que produjo el agujero de V-4 —una
+ * pieza que se comporta distinto según el tag— y por eso se afirma así y no
+ * como "es none".
+ */
+test("`.boton` · el enlace-botón se ve igual que el botón-botón", async () => {
+  const medida = await enUnaPagina(
+    `<a class="boton boton--primario" id="a" href="#">Activar Laboratorio</a>
+     <button class="boton boton--primario" id="b">Activar Laboratorio</button>
+     <a id="pelado" href="#">un enlace de prosa</a>`,
+    (page) =>
+      page.evaluate(() => ({
+        enlace: getComputedStyle(document.getElementById("a")!).textDecorationLine,
+        boton: getComputedStyle(document.getElementById("b")!).textDecorationLine,
+        pelado: getComputedStyle(document.getElementById("pelado")!).textDecorationLine,
+      })),
+  );
+  assert.equal(
+    medida.enlace,
+    medida.boton,
+    `un \`<a class="boton">\` se ve "${medida.enlace}" y un \`<button class="boton">\` "${medida.boton}": ` +
+      "la misma clase, dos aspectos según la etiqueta",
+  );
+  assert.equal(medida.enlace, "none", "el botón salió subrayado");
+  // La dirección contraria: el arreglo NO puede haberle sacado el subrayado a
+  // los enlaces de prosa, que sí lo necesitan.
+  assert.equal(
+    medida.pelado,
+    "underline",
+    "un enlace sin clase perdió su subrayado: el arreglo se derramó fuera de `.boton`",
+  );
+});
+
 /* ══ D2-6 · APILABLE, Y EL `display` DE `.tarjeta` ════════════════════════
  *
  * Las dos partes de O-1 se miden por separado porque protegen cosas distintas.

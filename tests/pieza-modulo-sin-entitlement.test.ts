@@ -186,7 +186,13 @@ test("B.2-21 · G-3 · las salidas miden 44 px y V-4 las mide", async () => {
           const r = e.getBoundingClientRect();
           // El predicado de V-4, tal cual está en los módulos.
           const loMide = e.tagName === "A" ? s.display !== "inline" : true;
-          return { alto: Math.round(r.height), ancho: Math.round(r.width), display: s.display, loMide };
+          return {
+            alto: Math.round(r.height),
+            ancho: Math.round(r.width),
+            display: s.display,
+            loMide,
+            subrayado: s.textDecorationLine,
+          };
         }),
       ),
   );
@@ -195,6 +201,14 @@ test("B.2-21 · G-3 · las salidas miden 44 px y V-4 las mide", async () => {
     assert.ok(b.alto >= 44, `una salida mide ${b.alto} de alto y la compuerta de UI-1 pide 44`);
     assert.ok(b.ancho >= 44, `una salida mide ${b.ancho} de ancho`);
     assert.equal(b.loMide, true, `una salida quedó fuera del alcance de V-4 (display ${b.display})`);
+    // El paquete EMITE estos dos `<a>` desde `htmlDeDenegacion`, así que el
+    // subrayado de `.boton` dejó de ser problema del consumidor y pasó a ser
+    // parte de lo que este paquete entrega.
+    assert.equal(
+      b.subrayado,
+      "none",
+      `una salida sale subrayada ("${b.subrayado}"): es un \`<a>\`, y \`.boton\` tiene que verse igual con las dos etiquetas`,
+    );
   }
 });
 
