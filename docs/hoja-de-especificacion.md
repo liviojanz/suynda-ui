@@ -143,8 +143,13 @@ Son **21 del canon §B.2** más **6 descubiertas al construir** (B.2-22 … B.2-
 
 ## B.2-21 · Módulo sin entitlement
 
-**Receta:** centrado a 46ch · título 18px/600 · cuerpo 13.5px `--tinta-suave` · **dos salidas**: activar y volver al Hub
+**Receta:** centrado a 46ch · título 18px/600 · cuerpo 13.5px `--tinta-suave` · **las salidas dependen de la causa**, y hay dos causas:
+- *sin módulo* (`ENTITLEMENT_MODULE_INACTIVE`) — este espacio no tiene el módulo: **dos salidas**, activar y volver al Hub;
+- *sin facultad* (`CAPABILITY_DENIED` — el candado de rollout, o sin tildes) — el espacio puede tenerlo pero esta cuenta no entra: **una sola salida**, volver al Hub. Ofrecer activar ahí sería mentir: activar no lo dejaría entrar igual.
+
 **Prohibición:** jamás una pantalla en blanco ni un 403 crudo — quien llega acá se equivocó de espacio, no de producto.
+
+> **Enmienda del 9-sep-2026** (recon de extracción de `@suynda/modulo`, D2). La receta decía «dos salidas» siempre; la conducta firmada en ACT-1a-fix es una sola cuando activar no resuelve la denegación (`lab/src/http/denegacion.ts`). El canon se corrige a lo firmado. **Dueños:** la *decisión* —causa y salidas— es de `@suynda/modulo`; **la pieza completa —markup, las dos causas, las salidas y el copy con `{modulo}` como parámetro— es de este paquete**; el render es del starter. **Estado hoy:** la pieza tiene sólo CSS (`.sin-modulo`, `piezas.css:828-843`), y Lab la pintó con clases propias (`.sin-acceso`) reescribiendo el CSS en su `<style>` — deuda que se cierra cuando la pieza entre completa al paquete, con tag nuevo.
 
 ---
 
