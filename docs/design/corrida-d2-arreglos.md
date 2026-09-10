@@ -44,10 +44,50 @@ corta el objetivo se achica y **V-4 sigue callado**.
 **Y esto lo produjo una cura nuestra.** `.tarjeta--interactiva` fue la respuesta
 del canon a «una fila que se toca entera»; aplicarla **creó el punto ciego**.
 
-**Resolución:** el arreglo de **D2-6 incluye `display: block` en `.tarjeta`**.
-Con eso el enlace deja de ser `inline`, **vuelve a entrar en V-4** y se mide como
-lo que es. **No se toca la exención de V-4**: la exención sigue siendo correcta,
-lo que estaba mal era que la tarjeta cayera dentro de ella.
+#### Y al verificar esto, apareció **el caso grande**, que es peor
+
+Escribí arriba que la exención estaba bien y que sólo había que sacar a la
+tarjeta de adentro. **Es falso, y lo desmintió abrir `.boton`.**
+
+`.boton` es **`display: inline-flex`** (`piezas.css:97`). Y `inline-flex`
+**empieza con «inline»**. Medido hoy, la misma caja de 44×73:
+
+```
+<a class="boton boton--primario">        inline-flex   44 x 73   V-4 lo mide: NO
+<button class="boton boton--primario">   inline-flex   44 x 73   V-4 lo mide: SÍ
+```
+
+**El mismo botón del canon, medido o exento según la etiqueta.** Y en Lab hay
+**quince `<a class="boton">`** (`html.ts`, quince ocurrencias: `:471, :478, :550,
+:1285, :1308, :1309, :1326, :1339, :1360, :1468, :1478, :1487, :1508, :1526,
+:2772`), repartidos por **todas** las estaciones que se vistieron. **A ninguno
+lo midió V-4 nunca.**
+
+**La intención de la exención está escrita y es correcta** — el comentario dice
+*«los enlaces EN LÍNEA quedan afuera a propósito»*, y un `<a>` en medio de una
+oración es exactamente `display: inline`. **Lo que está mal es el predicado:**
+`startsWith("inline")` atrapa además `inline-flex` e `inline-block`, que no son
+prosa sino **maquetación deliberada de un control**.
+
+**Resolución, ahora en dos partes y las dos hacen falta:**
+
+1. **El predicado de V-4 pasa de `startsWith("inline")` a `=== "inline"`**
+   (`lab/tests/helpers/estacion-vestida.ts:167`). Una palabra. Conserva la
+   intención declarada **al pie de la letra** y deja de eximir controles. Esto
+   destapa los quince `<a class="boton">`.
+2. **`display: block` en `.tarjeta`.** Sigue haciendo falta: un
+   `<a class="tarjeta">` es `display: inline` **exacto**, así que el punto 1 solo
+   no lo alcanza. Esto destapa los tres enlaces de fila de Inicio.
+
+**Ninguna de las dos toca la regla de negocio de la exención.** La 1 la escribe
+como decía que era; la 2 saca a la tarjeta de su alcance.
+
+> **Esto es una compuerta que se leía por lo que decía medir y no por lo que
+> medía**, otra vez, y del lado más caro: **el aparato de medición**. Las siete
+> estaciones se cerraron con V-4 verde y V-4 no estaba mirando ninguno de sus
+> quince botones-enlace. **Ningún verde anterior de V-4 sobre un `<a>` significa
+> lo que parecía significar**, y eso hay que decirlo antes que cualquier otra
+> cosa sobre esas estaciones.
 
 > **Y ésta es la dirección contraria, que hay que mirar:** poner `display: block`
 > en `.tarjeta` **puede volver rojas estaciones ya cerradas**, porque empieza a
@@ -307,16 +347,21 @@ cerradas, y conviene que llegue con el resto del tag construido.
   hasta que UI-2V-C cierre, por orden del fundador.
 - **Estilos de tabla** (§8) y **una tercera causa de denegación** — los dos serían
   el candidato once.
-- **Si `display: block` en `.tarjeta` rompe una pantalla que hoy está verde.** No
-  se puede saber sin correr las compuertas de Lab contra el paquete nuevo, y eso
-  es (d). **Está declarado como riesgo, no descartado.**
+- **Cuántas estaciones se ponen rojas con O-1 puesto.** Son quince
+  botones-enlace y tres tarjetas repartidos por las siete estaciones, pero
+  **cuántos miden menos de 44 no se sabe sin correrlo**, y correrlo exige Lab
+  re-pineado — o sea (d). **Está declarado como riesgo cuantificado en su
+  población, no medido en su resultado.** Lo que sí se puede afirmar hoy es que
+  **el verde anterior de V-4 sobre esos dieciocho nodos no significaba nada**.
 
 ---
 
 ## 11 · Lo que espera tu firma
 
-1. **O-1** — que D2-6 incluya `display: block` en `.tarjeta`, que **no se toque la
-   exención de V-4**, y que un rojo nuevo en Lab se lea como hallazgo.
+1. **O-1** — **las dos partes**: el predicado de V-4 de `startsWith("inline")` a
+   `=== "inline"`, **y** `display: block` en `.tarjeta`. Y que los rojos nuevos en
+   Lab —que van a aparecer, son quince botones-enlace más tres tarjetas— se lean
+   como **hallazgo, no como regresión**.
 2. **O-2** — que D2-9 sea dueño único de la envoltura, que **borre** la línea de
    `.tablero__titulo`, y que la declaración elegida sea `break-word`.
 3. **O-3** — que **`.tarjeta__titulo` entre con D2-9**, no con D2-7 ni D2-8; y el
