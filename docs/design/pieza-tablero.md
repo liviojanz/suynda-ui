@@ -49,14 +49,44 @@ Es lo único que este documento tiene que decidir de verdad. Tres salidas reales
 
 ### Se firma **A**, y el argumento está medido, no es preferencia
 
-**El panorama del tablero vive en los contadores, no en las columnas.** La
-pregunta que responde esta pantalla es *«¿cuántas órdenes hay en cada estado?»*,
-y eso lo contestan cuatro números. Apilado, los cuatro títulos entran en el
-primer viewport de 360 px; con scroll horizontal hay que barrer para verlos.
+### El apilado se sostiene por sí mismo, sin premisa de plataforma
 
-**La puerta de entrada de Suynda es el celular** — el alta es por WhatsApp
-(`shell-canonico.md` §3-bis, motivo del fundador del 29-ago). El móvil no es el
-caso degradado del tablero: es el primero.
+**Primero: no desborda.** 804 px de ancho mínimo dentro de un slot de ~312 no
+entran de ninguna manera, y hoy `.shell__cuerpo` lo recorta sin avisar. Apilar
+es la única de las tres salidas que no deja marcado fuera de la caja.
+
+**Segundo: no exige exención de V-3.** Un contenedor que rueda de costado
+adentro de un slot que rueda hacia abajo hay que declararlo como excepción, y
+cada excepción es una zona donde la compuerta deja de mirar. Apilar **conserva
+la medición**; scrollear la apaga.
+
+Los dos valen **aunque el escritorio sea el caso principal** — que lo es.
+
+**Y el panorama no se pierde:** la pregunta que responde esta pantalla es
+*«¿cuántas órdenes hay en cada estado?»*, y eso lo contestan cuatro números.
+Apilado, los cuatro títulos entran en el primer viewport de 360 px.
+
+> **CORRECCIÓN DEL FUNDADOR (10-sep-2026). Acá había un argumento retirado.**
+>
+> Este documento decía: *«la puerta de entrada de Suynda es el celular — el alta
+> es por WhatsApp; el móvil no es el caso degradado del tablero: es el primero»*,
+> citando `shell-canonico.md` §3-bis como motivo del fundador del 29-ago.
+>
+> **La cita era textual** —esa frase está en `shell-canonico.md:269`, atribuida
+> al fundador con fecha—, **pero la premisa estaba mal extendida**. La palabra
+> del fundador, textual:
+>
+> > «la puerta de entrada a Suynda es WhatsApp, que vive generalmente en el
+> > celular. **Eso no significa que todos los módulos sean primariamente
+> > manejados desde el celular.**»
+>
+> El celular manda en el **camino de entrada** —alta, invitación, OTP—. **El
+> contexto de uso lo define cada módulo**, y **Lab vive en un monitor de
+> laboratorio: el escritorio es el caso principal de esta pieza.** El soporte
+> móvil es un plus.
+>
+> **El apilado en angosto sigue firmado y no se mueve**, porque no dependía de
+> esto: se sostiene solo, por los dos argumentos de abajo.
 
 **Y B se descarta por algo más duro que la comodidad:** un contenedor con scroll
 horizontal adentro del slot `.main` —que ya scrollea en vertical— es el patrón

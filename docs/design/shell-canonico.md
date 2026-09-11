@@ -264,12 +264,54 @@ Se congela **el comportamiento de los cuatro niveles**. El diseño de las pantal
 
 **Lo que el hub hace hoy:** el riel sigue vertical, 60 px, sólo íconos. Su código lo justifica citando la norma vieja: *"En móvil (sin hover) nunca aparece [la etiqueta]: **íconos con tap, como fija el congelado §2**"* (`Riel.astro:76-79`).
 
-**Por qué gana la barra inferior** *(motivo del fundador, 29-ago)*:
+**Por qué gana la barra inferior:**
 
-- **La puerta de entrada de Suynda es el celular** — el alta es por WhatsApp. El móvil no es el caso degradado; es el primero.
+- **La puerta de entrada de Suynda es el celular** — el alta es por WhatsApp. *(Frase del fundador, 29-ago.)*
 - **El riel vertical cobra ~17 % del ancho a 360 px**, de forma constante, **en todas las pantallas de todos los módulos**. La barra inferior **cobra alto, que es lo que sobra**.
 - Es **el patrón que el pulgar ya conoce**.
 - No choca con nada: la barra de estado **no** está fija abajo hoy, y en este modelo se pliega al menú del avatar.
+
+> ### ⚠ CORRECCIÓN DEL FUNDADOR (10-sep-2026) — una premisa retirada
+>
+> **Acá había una quinta afirmación, dentro del primer punto y bajo el rótulo
+> «motivo del fundador»:**
+>
+> > ~~«El móvil no es el caso degradado; es el primero.»~~
+>
+> **El fundador la desconoce como suya.** La primera mitad del punto —«la puerta
+> de entrada de Suynda es el celular, el alta es por WhatsApp»— **sí es su
+> frase y queda**. Lo que se retira es la extensión, que no dijo.
+>
+> **La premisa correcta, textual:**
+>
+> > «la puerta de entrada a Suynda es WhatsApp, que vive generalmente en el
+> > celular. **Eso no significa que todos los módulos sean primariamente
+> > manejados desde el celular.**»
+>
+> El celular manda en el **camino de entrada** —alta, invitación, OTP—. **El
+> contexto de uso lo define cada módulo**, y **Lab vive en un monitor de
+> laboratorio**.
+>
+> **LA DECISIÓN NO SE TOCA.** El riel sigue pasando a barra inferior en angosto,
+> y los módulos nuevos siguen naciendo así.
+>
+> **Pero su justificación queda PENDIENTE DE RE-ESTABLECERSE, y no se inventa
+> acá.** Lo que queda en pie de los cuatro puntos, sin la premisa retirada, es
+> el argumento del **ancho**: 17 % del ancho a 360 px, constante y en todas las
+> pantallas, contra alto que sobra. Ése no depende de que el móvil sea el caso
+> principal — depende de que, **cuando la pantalla es angosta, el ancho es el
+> recurso escaso**. Los otros dos puntos (el pulgar, el no-choque) describen la
+> conducta en móvil, no por qué el móvil manda.
+>
+> **Si eso alcanza o no, lo decide el dueño del canon; este documento no lo
+> resuelve.** Queda registrado como **pendiente del canon, con dueño a asignar
+> por el fundador.**
+>
+> **Y el patrón, que es lo que hay que no repetir:** una inferencia razonable se
+> escribió como cita del fundador en un documento firmado, y después **fue
+> fuente para la decisión siguiente** — el diseño de B.2-29 la citó de acá y la
+> usó para justificar el apilado del tablero. Lo que el fundador no dijo
+> textualmente **no se le atribuye**, ni siquiera cuando la inferencia es buena.
 
 **Lo que se pierde:** era lo construido, probado y desplegado, y el §2 lo había elegido a propósito.
 
