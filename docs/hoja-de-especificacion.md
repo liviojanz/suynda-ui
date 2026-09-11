@@ -46,6 +46,8 @@ Son **21 del canon §B.2** más **6 descubiertas al construir** (B.2-22 … B.2-
 **Receta:** `--card` · borde `--linea` · radio `--radio` (12px) · padding 14/16 · elevada suma `--sombra`
 **Prohibición:** no anidar tarjetas — dos bordes seguidos no crean jerarquía, crean ruido.
 
+> **Enmienda de v0.4.1 (10-sep-2026).** `.tarjeta` no declaraba `color` ni `text-decoration`, así que `<div class="tarjeta">` salía limpio y **`<a class="tarjeta">` salía azul y subrayado** — la misma clase con dos aspectos según la etiqueta, igual que `.boton` antes de D2. Alcanzaba a tres nodos en Lab, **dos de ellos desde que `.tarjeta--interactiva` se recomendó como cura de «una fila que se toca entera»**: la cura del canon traía su propio defecto. Va en `.tarjeta` y **no** en `.tarjeta a`: un enlace de prosa adentro de una tarjeta conserva lo suyo, y su compuerta lo mide en las dos direcciones.
+
 ## B.2-06 · Tabla / lista de trabajo
 
 **Estados:** cabecera pegajosa · fila seleccionable · fila en acción

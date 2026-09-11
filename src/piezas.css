@@ -211,6 +211,21 @@
   border: 1px solid var(--linea);
   border-radius: var(--radio);
   padding: 14px 16px;
+  /* v0.4.1 - UNA TARJETA NO ES UN ENLACE AZUL SUBRAYADO. Es el mismo defecto
+     que `.boton` tenia y por el mismo motivo: la clase no neutralizaba el
+     estilo que el navegador le da a un `<a>`, asi que `<div class="tarjeta">`
+     salia limpio y `<a class="tarjeta">` salia azul y subrayado.
+
+     Lo encontro (e) de UI-2V-C al montar el tablero, pero NO era de ahi: los
+     enlaces de fila de Inicio venian asi desde C-a, porque la cura del canon a
+     «una fila que se toca entera» —`.tarjeta--interactiva`— traia su propio
+     defecto y nadie lo miro de cerca.
+
+     Va en `.tarjeta` y no en `.tarjeta a`: un enlace de PROSA adentro de una
+     tarjeta conserva lo suyo, porque el `<a>` declara su color y su subrayado
+     y eso le gana a lo heredado. Esta probado en las dos direcciones. */
+  color: var(--tinta);
+  text-decoration: none;
 }
 /* D2-9 - EL TITULO QUE B.2-05 NO TENIA, y es la causa de que cada modulo
    escriba el suyo. `.entrada` tiene `.entrada__titulo` (:1040) desde siempre;

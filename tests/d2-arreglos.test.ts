@@ -420,6 +420,59 @@ test("`.boton` · el enlace-botón se ve igual que el botón-botón", async () =
   );
 });
 
+/* ══ `.tarjeta` · UNA TARJETA NO ES UN ENLACE AZUL ═══════════════════════
+ *
+ * v0.4.1, y es la SEGUNDA vez que aparece la misma forma: una clase del canon
+ * aplicada a un `<a>` que no neutraliza el estilo de enlace del navegador.
+ * `.boton` lo tuvo; `.tarjeta` también, y alcanzaba a tres nodos de Lab —los
+ * dos enlaces de fila de Inicio **desde C-a**, y la tarjeta del tablero—.
+ *
+ * Se mide la misma propiedad que en `.boton`: la clase se ve igual con las dos
+ * etiquetas. Y **la dirección contraria**, que acá es más fina: un enlace de
+ * PROSA adentro de una tarjeta tiene que conservar lo suyo.
+ */
+test("`.tarjeta` · la tarjeta-enlace se ve igual que la tarjeta-caja", async () => {
+  const medida = await enUnaPagina(
+    `<a class="tarjeta tarjeta--interactiva" id="a" href="#">Orden 1042 · Ayala, Carmen</a>
+     <div class="tarjeta tarjeta--interactiva" id="d">Orden 1042 · Ayala, Carmen</div>
+     <div class="tarjeta" id="c">Texto de la tarjeta con <a id="prosa" href="#">un enlace adentro</a>.</div>`,
+    (page) =>
+      page.evaluate(() => {
+        const a = getComputedStyle(document.getElementById("a")!);
+        const d = getComputedStyle(document.getElementById("d")!);
+        const p = getComputedStyle(document.getElementById("prosa")!);
+        return {
+          enlaceColor: a.color,
+          enlaceSubrayado: a.textDecorationLine,
+          cajaColor: d.color,
+          cajaSubrayado: d.textDecorationLine,
+          prosaColor: p.color,
+          prosaSubrayado: p.textDecorationLine,
+        };
+      }),
+  );
+  assert.equal(
+    medida.enlaceColor,
+    medida.cajaColor,
+    `un \`<a class="tarjeta">\` es "${medida.enlaceColor}" y un \`<div class="tarjeta">\` "${medida.cajaColor}": ` +
+      "la misma clase, dos colores según la etiqueta",
+  );
+  assert.equal(medida.enlaceSubrayado, "none", "la tarjeta-enlace salió subrayada");
+  assert.equal(medida.enlaceSubrayado, medida.cajaSubrayado);
+  // LA DIRECCIÓN CONTRARIA: el arreglo no puede derramarse a la prosa de
+  // adentro. Un enlace en medio de una oración sigue siendo un enlace.
+  assert.equal(
+    medida.prosaSubrayado,
+    "underline",
+    "un enlace de prosa DENTRO de una tarjeta perdió su subrayado: el arreglo se derramó",
+  );
+  assert.notEqual(
+    medida.prosaColor,
+    medida.cajaColor,
+    "un enlace de prosa dentro de una tarjeta perdió su color de enlace",
+  );
+});
+
 /* ══ D2-6 · APILABLE, Y EL `display` DE `.tarjeta` ════════════════════════
  *
  * Las dos partes de O-1 se miden por separado porque protegen cosas distintas.

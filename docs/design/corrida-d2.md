@@ -155,3 +155,54 @@ revirtiendo el arreglo** — no una roja genérica de la corrida.
 con **el tag commiteado y SIN pushear**. El push del fundador es lo que
 desbloquea el re-pin de Lab, que exige cotejar el lock contra un tag que exista
 en el remoto. **Su push está en el medio de la secuencia, no al final.**
+
+---
+
+## 4. Candidatos del TAG SIGUIENTE — la lista que se abre cuando ésta cerró
+
+La lista de los diez se congeló al abrir D2 y **se respetó**. Lo que apareció
+después se anotó acá en vez de colarse. Cada uno con quién lo encontró:
+
+### C-1 · El canon **no declara tamaño base** en ningún lado
+
+Ni regla de `body`, ni de `html`, ni de `*`, ni token de escala. Cada pieza
+declara sus px y **el texto sin clase queda en el default del navegador**.
+Lo encontró la prueba de D2-9 al comparar `.tarjeta__titulo` contra un `<p>`
+pelado: 15 contra 16, y el título salía más chico que el párrafo.
+
+### C-2 · **Estilos de tabla**
+
+El paquete no tiene `<table>`. D2-10 le dio el envoltorio de scroll y
+deliberadamente no los estilos — habría sido el candidato once de D2.
+
+### C-3 · Un tono de **CERRADO / INMUTABLE** en B.2-01 — **firmado**
+
+**Firmado por el fundador el 10-sep para el tag siguiente**, por el camino de
+**B.2-01c**: pieza con código propio y su ficha, **disponible para toda la
+plataforma**.
+
+Lo pidió (e) de UI-2V-C: Entregar tiene **dos** usos del mismo `#163a73`
+—`.badge-delivered` y `.lock`— y los dos dicen «esto está cerrado, es
+inmutable». Dos consumidores en una sola pantalla es el mismo criterio de patrón
+con que D2-8 entró. Entretanto Lab usa una traducción **declarada provisoria**
+(`--neutro` y `.aviso`), que reemplaza cuando el tono exista.
+
+### C-4 · Revisión de **nombres del canon**
+
+Una pieza nombrada por su primer uso se vuelve invisible para el próximo módulo,
+que la reinventa — R8 a nivel de canon. `.modulo-chip` es el caso probado y D2-3
+lo curó con un alias. **Congelada hasta que UI-2V-C cierre**, por orden del
+fundador; puede haber más casos.
+
+---
+
+## 5. El principio que gobierna todo esto, firmado el 10-sep
+
+> **Nada se resuelve sólo para Lab.** Si un módulo necesita algo que el canon no
+> tiene, **se construye en el canon, para todos los módulos.**
+
+Aplica a **toda corrida de acá en adelante**, y va a la próxima regeneración
+**como regla, no como nota**: le ahorra la pregunta a cada corrida. Es la razón
+por la que los diez de arriba entraron al paquete en vez de arreglarse en el
+`<style>` de Lab, que habría sido más corto cada vez.
+
